@@ -22,3 +22,9 @@ GitHub runs both automatically on every push (see `.github/workflows/test.yml`).
 Only the two classic card decks (English Pattern and Classic Casino Standard) are included. The other
 deck themes and local mods are left out to keep the repository small. Drop extra decks into `decks/` and
 mods into `mods/` to add them.
+
+## Audio and license
+
+- The Teacher voice lines in `audio/encouragement` are generated speech clips; the scripts that made them are in `audio/`.
+- The background music is synthesized in code (`src/audio`); no recorded music is included.
+- This project is released under the MIT license; see [LICENSE](LICENSE).
