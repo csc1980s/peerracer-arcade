@@ -1,0 +1,48 @@
+
+========================================
+FREECELL SUPERMOVE ALGORITHM TESTS
+========================================
+
+--- SECTION 1: Supermove Formula ---
+
+✓ Supermove formula - no empty freecells, no empty cascades
+✓ Supermove formula - 4 empty freecells, no empty cascades
+✓ Supermove formula - 4 empty freecells, 1 empty cascade
+✓ Supermove formula - 4 empty freecells, 2 empty cascades
+✓ Supermove formula - target is empty cascade (adjustment)
+✓ Supermove formula - 2 freecells, 3 empty cascades
+
+--- SECTION 2: Valid Sequence Detection ---
+
+✓ Valid sequence - alternating colors descending
+✓ Invalid sequence - same color
+✓ Invalid sequence - not descending
+✓ Valid sequence - single card
+
+--- SECTION 3: Multi-card Move Validation ---
+
+✓ Multi-card move - within supermove limit
+✓ Multi-card move - exceeds supermove limit
+✓ Multi-card move - invalid sequence rejected
+
+--- SECTION 4: FreeCell Game Rules ---
+
+✓ FreeCell initial state - all cards face up
+✓ FreeCell initial state - 8 cascades with correct distribution
+✓ FreeCell - can move to empty freecell
+✓ FreeCell - cannot move to occupied freecell
+✓ FreeCell - can move from freecell to tableau
+✓ FreeCell - win condition detection
+✓ FreeCell - empty freecell count
+✓ FreeCell - empty cascade count
+✓ FreeCell - empty cascade count with exclusion
+
+========================================
+TEST RESULTS SUMMARY
+========================================
+Total Tests: 22
+Passed: 22
+Failed: 0
+Success Rate: 100.0%
+========================================
+

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="mapleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e76f51"/>
+      <stop offset="50%" stop-color="#f4a261"/>
+      <stop offset="100%" stop-color="#b54419"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 4 L36 18 L48 16 L44 26 L56 32 L46 40 L48 50 L36 46 L34 60 L30 60 L28 46 L16 50 L18 40 L8 32 L20 26 L16 16 L28 18 Z" fill="url(#mapleGrad)" stroke="#8d3010" stroke-width="1.5"/>
+</svg>

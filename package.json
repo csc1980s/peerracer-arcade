@@ -1,0 +1,28 @@
+{
+  "name": "peerracer-arcade",
+  "version": "1.0.0",
+  "description": "A legally clean-room, original suite of classic card games (Klondike, FreeCell, Spider) with procedural vector art, synthesized Web Audio, and independent solvable seed generation.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/test_runner.js && node tests/test_word_tiles.js && node tests/test_tank_minefield.js && node tests/test_mahjong.js && node tests/test_sudoku.js && node tests/test_keystone_drop.js && node tests/test_dominoes.js && node tests/test_freecell.js && node tests/test_hints.js && node tests/test_race.js && node tests/test_race_p2p.js && node tests/test_trash_conveyor.js"
+  },
+  "keywords": [
+    "solitaire",
+    "card-game",
+    "clean-room",
+    "klondike",
+    "freecell",
+    "spider",
+    "svg",
+    "web-audio"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.35.5",
+    "three": "^0.186.1",
+    "tone": "^15.1.22"
+  }
+}

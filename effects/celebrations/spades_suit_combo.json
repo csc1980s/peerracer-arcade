@@ -1,0 +1,193 @@
+{
+  "name": "Spades Suit Combo - Fraser Fir Forest",
+  "description": "Spades suit celebration with falling leaves, pine needles, and woodland particles",
+  "version": "1.0",
+  "cardAnimation": {
+    "sequence": [
+      {
+        "name": "card_rustle",
+        "duration": 1800,
+        "easing": "easeInOutQuad",
+        "stagger": 140,
+        "properties": {
+          "translateY": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.35, "value": -10},
+              {"time": 0.7, "value": -5},
+              {"time": 1.0, "value": 0}
+            ]
+          },
+          "rotation": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.25, "value": -4},
+              {"time": 0.5, "value": 4},
+              {"time": 0.75, "value": -2},
+              {"time": 1.0, "value": 0}
+            ]
+          },
+          "scale": {
+            "keyframes": [
+              {"time": 0, "value": 1.0},
+              {"time": 0.4, "value": 1.07},
+              {"time": 1.0, "value": 1.0}
+            ]
+          }
+        }
+      },
+      {
+        "name": "forest_glow",
+        "duration": 2000,
+        "easing": "easeInOutSine",
+        "properties": {
+          "glow": {
+            "color": "#228b22",
+            "intensity": {
+              "keyframes": [
+                {"time": 0, "value": 0},
+                {"time": 0.4, "value": 0.6},
+                {"time": 0.8, "value": 0.4},
+                {"time": 1.0, "value": 0}
+              ]
+            },
+            "blur": 13
+          }
+        }
+      }
+    ]
+  },
+  "particles": {
+    "emitters": [
+      {
+        "name": "falling_leaves",
+        "shape": "leaf",
+        "position": "screen_top",
+        "count": 45,
+        "duration": 3000,
+        "particleLifetime": 2800,
+        "colors": ["#228b22", "#2e8b57", "#3cb371", "#8fbc8f"],
+        "size": {
+          "start": 12,
+          "end": 8
+        },
+        "opacity": {
+          "start": 0.9,
+          "end": 0.2
+        },
+        "velocity": {
+          "x": {"min": -70, "max": 70},
+          "y": {"min": -80, "max": -25}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -270, "max": 270},
+          "randomize": true
+        },
+        "gravity": 35,
+        "sway": {
+          "amplitude": 35,
+          "frequency": 2
+        },
+        "blendMode": "normal"
+      },
+      {
+        "name": "pine_needles",
+        "shape": "line",
+        "position": "screen_around",
+        "count": 50,
+        "duration": 2500,
+        "particleLifetime": 2200,
+        "colors": ["#006400", "#228b22", "#2e8b57"],
+        "size": {
+          "width": 2,
+          "height": {"start": 10, "end": 6}
+        },
+        "opacity": {
+          "start": 0.8,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -80, "max": 80},
+          "y": {"min": -90, "max": -35}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -180, "max": 180},
+          "randomize": true
+        },
+        "gravity": 40,
+        "sway": {
+          "amplitude": 20,
+          "frequency": 3
+        },
+        "blendMode": "normal"
+      },
+      {
+        "name": "acorns",
+        "shape": "circle",
+        "position": "screen_top",
+        "count": 20,
+        "duration": 2200,
+        "particleLifetime": 1800,
+        "colors": ["#8b4513", "#a0522d", "#cd853f"],
+        "size": {
+          "start": 8,
+          "end": 6
+        },
+        "opacity": {
+          "start": 1.0,
+          "end": 0.4
+        },
+        "velocity": {
+          "x": {"min": -60, "max": 60},
+          "y": {"min": -70, "max": -30}
+        },
+        "gravity": 55,
+        "bounce": 0.4,
+        "blendMode": "normal"
+      },
+      {
+        "name": "woodland_sparkles",
+        "shape": "star",
+        "position": "card_bounds",
+        "count": 30,
+        "duration": 2000,
+        "particleLifetime": 1600,
+        "colors": ["#90ee90", "#98fb98", "#f0fff0"],
+        "size": {
+          "start": 5,
+          "end": 2
+        },
+        "opacity": {
+          "start": 0.75,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -85, "max": 85},
+          "y": {"min": -100, "max": -45}
+        },
+        "gravity": 30,
+        "twinkle": {
+          "frequency": 5,
+          "amplitude": 0.5
+        },
+        "blendMode": "add"
+      }
+    ]
+  },
+  "audio": {
+    "triggerDelay": 220,
+    "voiceType": "suit_based",
+    "volume": 0.75,
+    "fadeIn": 350,
+    "fadeOut": 500
+  },
+  "triggers": {
+    "conditions": [
+      "spades_suit_run",
+      "spades_sequence_complete",
+      "all_spades_face_cards"
+    ]
+  }
+}

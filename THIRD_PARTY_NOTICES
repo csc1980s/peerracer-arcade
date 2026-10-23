@@ -1,0 +1,48 @@
+# Third-Party Notices & Data Provenance
+
+This document records the licensing, provenance, attribution, and verification details of all external data resources used in **Word Tiles: Sovereign Lexicon**.
+
+---
+
+## 1. Primary Lexicon: ENABLE1 (Enhanced North American Benchmark Lexicon)
+
+- **Resource:** `assets/dictionary/enable1.txt`
+- **Word Count:** 172,823 words
+- **File Size:** 1,743,363 bytes
+- **SHA-256 Checksum:** `3f16130220645692ed49c7134e24a18504c2ca55b3c012f7290e3e77c63b1a89`
+- **Compilers:** Alan Beale and the Cooper family (1997)
+- **Upstream Repository:** `https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt`
+- **License:** **Public Domain**
+- **Restrictions:** None. Free for commercial, non-commercial, modification, and redistribution use.
+
+### Provenance & Clearance Note:
+The ENABLE (Enhanced North American Benchmark Lexicon) project was established in 1997 specifically to provide software word-game developers with an authoritative, unencumbered, copyright-free alternative to proprietary tournament word lists (such as Hasbro/Merriam-Webster's OSPD). The compilers explicitly released the word list to the **Public Domain**.
+
+### Text Normalization Applied:
+- Stripped carriage returns (`\r`) and blank lines.
+- Filtered to ASCII alphabetical characters `[A-Z]`.
+- Normalized to uppercase.
+- Minimum word length enforced by engine: $\ge 2$ characters.
+
+---
+
+## 2. Typography & Fonts
+
+### Cinzel (Serif Typography)
+- **Designer:** Natanael Gama
+- **License:** SIL Open Font License, Version 1.1 (OFL-1.1)
+- **Source:** Google Fonts (`https://fonts.google.com/specimen/Cinzel`)
+
+### Outfit (Sans-Serif Typography)
+- **Designer:** Rodrigo Fuenzalida
+- **License:** SIL Open Font License, Version 1.1 (OFL-1.1)
+- **Source:** Google Fonts (`https://fonts.google.com/specimen/Outfit`)
+
+---
+
+## 3. Acoustic Sound & Assets
+
+- **Audio Engine:** `src/audio/sound_synth.js`
+- **Provenance:** 100% original procedural sound synthesis using the native browser Web Audio API (`AudioContext`, `BiquadFilterNode`, `GainNode`, mathematical ADSR envelopes).
+- **License:** MIT License (original codebase).
+- **Audio Files:** Zero external audio files, zero proprietary sound banks, zero Freesound audio samples used.

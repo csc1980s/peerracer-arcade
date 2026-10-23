@@ -1,0 +1,16 @@
+# Multi-Voice Audio Generator Requirements
+# Install with: pip install -r requirements.txt
+
+# Text-to-speech engine
+pyttsx3==2.90
+
+# Audio processing (optional but recommended for voice effects)
+pydub==0.25.1
+
+# Note: pydub requires ffmpeg to be installed
+# Windows: Download from https://ffmpeg.org/download.html
+# Or use chocolatey: choco install ffmpeg
+# Or use winget: winget install ffmpeg
+
+# For enhanced audio quality (optional)
+# SpeechRecognition==3.10.0

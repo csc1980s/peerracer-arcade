@@ -1,0 +1,19 @@
+AssetID,Category,Name,SourceType,Creator,ToolOrMethod,License,CleanRoomStatus
+CORE-PRNG-001,Algorithm,SplitMix64 + Lemire Fisher-Yates,Original Code,Antigravity Pair Dev,Pure JS ES Module,MIT,Verified Original Clean-Room
+CORE-CARD-001,Data Model,Canonical Card Representation,Original Code,Antigravity Pair Dev,Pure JS ES Module,MIT,Verified Original Clean-Room
+CORE-VAL-001,Logic,Pure State Transition Validator,Original Code,Antigravity Pair Dev,Pure JS ES Module,MIT,Verified Original Clean-Room
+CORE-SOLV-001,Algorithm,Klondike & FreeCell Heuristic Solver,Original Code,Antigravity Pair Dev,A* Search & Branch Bounding,MIT,Verified Original Clean-Room
+GAME-KLON-001,Rules,Klondike Rules Engine (Draw 1 & 3),Original Code,Antigravity Pair Dev,Hoyle's Rules Public Convention,MIT,Verified Original Clean-Room
+GAME-FREE-001,Rules,FreeCell Engine & Supermove Math,Original Code,Antigravity Pair Dev,Public Convention / Gardner 1978,MIT,Verified Original Clean-Room
+GAME-SPID-001,Rules,Spider Rules Engine (1/2/4 Suits),Original Code,Antigravity Pair Dev,Public Domain Rules,MIT,Verified Original Clean-Room
+ART-DECK-001,Visual Art,SVG Vector Card Faces & Pips,Original Code,Antigravity Pair Dev,Procedural SVG Vector Generation,MIT,Verified Original Clean-Room
+ART-ROYAL-001,Visual Art,Bespoke Art Deco Face Cards (J/Q/K),Original Code,Antigravity Pair Dev,Mathematical Vector Geometry,MIT,Verified Original Clean-Room
+ART-BACK-001,Visual Art,Royal Guilloche Card Back,Original Code,Antigravity Pair Dev,Procedural Trigonometric Curves,MIT,Verified Original Clean-Room
+ART-BACK-002,Visual Art,Obsidian Gold Geometric Card Back,Original Code,Antigravity Pair Dev,SVG Polygon Tessellation,MIT,Verified Original Clean-Room
+ART-BACK-003,Visual Art,Celestial Constellation Card Back,Original Code,Antigravity Pair Dev,Radial Vector Coordinates,MIT,Verified Original Clean-Room
+ART-BACK-004,Visual Art,Crimson Damask Card Back,Original Code,Antigravity Pair Dev,SVG Pattern Repeating Tile,MIT,Verified Original Clean-Room
+ART-BACK-005,Visual Art,Emerald Filigree Card Back,Original Code,Antigravity Pair Dev,Bézier Scrollwork,MIT,Verified Original Clean-Room
+AUD-SYNTH-001,Audio,Procedural Web Audio SFX Synthesizer,Original Code,Antigravity Pair Dev,Web Audio API (Oscillators/Noise),MIT,Verified Original Clean-Room
+CONF-TUNE-001,Config,Game Balance & Scoring Tuning,Original Data,Antigravity Pair Dev,Original JSON Specification,MIT,Verified Original Clean-Room
+UI-ENGINE-001,Interface,Responsive Canvas & DOM Table System,Original Code,Antigravity Pair Dev,HTML5 / Vanilla CSS / ES6,MIT,Verified Original Clean-Room
+PHYS-WIN-001,Physics,Bouncing Card Victory Cascade Engine,Original Code,Antigravity Pair Dev,2D Verlet/Euler Particle Physics,MIT,Verified Original Clean-Room

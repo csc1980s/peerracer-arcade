@@ -1,0 +1,274 @@
+=================================================
+ SOLITAIRE SOVEREIGN - CLEAN-ROOM VERIFICATION
+=================================================
+
+--- TEST SUITE 1: PRNG Determinism & Vectors ---
+  [PASS] Identical seeds produce identical 64-bit outputs
+  [PASS] Lemire boundedInt strictly constrains outputs to [0, range - 1]
+  [PASS] Deal code encodes and verifies checksum correctly: KL-28T5-CY4T-F
+
+--- TEST SUITE 2: Card Data Model ---
+  [PASS] Standard deck contains exactly 52 cards
+  [PASS] Every suit contains exactly 13 cards (Ace to King)
+  [PASS] Red Queen legally stacks on Black King in Tableau
+  [PASS] Black Queen CANNOT stack on Black King (alternating color rule)
+  [PASS] Ace can start empty Foundation
+  [PASS] Two of Spades can build upon Ace of Spades
+  [PASS] Two of Hearts CANNOT build upon Ace of Spades
+
+--- TEST SUITE 3: Klondike Rules & Invariants ---
+  [PASS] Klondike initial state preserves all 52 unique cards
+  [PASS] Tableau piles correctly initialized with sizes 1 through 7
+  [PASS] Stock pile initially contains exactly 24 cards
+  [PASS] Draw moves 1 card from Stock to Waste
+  [PASS] Undo perfectly restores Stock and Waste state
+  [PASS] Klondike canAutoComplete returns true when stock is empty and all tableau cards are face up
+  [PASS] Tactical hint announces auto-completion when columns are completed
+  [PASS] Solvable endgame board detects canAutoComplete === true
+  [PASS] Auto-complete step 1 executed legally
+  [PASS] Auto-complete step 2 executed legally
+  [PASS] Auto-complete step 3 executed legally
+  [PASS] Auto-complete step 4 executed legally
+  [PASS] Auto-complete step 5 executed legally
+  [PASS] Auto-complete step 6 executed legally
+  [PASS] Auto-complete step 7 executed legally
+  [PASS] Auto-complete step 8 executed legally
+  [PASS] Auto-complete step 9 executed legally
+  [PASS] Auto-complete step 10 executed legally
+  [PASS] Auto-complete step 11 executed legally
+  [PASS] Auto-complete step 12 executed legally
+  [PASS] Auto-complete step 13 executed legally
+  [PASS] Auto-complete step 14 executed legally
+  [PASS] Auto-complete step 15 executed legally
+  [PASS] Auto-complete step 16 executed legally
+  [PASS] Auto-complete step 17 executed legally
+  [PASS] Auto-complete step 18 executed legally
+  [PASS] Auto-complete step 19 executed legally
+  [PASS] Auto-complete step 20 executed legally
+  [PASS] Auto-complete step 21 executed legally
+  [PASS] Auto-complete step 22 executed legally
+  [PASS] Auto-complete step 23 executed legally
+  [PASS] Auto-complete step 24 executed legally
+  [PASS] Auto-complete step 25 executed legally
+  [PASS] Auto-complete step 26 executed legally
+  [PASS] Auto-complete step 27 executed legally
+  [PASS] Auto-complete step 28 executed legally
+  [PASS] Auto-complete step 29 executed legally
+  [PASS] Auto-complete step 30 executed legally
+  [PASS] Auto-complete step 31 executed legally
+  [PASS] Auto-complete step 32 executed legally
+  [PASS] Auto-complete solves all cards to foundations and triggers victory
+
+--- TEST SUITE 4: FreeCell Supermove Math ---
+  [PASS] FreeCell initial deal preserves all 52 unique cards
+  [PASS] Default FreeCell supermove limit is 5 cards (got 5)
+  [PASS] Supermove with 1 empty cascade is 10 cards (got 10)
+
+--- TEST SUITE 5: Spider Rules & Completed Runs ---
+  [PASS] Spider has 10 tableau columns
+  [PASS] Spider stock contains 50 reserve cards
+  [PASS] Dealing a row deducts 10 cards from stock
+  [PASS] Undo deal returns exactly 10 cards to stock
+
+--- TEST SUITE 6: Random-Walk Invariant Stress (200 Iterations) ---
+  [PASS] All 52 cards preserved without loss or duplication across 200 game steps
+
+--- TEST SUITE 7: Casino Blackjack Rules & Basic Strategy ---
+  [PASS] 6-deck shoe initialized with 312 cards
+  [PASS] Initial bankroll set to $1,000
+  [PASS] Adding chip bet deducts from bankroll correctly
+  [PASS] Dealing round succeeds
+  [PASS] Player receives exactly 2 initial cards
+  [PASS] Dealer receives exactly 2 cards (1 upcard, 1 hole card)
+  [PASS] Dealer hole card is face down initially
+  [PASS] Basic Strategy hint generates mathematical recommendation: "Basic Strategy: Hard 17. Always STAND."
+  [PASS] Ace + 6 evaluates to Soft 17
+  [PASS] Ace + 6 + 8 converts Ace to 1, evaluating to Hard 15
+  [PASS] Blackjack round resolves to RESOLVED on player stand
+  [PASS] newHand() resets game state to BETTING for next deal
+  [PASS] rebetAndDeal() accurately re-bets previous bet and deals next round
+  [PASS] rebuy(1000) restores bankroll and readies betting phase
+
+--- TEST SUITE 8: Tactical Hint Engine Verification ---
+  [PASS] Klondike tactical hint returned: "Move 5♥ stack to Column 1 to reveal a hidden card!"
+  [PASS] FreeCell tactical hint returned: "Play A♦ from Cascade 1 to Foundation 1."
+  [PASS] Spider tactical hint returned: "Same-Suit Build: Move 2♠ onto 3♠ in Column 3 to reveal hidden card!"
+
+--- TEST SUITE 9: Multiplayer Profiles & State Saves ---
+  [PASS] Multiple user profiles created successfully
+  [PASS] Leaderboard correctly ranks Bob in 1st place with 520 pts
+  [PASS] Leaderboard correctly ranks Alice in 2nd place with 350 pts
+  [PASS] Atomic game state save succeeded
+  [PASS] Loaded saved game matches exact serialized state and user
+
+--- TEST SUITE 10: Pyramid Solitaire Engine ---
+  [PASS] Pyramid dealt exactly 28 cards across 7 rows
+  [PASS] Pyramid stock contains remaining 24 cards
+  [PASS] Pyramid waste initially empty
+  [PASS] Row 0 apex card is blocked by lower rows
+  [PASS] Row 6 bottom base card is unblocked
+  [PASS] Draw from stock successfully moves card to waste
+  [PASS] Pyramid tactical hint generated: Pair 10♦ with 3♦ (Sum: 13)!
+
+--- TEST SUITE 11: TriPeaks Solitaire Engine ---
+  [PASS] TriPeaks tableau contains exactly 28 cards
+  [PASS] TriPeaks waste starts with 1 face-up card
+  [PASS] TriPeaks stock starts with 23 face-down cards
+  [PASS] Peak summit 0 is blocked initially
+  [PASS] Base row card 18 is unblocked
+  [PASS] Base row cards are face up initially
+  [PASS] Card of rank 5 can play on Waste of rank 4
+  [PASS] Ace (rank 0) can wrap-play on King (rank 12)
+  [PASS] TriPeaks tactical hint generated: DRAW_STOCK
+
+--- TEST SUITE 12: Video Poker Variations ---
+  [PASS] Dealt 5 initial cards
+  [PASS] Game phase transitioned to HOLDING
+  [PASS] Royal Flush correctly recognized
+  [PASS] Jacks or Better recognized
+  [PASS] Four Deuces recognized in Deuces Wild
+  [PASS] Wild Royal Flush correctly evaluated in Deuces Wild
+  [PASS] Five of a Kind evaluated with Wild Joker
+  [PASS] Auto-Hold Advisor returns 5-card recommendation array
+  [PASS] Deuces Wild correctly holds the single wild Deuce (2)
+  [PASS] Deuces Wild hint does NOT tell player to draw 5 cards when holding a Deuce
+  [PASS] Deuces Wild advice accurately states draw 4 cards: "Deuces Wild: Hold the wild Deuce (2) and draw 4 cards."
+  [PASS] Joker Poker correctly holds the single wild Joker
+  [PASS] Joker Poker hint does NOT tell player to draw 5 cards when holding a Joker
+  [PASS] Joker Poker advice accurately states draw 4 cards: "Joker Poker: Hold the wild Joker and draw 4 cards."
+  [PASS] Two Pair correctly recognized in Deuces Wild evaluation
+  [PASS] Two Pair evaluation returns name 'Two Pair'
+  [PASS] Two Pair in Deuces Wild correctly reflects 0 payout
+  [PASS] Deuces Wild Auto-Hold correctly holds 1 pair (2 cards) when dealt Two Pair
+  [PASS] Deuces Wild Auto-Hold holds the higher pair (Jacks)
+  [PASS] Deuces Wild advice explains Two Pair does not pay: "Deuces Wild: Two Pair does not pay! Hold higher pair (Jacks) and draw 3 cards for Three of a Kind or better."
+
+--- TEST SUITE 13: P2P Duplicate Tournaments & Move Verification ---
+  [PASS] P2P Duel Room ID generated with prefix DUEL-TRIP-
+  [PASS] Duel seed preserved
+  [PASS] Match Code encoded successfully: eyJpZCI6IkRVRUwtVFJJUC1F...
+  [PASS] Opponent successfully joined duplicate room with identical seed
+  [PASS] Tamper-evident completion certificate generated with hash
+  [PASS] Tampered opponent certificate correctly rejected by anti-cheat verification
+
+--- TEST SUITE 14: Texas Hold'em Table Poker & 7-Card Hand Evaluation ---
+  [PASS] 4-player table initialized (Human + 3 AI opponents)
+  [PASS] Active player dealt exactly 2 hole cards
+  [PASS] AI opponent dealt exactly 2 hole cards
+  [PASS] Blinds posted properly into pot ($10 SB + $20 BB = $30)
+  [PASS] Game begins at PREFLOP stage
+  [PASS] Zero community cards dealt before flop
+  [PASS] Best 5-card hand evaluated correctly from 7 cards: Full House
+  [PASS] Best hand combination contains exactly 5 cards
+  [PASS] Flop dealt with 3 community cards
+  [PASS] All community cards are face up
+  [PASS] Tactical hint provides clear strategy reason
+
+--- TEST SUITE 15: Cross-Game Casino Bankroll & Solitaire Earnings ---
+  [PASS] Active user initialized with standard $1,000 Casino Bankroll
+  [PASS] 500 Solitaire points awards +$125 chips, driving Casino Bankroll to $1,125
+  [PASS] Mastering Spider 4-Suit grants +$1,000 victory bonus to Casino Bankroll
+  [PASS] Blackjack inherits full synchronized Casino Vault balance ($2,125)
+  [PASS] Video Poker inherits full synchronized Casino Vault credits (2,125)
+
+--- TEST SUITE 16: 5-Player Same-Seed P2P Time Challenge Arena ---
+  [PASS] 5-Player Time Challenge room generated with DUEL-KLON prefix
+  [PASS] Deterministic seed preserved across challenge
+  [PASS] Challenge room strictly configured for up to 5 players
+  [PASS] Initial room contains host player
+  [PASS] Host player flagged as isYou
+  [PASS] Time Challenge automatically populates 5 competitors (Host + 4 Challengers)
+  [PASS] All 5 competitors assigned identical 52-card objective
+  [PASS] Player progress percentage accurately computed from cards remaining
+  [PASS] Player with fastest completion time takes 1st place 🥇 on leaderboard
+  [PASS] Rank 1 receives golden 1st 🥇 crown badge
+  [PASS] 2nd finisher ranked in 2nd place 🥈
+  [PASS] Joined competitor receives the exact identical PRNG seed deal
+  [PASS] Joined competitor receives matching game type
+
+--- TEST SUITE 17: P2P Network Discovery of Hosted Duels ---
+  [PASS] Alice flagged as active host
+  [PASS] Alice room created with DUEL-FREE prefix
+  [PASS] Alice's hosted duel ranks #1 at the top of available challenges
+  [PASS] Hosted duel flagged as isLiveHost
+  [PASS] Host name preserved as AliceHost
+  [PASS] Bob discovers Alice's hosted duel on the P2P network
+  [PASS] Bob recognizes Alice's duel as a live hosted match
+  [PASS] Live hosted duel ranks above default static challenges
+  [PASS] Bob joined Alice's room with identical seed deal
+  [PASS] Bob joined with matching FreeCell discipline
+  [PASS] Charlie received real-time P2P challenge invitation notification
+  [PASS] Invitation reflects hosting player's name
+  [PASS] Invitation reflects game discipline
+  [PASS] Alice's duel is cleanly removed from the P2P network upon host leaving
+
+--- TEST SUITE 18: Duel Timer Start On 5 Members Joined or 5 Min ---
+  [PASS] Duel room begins in WAITING lobby state
+  [PASS] Duel racing stopwatch is NOT started while in WAITING state
+  [PASS] Join deadline configured for 5 minutes (300,000ms)
+  [PASS] Only host is currently in the waiting lobby (1/5)
+  [PASS] Room remains in WAITING state with 2 players joined
+  [PASS] Stopwatch remains paused with 2/5 players
+  [PASS] Room remains in WAITING state with 3 players joined
+  [PASS] Stopwatch remains paused with 3/5 players
+  [PASS] Room remains in WAITING state with 4 players joined
+  [PASS] Stopwatch remains paused with 4/5 players
+  [PASS] Duel timer and room automatically transition to RACING when 5th member joins
+  [PASS] Duel stopwatch startTime is officially initiated upon 5 members joining
+  [PASS] Room contains all 5 active racing competitors
+  [PASS] onRaceStart callback successfully triggered
+  [PASS] Room initially in WAITING state
+  [PASS] Stopwatch not yet running
+  [PASS] Duel timer automatically starts when timeout expires
+  [PASS] Stopwatch running after timeout
+  [PASS] Remaining empty slots automatically populated with challenger ghosts upon timer start
+  [PASS] Contenders filled with ghost speedrunners to complete 5-player race
+  [PASS] Room waiting before manual start
+  [PASS] Room instantly transitions to RACING on host manual start
+  [PASS] Unfilled player slots filled with competitors up to 5
+  [PASS] Duel stopwatch timer running
+
+--- TEST SUITE 19: Computer Stand-ins with Diverse Skill Tiers ---
+  [PASS] Stand-in Bot roster contains at least 6 unique computer competitors
+  [PASS] Roster includes 'Casual' skill tier
+  [PASS] Roster includes 'Novice' skill tier
+  [PASS] Roster includes 'Intermediate' skill tier
+  [PASS] Roster includes 'Pro' skill tier
+  [PASS] Roster includes 'Master' skill tier
+  [PASS] Roster includes 'Grandmaster' skill tier
+  [PASS] Lowest bot skill rating accommodates casual/relaxed pacing (<= 0.65)
+  [PASS] Highest bot skill rating represents elite competitive speedrunning (>= 0.90)
+  [PASS] Initially only 1 human player in lobby
+  [PASS] Duel transitioned to RACING
+  [PASS] Unfilled slots successfully filled to 5 players with computer stand-ins
+  [PASS] Exactly 4 computer stand-ins filled the empty slots
+  [PASS] Bot Sammy_Slow is marked as bot and ghost competitor
+  [PASS] Bot Sammy_Slow has valid skill rating: 0.62
+  [PASS] Bot Sammy_Slow has skill level tag: Casual
+  [PASS] Bot Sammy_Slow has UI badge: 🐢 Casual Bot
+  [PASS] Bot CasualCathy is marked as bot and ghost competitor
+  [PASS] Bot CasualCathy has valid skill rating: 0.68
+  [PASS] Bot CasualCathy has skill level tag: Novice
+  [PASS] Bot CasualCathy has UI badge: ☕ Novice Bot
+  [PASS] Bot VegasVic is marked as bot and ghost competitor
+  [PASS] Bot VegasVic has valid skill rating: 0.76
+  [PASS] Bot VegasVic has skill level tag: Intermediate
+  [PASS] Bot VegasVic has UI badge: 🎲 Club Player
+  [PASS] Bot CardShark is marked as bot and ghost competitor
+  [PASS] Bot CardShark has valid skill rating: 0.83
+  [PASS] Bot CardShark has skill level tag: Pro
+  [PASS] Bot CardShark has UI badge: 🦈 Pro Bot
+  [PASS] All stand-in bots have distinct names and personalities
+
+--- TEST SUITE 20: StackExchange Klondike - Filtering Pointless Partial Sequence Moves ---
+  [PASS] Hint engine strictly skips moving partial sequence 5♥ from 6♣ to 6♠ when 6♣ cannot move to foundation (no strategic gain)
+  [PASS] Hint engine successfully identifies strategic partial sequence move that unblocks foundation!
+  [PASS] Identifies 5♥ on Col 0 as source
+  [PASS] Identifies Col 1 as target
+  [PASS] Hint message explicitly informs player of strategic gain: "Move 5♥ to Column 2 to unblock 6♠ for Foundation!"
+
+=================================================
+ RESULTS: 225 Passed, 0 Failed
+=================================================
+All clean-room engines, Pyramid, TriPeaks, Poker variations, and P2P Duels verified successfully!
+

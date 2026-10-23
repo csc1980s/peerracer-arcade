@@ -1,0 +1,139 @@
+{
+  "name": "King Celebration - Grand & Powerful",
+  "description": "Majestic celebration animation for Kings with crown sparkles and golden particles",
+  "version": "1.0",
+  "cardAnimation": {
+    "sequence": [
+      {
+        "name": "card_scale_pulse",
+        "duration": 1500,
+        "easing": "easeInOutQuad",
+        "properties": {
+          "scale": {
+            "keyframes": [
+              {"time": 0, "value": 1.0},
+              {"time": 0.3, "value": 1.15},
+              {"time": 0.6, "value": 1.1},
+              {"time": 1.0, "value": 1.0}
+            ]
+          },
+          "rotation": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.25, "value": -3},
+              {"time": 0.5, "value": 3},
+              {"time": 0.75, "value": -2},
+              {"time": 1.0, "value": 0}
+            ]
+          }
+        }
+      },
+      {
+        "name": "glow_pulse",
+        "duration": 1800,
+        "easing": "easeInOutSine",
+        "properties": {
+          "glow": {
+            "color": "#d4af37",
+            "intensity": {
+              "keyframes": [
+                {"time": 0, "value": 0},
+                {"time": 0.3, "value": 0.8},
+                {"time": 0.7, "value": 0.6},
+                {"time": 1.0, "value": 0}
+              ]
+            },
+            "blur": 15
+          }
+        }
+      }
+    ]
+  },
+  "particles": {
+    "emitters": [
+      {
+        "name": "crown_sparkles",
+        "shape": "crown",
+        "position": "card_top",
+        "count": 50,
+        "duration": 2000,
+        "particleLifetime": 1500,
+        "colors": ["#d4af37", "#ffd700", "#b8860b", "#ffdf00"],
+        "size": {
+          "start": 8,
+          "end": 2
+        },
+        "opacity": {
+          "start": 1.0,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -100, "max": 100},
+          "y": {"min": -150, "max": -50}
+        },
+        "gravity": 50,
+        "blendMode": "add"
+      },
+      {
+        "name": "golden_rays",
+        "shape": "ray",
+        "position": "card_center",
+        "count": 12,
+        "duration": 1500,
+        "particleLifetime": 1200,
+        "colors": ["#ffd700", "#ffed4e"],
+        "size": {
+          "width": 3,
+          "height": {"start": 80, "end": 150}
+        },
+        "opacity": {
+          "start": 0.6,
+          "end": 0
+        },
+        "rotation": {
+          "start": 0,
+          "end": 360,
+          "randomize": true
+        },
+        "blendMode": "add"
+      },
+      {
+        "name": "shimmer_particles",
+        "shape": "circle",
+        "position": "card_bounds",
+        "count": 30,
+        "duration": 2500,
+        "particleLifetime": 2000,
+        "colors": ["#ffffff", "#fffacd", "#ffd700"],
+        "size": {
+          "start": 4,
+          "end": 1
+        },
+        "opacity": {
+          "start": 0.8,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -80, "max": 80},
+          "y": {"min": -120, "max": -40}
+        },
+        "gravity": 30,
+        "blendMode": "screen"
+      }
+    ]
+  },
+  "audio": {
+    "triggerDelay": 200,
+    "voiceType": "king",
+    "volume": 0.8,
+    "fadeIn": 300,
+    "fadeOut": 500
+  },
+  "triggers": {
+    "conditions": [
+      "king_placed",
+      "king_sequence",
+      "high_card_combo_king"
+    ]
+  }
+}

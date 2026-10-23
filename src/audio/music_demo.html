@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Chiptune Music Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .subtitle {
+      text-align: center;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+    .track-grid {
+      display: grid;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      color: white;
+      padding: 15px 25px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    button.active {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      box-shadow: 0 0 30px rgba(245, 87, 108, 0.5);
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .controls button {
+      flex: 1;
+    }
+    .sfx-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .sfx-grid button {
+      font-size: 0.9em;
+      padding: 10px;
+    }
+    .status {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      font-size: 0.9em;
+    }
+    .status.playing {
+      background: rgba(76, 175, 80, 0.2);
+    }
+    .info {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      font-size: 0.85em;
+      line-height: 1.6;
+    }
+    .channel-indicator {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      justify-content: center;
+    }
+    .channel {
+      padding: 5px 15px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 5px;
+      font-size: 0.8em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Chiptune Music</h1>
+    <p class="subtitle">NES/Game Boy Soundtrack Suite</p>
+
+    <div class="controls">
+      <button id="initBtn">🎮 Initialize Audio</button>
+      <button id="muteBtn" disabled>🔇 Mute</button>
+    </div>
+
+    <div class="track-grid">
+      <button class="track-btn" data-track="title" disabled>
+        📜 Track 1: "Cartridge Sunrise"<br>
+        <small>Title Screen • 108 BPM • C Major</small>
+      </button>
+      <button class="track-btn" data-track="gameplay" disabled>
+        🎮 Track 2: "Puzzle Parade"<br>
+        <small>Gameplay • 126 BPM • G Major</small>
+      </button>
+      <button class="track-btn" data-track="tension" disabled>
+        ⚡ Track 3: "Combo Cascade"<br>
+        <small>Tension • 168 BPM • A Minor</small>
+      </button>
+      <button class="track-btn" data-track="victory" disabled>
+        🏆 Track 4: "Clear the Board!"<br>
+        <small>Victory • 150 BPM • C Major</small>
+      </button>
+    </div>
+
+    <button id="stopBtn" disabled style="width: 100%; background: #e74c3c;">
+      ⏹️ Stop Music
+    </button>
+
+    <div class="info">
+      <strong>Sound Effects:</strong>
+    </div>
+    <div class="sfx-grid">
+      <button class="sfx-btn" data-sfx="cardFlip" disabled>🃏 Card Flip</button>
+      <button class="sfx-btn" data-sfx="cardPlace" disabled>📍 Card Place</button>
+      <button class="sfx-btn" data-sfx="cardDeal" disabled>🎴 Card Deal</button>
+      <button class="sfx-btn" data-sfx="invalidMove" disabled>❌ Invalid Move</button>
+      <button class="sfx-btn" data-sfx="win" disabled>🎉 Win Sound</button>
+    </div>
+
+    <div class="channel-indicator">
+      <div class="channel">Square 1</div>
+      <div class="channel">Square 2</div>
+      <div class="channel">Triangle</div>
+      <div class="channel">Noise</div>
+    </div>
+
+    <div id="status" class="status">
+      Click "Initialize Audio" to start
+    </div>
+  </div>
+
+  <script type="module">
+    import { chiptuneMusic } from './chiptune_music.js';
+
+    const initBtn = document.getElementById('initBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const trackBtns = document.querySelectorAll('.track-btn');
+    const sfxBtns = document.querySelectorAll('.sfx-btn');
+    const status = document.getElementById('status');
+
+    let initialized = false;
+
+    // Initialize audio
+    initBtn.addEventListener('click', async () => {
+      try {
+        await chiptuneMusic.initialize();
+        initialized = true;
+
+        initBtn.textContent = '✅ Audio Ready';
+        initBtn.disabled = true;
+        muteBtn.disabled = false;
+        stopBtn.disabled = false;
+        trackBtns.forEach(btn => btn.disabled = false);
+        sfxBtns.forEach(btn => btn.disabled = false);
+
+        status.textContent = 'Audio engine initialized! Select a track to play.';
+        status.classList.add('playing');
+      } catch (error) {
+        status.textContent = 'Error initializing audio: ' + error.message;
+      }
+    });
+
+    // Track buttons
+    trackBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const track = btn.dataset.track;
+
+        // Remove active class from all buttons
+        trackBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        switch(track) {
+          case 'title':
+            chiptuneMusic.playTitleMusic();
+            status.textContent = '🎵 Now Playing: "Cartridge Sunrise" (Title Screen)';
+            break;
+          case 'gameplay':
+            chiptuneMusic.playGameplayMusic();
+            status.textContent = '🎵 Now Playing: "Puzzle Parade" (Gameplay)';
+            break;
+          case 'tension':
+            chiptuneMusic.playTensionMusic();
+            status.textContent = '🎵 Now Playing: "Combo Cascade" (Tension)';
+            break;
+          case 'victory':
+            chiptuneMusic.playVictoryMusic();
+            status.textContent = '🎵 Now Playing: "Clear the Board!" (Victory Jingle)';
+            setTimeout(() => {
+              status.textContent = 'Victory jingle completed!';
+              trackBtns.forEach(b => b.classList.remove('active'));
+            }, 6000);
+            break;
+        }
+        status.classList.add('playing');
+      });
+    });
+
+    // Stop button
+    stopBtn.addEventListener('click', () => {
+      chiptuneMusic.stop();
+      trackBtns.forEach(b => b.classList.remove('active'));
+      status.textContent = 'Music stopped.';
+      status.classList.remove('playing');
+    });
+
+    // Mute button
+    muteBtn.addEventListener('click', () => {
+      const isMuted = chiptuneMusic.toggleMute();
+      muteBtn.textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
+    });
+
+    // Sound effects
+    sfxBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sfx = btn.dataset.sfx;
+        chiptuneMusic.sfx[sfx]();
+      });
+    });
+  </script>
+</body>
+</html>

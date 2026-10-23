@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "app_name": "Solitaire Sovereign",
+  "branding": {
+    "title": "Solitaire Sovereign",
+    "subtitle": "A Clean-Room Suite of Classic Card Games",
+    "version": "1.0.0",
+    "license": "MIT"
+  },
+  "scoring": {
+    "klondike": {
+      "waste_to_tableau": 10,
+      "waste_to_foundation": 15,
+      "tableau_to_foundation": 20,
+      "turn_tableau_card": 10,
+      "foundation_to_tableau": -15,
+      "recycle_stock_penalty": -15,
+      "time_decay_seconds": 15,
+      "time_decay_penalty": 2,
+      "vegas_cost_per_game": 52,
+      "vegas_reward_per_foundation": 5
+    },
+    "freecell": {
+      "card_to_foundation": 20,
+      "cascade_to_freecell": 2,
+      "freecell_to_cascade": 3,
+      "completion_base_score": 1000,
+      "move_par": 80,
+      "move_penalty_per_excess": 2
+    },
+    "spider": {
+      "initial_score": 1000,
+      "move_penalty": 1,
+      "completed_suit_run_reward": 200,
+      "all_runs_complete_bonus": 500
+    }
+  },
+  "animation": {
+    "card_move_duration_ms": 220,
+    "card_flip_duration_ms": 180,
+    "auto_complete_delay_ms": 75,
+    "win_cascade_particle_count": 52,
+    "win_gravity": 0.42,
+    "win_bounce_restitution": 0.82
+  },
+  "audio": {
+    "master_volume": 0.75,
+    "sfx_volume": 0.8,
+    "pitch_scaling_enabled": true,
+    "sound_theme": "tactile_wood_felt"
+  },
+  "difficulty": {
+    "easy": { "solver_depth_limit": 5000, "label": "Casual / Relaxed" },
+    "medium": { "solver_depth_limit": 20000, "label": "Standard Challenge" },
+    "hard": { "solver_depth_limit": 60000, "label": "Master Tactician" }
+  }
+}

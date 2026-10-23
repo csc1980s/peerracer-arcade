@@ -1,0 +1,133 @@
+{
+  "name": "Hearts Suit Combo - Holly Berries & Love",
+  "description": "Hearts suit celebration with holly berries, red hearts, and warm festive particles",
+  "version": "1.0",
+  "cardAnimation": {
+    "sequence": [
+      {
+        "name": "card_sequence_wave",
+        "duration": 1800,
+        "easing": "easeInOutSine",
+        "stagger": 150,
+        "properties": {
+          "translateY": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.4, "value": -12},
+              {"time": 1.0, "value": 0}
+            ]
+          },
+          "scale": {
+            "keyframes": [
+              {"time": 0, "value": 1.0},
+              {"time": 0.35, "value": 1.06},
+              {"time": 1.0, "value": 1.0}
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "particles": {
+    "emitters": [
+      {
+        "name": "holly_berries",
+        "shape": "circle",
+        "position": "screen_top",
+        "count": 30,
+        "duration": 2500,
+        "particleLifetime": 2000,
+        "colors": ["#dc143c", "#b22222", "#8b0000"],
+        "size": {
+          "start": 10,
+          "end": 6
+        },
+        "opacity": {
+          "start": 1.0,
+          "end": 0.3
+        },
+        "velocity": {
+          "x": {"min": -80, "max": 80},
+          "y": {"min": -60, "max": -20}
+        },
+        "gravity": 50,
+        "bounce": 0.3,
+        "blendMode": "normal"
+      },
+      {
+        "name": "cascading_hearts",
+        "shape": "heart",
+        "position": "screen_top",
+        "count": 40,
+        "duration": 3000,
+        "particleLifetime": 2500,
+        "colors": ["#ff0000", "#ff1493", "#ff69b4", "#dc143c"],
+        "size": {
+          "start": 14,
+          "end": 8
+        },
+        "opacity": {
+          "start": 0.85,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -70, "max": 70},
+          "y": {"min": -90, "max": -30}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -90, "max": 90},
+          "randomize": true
+        },
+        "gravity": 35,
+        "sway": {
+          "amplitude": 25,
+          "frequency": 2.5
+        },
+        "blendMode": "normal"
+      },
+      {
+        "name": "ivy_sparkles",
+        "shape": "leaf",
+        "position": "screen_edges",
+        "count": 25,
+        "duration": 2000,
+        "particleLifetime": 1800,
+        "colors": ["#228b22", "#32cd32", "#90ee90"],
+        "size": {
+          "start": 8,
+          "end": 4
+        },
+        "opacity": {
+          "start": 0.7,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -60, "max": 60},
+          "y": {"min": -80, "max": -30}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -180, "max": 180},
+          "randomize": true
+        },
+        "gravity": 30,
+        "blendMode": "normal"
+      }
+    ]
+  },
+  "audio": {
+    "triggerDelay": 200,
+    "voiceType": "suit_based",
+    "volume": 0.75,
+    "fadeIn": 350,
+    "fadeOut": 500
+  },
+  "triggers": {
+    "conditions": [
+      "hearts_suit_run",
+      "hearts_sequence_complete",
+      "all_hearts_face_cards"
+    ]
+  }
+}

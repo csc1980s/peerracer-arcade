@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <radialGradient id="classic_felt_rad" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#125936"/>
+      <stop offset="55%" stop-color="#0a3c23"/>
+      <stop offset="100%" stop-color="#041a0e"/>
+    </radialGradient>
+    <pattern id="classic_weave" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M0 16 L32 16 M16 0 L16 32" stroke="#ffffff" stroke-width="0.3" stroke-opacity="0.04"/>
+      <circle cx="8" cy="8" r="1" fill="#d4af37" fill-opacity="0.05"/>
+      <circle cx="24" cy="24" r="1" fill="#d4af37" fill-opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#classic_felt_rad)"/>
+  <rect width="1920" height="1080" fill="url(#classic_weave)"/>
+  <rect x="24" y="24" width="1872" height="1032" rx="16" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-opacity="0.18"/>
+  <rect x="36" y="36" width="1848" height="1008" rx="12" fill="none" stroke="#d4af37" stroke-width="0.75" stroke-opacity="0.10" stroke-dasharray="6 4"/>
+</svg>

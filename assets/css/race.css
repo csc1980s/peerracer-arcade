@@ -1,0 +1,43 @@
+/* PeerRacer Arcade - race dock */
+.race-dock { position: fixed; right: 16px; bottom: 16px; z-index: 60; font-family: var(--font-sans, 'Outfit', sans-serif); color: #f3efe2; }
+.race-dock.hidden { display: none; }
+.race-toggle { display: flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: 0.95rem;
+  background: linear-gradient(135deg, #f5d77f, #d4af37 55%, #aa841c); color: #2a2208; border: 1px solid #8a6a14; box-shadow: 0 6px 18px rgba(0,0,0,.45); }
+.race-toggle:hover { filter: brightness(1.08); }
+.race-body { position: absolute; right: 0; bottom: 52px; width: 340px; max-width: calc(100vw - 32px); max-height: 70vh; overflow: auto; padding: 14px 16px 16px; border-radius: 14px;
+  background: var(--glass-bg, rgba(14, 22, 18, .94)); border: 1px solid var(--glass-border, rgba(255,255,255,.14)); box-shadow: 0 12px 36px rgba(0,0,0,.55); backdrop-filter: blur(10px); }
+.race-body.hidden, .race-countdown.hidden { display: none; }
+.race-body h3 { margin: 0 0 8px; font-family: var(--font-serif, Georgia, serif); font-size: 1.1rem; color: var(--gold-primary, #d4af37); }
+.race-help { margin: 6px 0; font-size: .78rem; color: #9fb3a6; line-height: 1.4; }
+.race-help code { color: #f5d77f; }
+.race-msg { margin: 8px 0; font-size: .82rem; color: #ffb4a8; }
+.race-label { display: flex; flex-direction: column; gap: 4px; margin: 8px 0; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: #9fb3a6; }
+.race-body input { padding: 7px 9px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18); background: rgba(0,0,0,.35); color: #f3efe2; font: inherit; min-width: 0; }
+.race-code-input { text-transform: uppercase; letter-spacing: .25em; text-align: center; flex: 1; }
+.race-row { display: flex; gap: 8px; }
+.race-or { margin: 10px 0 6px; text-align: center; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: #7f9488; }
+.race-btn { padding: 8px 12px; border-radius: 8px; cursor: pointer; font: inherit; font-weight: 600; font-size: .85rem; color: #f3efe2; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); }
+.race-btn:hover:not(:disabled) { background: rgba(255,255,255,.18); }
+.race-btn:disabled { opacity: .45; cursor: default; }
+.race-primary { width: 100%; margin-top: 6px; color: #2a2208; background: linear-gradient(135deg, #f5d77f, #d4af37); border-color: #8a6a14; }
+.race-primary:hover:not(:disabled) { background: linear-gradient(135deg, #ffe596, #e0bb45); }
+.race-quiet { width: 100%; margin-top: 10px; background: transparent; color: #9fb3a6; }
+.race-roomcode { display: flex; align-items: center; justify-content: space-between; margin: 4px 0; }
+.race-roomcode b { font-size: 2rem; letter-spacing: .3em; color: #fff3c4; }
+.race-list { list-style: none; margin: 8px 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.race-list li { display: grid; grid-template-columns: 30px 1fr; gap: 2px 8px; align-items: center; padding: 6px 8px; border-radius: 8px; background: rgba(255,255,255,.05); }
+.race-list li.race-me { background: rgba(212,175,55,.16); border: 1px solid rgba(212,175,55,.45); }
+.race-rank { font-weight: 700; color: var(--gold-primary, #d4af37); text-align: center; }
+.race-pname { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.race-bar { grid-column: 2; height: 6px; border-radius: 3px; background: rgba(255,255,255,.12); overflow: hidden; }
+.race-bar i { display: block; height: 100%; background: linear-gradient(90deg, #4fb286, #bdf0d6); transition: width .6s ease; }
+.race-res { grid-column: 2; font-size: .74rem; color: #9fb3a6; }
+.race-share { margin-top: 10px; font-size: .8rem; }
+.race-share summary { cursor: pointer; color: #9fb3a6; }
+.race-share .race-btn, .race-share input { width: 100%; margin-top: 6px; box-sizing: border-box; }
+.race-countdown { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; pointer-events: none;
+  font-family: var(--font-serif, Georgia, serif); font-size: 12rem; font-weight: 700; color: #fff3c4; text-shadow: 0 0 40px rgba(212,175,55,.9), 0 6px 0 #6a5010; background: rgba(0,0,0,.35); }
+@media (max-width: 700px) { .race-countdown { font-size: 8rem; } .race-dock { right: 10px; bottom: 10px; } }
+
+.race-p2p-code, .race-p2p-input { width: 100%; box-sizing: border-box; margin: 4px 0 6px; padding: 7px 9px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.35); color: #f3efe2; font: .7rem/1.3 ui-monospace, Consolas, monospace; resize: vertical; word-break: break-all; }

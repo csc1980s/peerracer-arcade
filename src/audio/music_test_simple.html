@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Simple Music Test</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', monospace;
+      background: #1a1a2e;
+      color: #eee;
+      padding: 40px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #16213e;
+      padding: 30px;
+      border-radius: 10px;
+    }
+    h1 { color: #0f3460; margin-bottom: 20px; }
+    button {
+      background: #e94560;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px 5px;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+    }
+    button:hover { background: #c23954; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .log {
+      background: #0f3460;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-size: 14px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .log-entry {
+      margin: 5px 0;
+      padding: 5px;
+      border-left: 3px solid #e94560;
+      padding-left: 10px;
+    }
+    .success { border-color: #4caf50; color: #4caf50; }
+    .error { border-color: #f44336; color: #f44336; }
+    .warning { border-color: #ff9800; color: #ff9800; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Simple Chiptune Test</h1>
+
+    <div>
+      <button id="testBtn">1. Test Web Audio API</button>
+      <button id="loadToneBtn" disabled>2. Load Tone.js</button>
+      <button id="initBtn" disabled>3. Initialize Audio</button>
+    </div>
+
+    <div>
+      <button id="beepBtn" disabled>Play Simple Beep</button>
+      <button id="scaleBtn" disabled>Play Scale</button>
+      <button id="titleBtn" disabled>Play Title Music</button>
+    </div>
+
+    <div class="log" id="log"></div>
+  </div>
+
+  <script>
+    const log = document.getElementById('log');
+
+    function addLog(message, type = 'info') {
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      log.insertBefore(entry, log.firstChild);
+    }
+
+    // Step 1: Test Web Audio API
+    document.getElementById('testBtn').addEventListener('click', () => {
+      addLog('Testing Web Audio API...', 'info');
+
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) {
+          addLog('ERROR: Web Audio API not supported!', 'error');
+          return;
+        }
+
+        addLog('✓ Web Audio API is supported', 'success');
+
+        const ctx = new AudioContext();
+        addLog(`✓ AudioContext created (state: ${ctx.state})`, 'success');
+
+        // Try to play a simple tone
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.frequency.value = 440; // A4
+        gain.gain.value = 0.3;
+
+        osc.start();
+        setTimeout(() => osc.stop(), 200);
+
+        addLog('✓ Played 440Hz beep (did you hear it?)', 'success');
+
+        document.getElementById('loadToneBtn').disabled = false;
+
+      } catch (error) {
+        addLog(`ERROR: ${error.message}`, 'error');
+      }
+    });
+
+    // Step 2: Load Tone.js
+    document.getElementById('loadToneBtn').addEventListener('click', () => {
+      addLog('Loading Tone.js from CDN...', 'info');
+
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js';
+
+      script.onload = () => {
+        addLog('✓ Tone.js loaded successfully!', 'success');
+        addLog(`✓ Tone.js version: ${Tone.version || 'unknown'}`, 'success');
+        document.getElementById('initBtn').disabled = false;
+      };
+
+      script.onerror = () => {
+        addLog('ERROR: Failed to load Tone.js from CDN', 'error');
+        addLog('Trying alternative CDN...', 'warning');
+
+        const altScript = document.createElement('script');
+        altScript.src = 'https://unpkg.com/tone@14.7.77/build/Tone.js';
+        altScript.onload = () => {
+          addLog('✓ Tone.js loaded from alternative CDN!', 'success');
+          document.getElementById('initBtn').disabled = false;
+        };
+        altScript.onerror = () => {
+          addLog('ERROR: Both CDNs failed. Check internet connection.', 'error');
+        };
+        document.head.appendChild(altScript);
+      };
+
+      document.head.appendChild(script);
+    });
+
+    // Step 3: Initialize Tone.js
+    let synth = null;
+    let triangle = null;
+
+    document.getElementById('initBtn').addEventListener('click', async () => {
+      addLog('Initializing Tone.js audio...', 'info');
+
+      try {
+        await Tone.start();
+        addLog('✓ Tone.js started!', 'success');
+        addLog(`✓ Audio context state: ${Tone.context.state}`, 'success');
+
+        // Create a simple synth
+        synth = new Tone.Synth({
+          oscillator: { type: 'square' },
+          envelope: { attack: 0.01, decay: 0.1, sustain: 0.3, release: 0.1 }
+        }).toDestination();
+
+        synth.volume.value = -10;
+        addLog('✓ Square wave synth created', 'success');
+
+        // Create triangle for bass
+        triangle = new Tone.Synth({
+          oscillator: { type: 'triangle' },
+          envelope: { attack: 0.01, decay: 0.2, sustain: 0.5, release: 0.2 }
+        }).toDestination();
+
+        triangle.volume.value = -12;
+        addLog('✓ Triangle wave synth created', 'success');
+
+        document.getElementById('beepBtn').disabled = false;
+        document.getElementById('scaleBtn').disabled = false;
+        document.getElementById('titleBtn').disabled = false;
+
+        addLog('✓✓✓ Ready to play music! ✓✓✓', 'success');
+
+      } catch (error) {
+        addLog(`ERROR: ${error.message}`, 'error');
+      }
+    });
+
+    // Play simple beep
+    document.getElementById('beepBtn').addEventListener('click', () => {
+      addLog('Playing beep...', 'info');
+      try {
+        synth.triggerAttackRelease('C5', '8n');
+        addLog('✓ Beep played (did you hear it?)', 'success');
+      } catch (error) {
+        addLog(`ERROR: ${error.message}`, 'error');
+      }
+    });
+
+    // Play scale
+    document.getElementById('scaleBtn').addEventListener('click', () => {
+      addLog('Playing C major scale...', 'info');
+      try {
+        const notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
+        notes.forEach((note, i) => {
+          setTimeout(() => {
+            synth.triggerAttackRelease(note, '8n');
+          }, i * 150);
+        });
+        addLog('✓ Scale playing...', 'success');
+      } catch (error) {
+        addLog(`ERROR: ${error.message}`, 'error');
+      }
+    });
+
+    // Play title music
+    document.getElementById('titleBtn').addEventListener('click', () => {
+      addLog('Playing "Cartridge Sunrise" title music...', 'info');
+
+      try {
+        Tone.Transport.bpm.value = 108;
+
+        const melody = [
+          ['E4', 0], ['G4', 0.5], ['A4', 1.0], ['G4', 1.5],
+          ['E4', 2.0], ['D4', 2.5], ['C4', 3.0], ['D4', 3.5],
+          ['E4', 4.0], ['G4', 4.5], ['C5', 5.0], ['B4', 5.5],
+          ['A4', 6.0], ['G4', 6.5], ['E4', 7.0]
+        ];
+
+        const bass = [
+          ['C2', 0], ['G2', 2], ['B1', 4], ['G1', 6]
+        ];
+
+        const now = Tone.now();
+
+        melody.forEach(([note, time]) => {
+          synth.triggerAttackRelease(note, '8n', now + time);
+        });
+
+        bass.forEach(([note, time]) => {
+          triangle.triggerAttackRelease(note, '4n', now + time);
+        });
+
+        addLog('✓ Title music playing!', 'success');
+        addLog('(First 8 seconds of "Cartridge Sunrise")', 'success');
+
+      } catch (error) {
+        addLog(`ERROR: ${error.message}`, 'error');
+      }
+    });
+
+    // Initial log
+    addLog('Welcome! Click "1. Test Web Audio API" to begin', 'info');
+    addLog('Make sure your volume is up and not muted!', 'warning');
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+{
+  "name": "Diamonds Suit Combo - Frosted Ice Crystals",
+  "description": "Diamonds suit celebration with ice crystals, snowflakes, and shimmering winter particles",
+  "version": "1.0",
+  "cardAnimation": {
+    "sequence": [
+      {
+        "name": "card_crystallize",
+        "duration": 2000,
+        "easing": "easeInOutCubic",
+        "stagger": 120,
+        "properties": {
+          "scale": {
+            "keyframes": [
+              {"time": 0, "value": 1.0},
+              {"time": 0.3, "value": 1.08},
+              {"time": 0.6, "value": 1.05},
+              {"time": 1.0, "value": 1.0}
+            ]
+          },
+          "rotation": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.5, "value": 2},
+              {"time": 1.0, "value": 0}
+            ]
+          }
+        }
+      },
+      {
+        "name": "ice_shimmer",
+        "duration": 2200,
+        "easing": "easeInOutSine",
+        "properties": {
+          "glow": {
+            "color": "#b0e0e6",
+            "intensity": {
+              "keyframes": [
+                {"time": 0, "value": 0},
+                {"time": 0.3, "value": 0.7},
+                {"time": 0.7, "value": 0.5},
+                {"time": 1.0, "value": 0}
+              ]
+            },
+            "blur": 14
+          }
+        }
+      }
+    ]
+  },
+  "particles": {
+    "emitters": [
+      {
+        "name": "snowflakes",
+        "shape": "snowflake",
+        "position": "screen_top",
+        "count": 50,
+        "duration": 3500,
+        "particleLifetime": 3000,
+        "colors": ["#ffffff", "#f0f8ff", "#e6f3ff", "#b0e0e6"],
+        "size": {
+          "start": 12,
+          "end": 8
+        },
+        "opacity": {
+          "start": 0.9,
+          "end": 0.1
+        },
+        "velocity": {
+          "x": {"min": -50, "max": 50},
+          "y": {"min": -70, "max": -20}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -360, "max": 360},
+          "randomize": true
+        },
+        "gravity": 25,
+        "sway": {
+          "amplitude": 40,
+          "frequency": 1.5
+        },
+        "blendMode": "screen"
+      },
+      {
+        "name": "ice_crystals",
+        "shape": "diamond",
+        "position": "screen_around",
+        "count": 35,
+        "duration": 2500,
+        "particleLifetime": 2000,
+        "colors": ["#add8e6", "#87ceeb", "#b0e0e6", "#e0ffff"],
+        "size": {
+          "start": 10,
+          "end": 4
+        },
+        "opacity": {
+          "start": 0.85,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -90, "max": 90},
+          "y": {"min": -100, "max": -40}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -120, "max": 120},
+          "randomize": true
+        },
+        "gravity": 40,
+        "twinkle": {
+          "frequency": 4,
+          "amplitude": 0.6
+        },
+        "blendMode": "add"
+      },
+      {
+        "name": "frost_sparkles",
+        "shape": "star",
+        "position": "card_bounds",
+        "count": 60,
+        "duration": 2000,
+        "particleLifetime": 1500,
+        "colors": ["#ffffff", "#e6f3ff", "#b0e0e6", "#afeeee"],
+        "size": {
+          "start": 6,
+          "end": 2
+        },
+        "opacity": {
+          "start": 1.0,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -100, "max": 100},
+          "y": {"min": -120, "max": -50}
+        },
+        "gravity": 35,
+        "twinkle": {
+          "frequency": 6,
+          "amplitude": 0.7
+        },
+        "blendMode": "screen"
+      },
+      {
+        "name": "icicle_shards",
+        "shape": "triangle",
+        "position": "screen_edges",
+        "count": 20,
+        "duration": 1800,
+        "particleLifetime": 1400,
+        "colors": ["#e0ffff", "#f0f8ff", "#ffffff"],
+        "size": {
+          "start": 8,
+          "end": 3
+        },
+        "opacity": {
+          "start": 0.7,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -80, "max": 80},
+          "y": {"min": -90, "max": -35}
+        },
+        "rotation": {
+          "randomize": true
+        },
+        "gravity": 45,
+        "blendMode": "add"
+      }
+    ]
+  },
+  "audio": {
+    "triggerDelay": 180,
+    "voiceType": "suit_based",
+    "volume": 0.75,
+    "fadeIn": 300,
+    "fadeOut": 500
+  },
+  "triggers": {
+    "conditions": [
+      "diamonds_suit_run",
+      "diamonds_sequence_complete",
+      "all_diamonds_face_cards"
+    ]
+  }
+}

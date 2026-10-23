@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="crysGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f7fa"/>
+      <stop offset="50%" stop-color="#80deea"/>
+      <stop offset="100%" stop-color="#00acc1"/>
+    </linearGradient>
+  </defs>
+  <polygon points="32,4 56,32 32,60 8,32" fill="url(#crysGrad)" stroke="#ffffff" stroke-width="2"/>
+  <polygon points="32,16 46,32 32,48 18,32" fill="#ffffff" opacity="0.4"/>
+</svg>

@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "description": "Victorian Christmas Solitaire Audio Files",
+  "voices": {
+    "jack": {
+      "fileCount": 16,
+      "manifestPath": "audio/encouragement/jack/manifest.json"
+    },
+    "king": {
+      "fileCount": 16,
+      "manifestPath": "audio/encouragement/king/manifest.json"
+    },
+    "queen": {
+      "fileCount": 16,
+      "manifestPath": "audio/encouragement/queen/manifest.json"
+    }
+  }
+}

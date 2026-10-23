@@ -1,0 +1,162 @@
+{
+  "name": "Queen Celebration - Elegant & Graceful",
+  "description": "Elegant celebration animation for Queens with hearts, flowers, and soft pink particles",
+  "version": "1.0",
+  "cardAnimation": {
+    "sequence": [
+      {
+        "name": "card_float_twirl",
+        "duration": 2000,
+        "easing": "easeInOutCubic",
+        "properties": {
+          "translateY": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.4, "value": -15},
+              {"time": 0.7, "value": -10},
+              {"time": 1.0, "value": 0}
+            ]
+          },
+          "rotation": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.5, "value": 5},
+              {"time": 1.0, "value": 0}
+            ]
+          },
+          "scale": {
+            "keyframes": [
+              {"time": 0, "value": 1.0},
+              {"time": 0.3, "value": 1.08},
+              {"time": 1.0, "value": 1.0}
+            ]
+          }
+        }
+      },
+      {
+        "name": "soft_glow",
+        "duration": 2200,
+        "easing": "easeInOutSine",
+        "properties": {
+          "glow": {
+            "color": "#ff69b4",
+            "intensity": {
+              "keyframes": [
+                {"time": 0, "value": 0},
+                {"time": 0.4, "value": 0.6},
+                {"time": 0.8, "value": 0.4},
+                {"time": 1.0, "value": 0}
+              ]
+            },
+            "blur": 12
+          }
+        }
+      }
+    ]
+  },
+  "particles": {
+    "emitters": [
+      {
+        "name": "floating_hearts",
+        "shape": "heart",
+        "position": "card_around",
+        "count": 20,
+        "duration": 2500,
+        "particleLifetime": 2000,
+        "colors": ["#ff69b4", "#ffb6c1", "#ffc0cb", "#ff1493"],
+        "size": {
+          "start": 12,
+          "end": 6
+        },
+        "opacity": {
+          "start": 0.9,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -60, "max": 60},
+          "y": {"min": -100, "max": -30}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -45, "max": 45},
+          "randomize": true
+        },
+        "gravity": 20,
+        "blendMode": "normal"
+      },
+      {
+        "name": "rose_petals",
+        "shape": "petal",
+        "position": "card_top",
+        "count": 35,
+        "duration": 3000,
+        "particleLifetime": 2500,
+        "colors": ["#ffb6c1", "#ffc0cb", "#fff0f5", "#ffe4e1"],
+        "size": {
+          "start": 8,
+          "end": 4
+        },
+        "opacity": {
+          "start": 0.8,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -90, "max": 90},
+          "y": {"min": -80, "max": -20}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -180, "max": 180},
+          "randomize": true
+        },
+        "gravity": 40,
+        "sway": {
+          "amplitude": 30,
+          "frequency": 2
+        },
+        "blendMode": "normal"
+      },
+      {
+        "name": "sparkle_dust",
+        "shape": "star",
+        "position": "card_bounds",
+        "count": 40,
+        "duration": 2000,
+        "particleLifetime": 1500,
+        "colors": ["#ffffff", "#ffb6c1", "#ffd1dc"],
+        "size": {
+          "start": 5,
+          "end": 1
+        },
+        "opacity": {
+          "start": 0.7,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -70, "max": 70},
+          "y": {"min": -90, "max": -30}
+        },
+        "gravity": 25,
+        "twinkle": {
+          "frequency": 5,
+          "amplitude": 0.5
+        },
+        "blendMode": "add"
+      }
+    ]
+  },
+  "audio": {
+    "triggerDelay": 250,
+    "voiceType": "queen",
+    "volume": 0.75,
+    "fadeIn": 400,
+    "fadeOut": 600
+  },
+  "triggers": {
+    "conditions": [
+      "queen_placed",
+      "queen_sequence",
+      "high_card_combo_queen"
+    ]
+  }
+}

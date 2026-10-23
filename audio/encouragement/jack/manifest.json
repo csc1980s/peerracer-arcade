@@ -1,0 +1,126 @@
+{
+  "voice": "jack",
+  "fileCount": 16,
+  "files": [
+    {
+      "filename": "clubs_quote_005_jack.mp3",
+      "path": "audio/encouragement/jack/clubs_quote_005_jack.mp3",
+      "relativePath": "encouragement/jack/clubs_quote_005_jack.mp3",
+      "suit": "clubs",
+      "category": "suit",
+      "quoteNumber": "005"
+    },
+    {
+      "filename": "clubs_quote_006_jack.mp3",
+      "path": "audio/encouragement/jack/clubs_quote_006_jack.mp3",
+      "relativePath": "encouragement/jack/clubs_quote_006_jack.mp3",
+      "suit": "clubs",
+      "category": "suit",
+      "quoteNumber": "006"
+    },
+    {
+      "filename": "diamonds_quote_005_jack.mp3",
+      "path": "audio/encouragement/jack/diamonds_quote_005_jack.mp3",
+      "relativePath": "encouragement/jack/diamonds_quote_005_jack.mp3",
+      "suit": "diamonds",
+      "category": "suit",
+      "quoteNumber": "005"
+    },
+    {
+      "filename": "diamonds_quote_006_jack.mp3",
+      "path": "audio/encouragement/jack/diamonds_quote_006_jack.mp3",
+      "relativePath": "encouragement/jack/diamonds_quote_006_jack.mp3",
+      "suit": "diamonds",
+      "category": "suit",
+      "quoteNumber": "006"
+    },
+    {
+      "filename": "general_quote_001_jack.mp3",
+      "path": "audio/encouragement/jack/general_quote_001_jack.mp3",
+      "relativePath": "encouragement/jack/general_quote_001_jack.mp3",
+      "category": "general",
+      "quoteNumber": "001"
+    },
+    {
+      "filename": "general_quote_002_jack.mp3",
+      "path": "audio/encouragement/jack/general_quote_002_jack.mp3",
+      "relativePath": "encouragement/jack/general_quote_002_jack.mp3",
+      "category": "general",
+      "quoteNumber": "002"
+    },
+    {
+      "filename": "general_quote_003_jack.mp3",
+      "path": "audio/encouragement/jack/general_quote_003_jack.mp3",
+      "relativePath": "encouragement/jack/general_quote_003_jack.mp3",
+      "category": "general",
+      "quoteNumber": "003"
+    },
+    {
+      "filename": "general_quote_004_jack.mp3",
+      "path": "audio/encouragement/jack/general_quote_004_jack.mp3",
+      "relativePath": "encouragement/jack/general_quote_004_jack.mp3",
+      "category": "general",
+      "quoteNumber": "004"
+    },
+    {
+      "filename": "general_quote_005_jack.mp3",
+      "path": "audio/encouragement/jack/general_quote_005_jack.mp3",
+      "relativePath": "encouragement/jack/general_quote_005_jack.mp3",
+      "category": "general",
+      "quoteNumber": "005"
+    },
+    {
+      "filename": "general_quote_006_jack.mp3",
+      "path": "audio/encouragement/jack/general_quote_006_jack.mp3",
+      "relativePath": "encouragement/jack/general_quote_006_jack.mp3",
+      "category": "general",
+      "quoteNumber": "006"
+    },
+    {
+      "filename": "general_quote_007_jack.mp3",
+      "path": "audio/encouragement/jack/general_quote_007_jack.mp3",
+      "relativePath": "encouragement/jack/general_quote_007_jack.mp3",
+      "category": "general",
+      "quoteNumber": "007"
+    },
+    {
+      "filename": "general_quote_008_jack.mp3",
+      "path": "audio/encouragement/jack/general_quote_008_jack.mp3",
+      "relativePath": "encouragement/jack/general_quote_008_jack.mp3",
+      "category": "general",
+      "quoteNumber": "008"
+    },
+    {
+      "filename": "hearts_quote_005_jack.mp3",
+      "path": "audio/encouragement/jack/hearts_quote_005_jack.mp3",
+      "relativePath": "encouragement/jack/hearts_quote_005_jack.mp3",
+      "suit": "hearts",
+      "category": "suit",
+      "quoteNumber": "005"
+    },
+    {
+      "filename": "hearts_quote_006_jack.mp3",
+      "path": "audio/encouragement/jack/hearts_quote_006_jack.mp3",
+      "relativePath": "encouragement/jack/hearts_quote_006_jack.mp3",
+      "suit": "hearts",
+      "category": "suit",
+      "quoteNumber": "006"
+    },
+    {
+      "filename": "spades_quote_005_jack.mp3",
+      "path": "audio/encouragement/jack/spades_quote_005_jack.mp3",
+      "relativePath": "encouragement/jack/spades_quote_005_jack.mp3",
+      "suit": "spades",
+      "category": "suit",
+      "quoteNumber": "005"
+    },
+    {
+      "filename": "spades_quote_006_jack.mp3",
+      "path": "audio/encouragement/jack/spades_quote_006_jack.mp3",
+      "relativePath": "encouragement/jack/spades_quote_006_jack.mp3",
+      "suit": "spades",
+      "category": "suit",
+      "quoteNumber": "006"
+    }
+  ]
+}

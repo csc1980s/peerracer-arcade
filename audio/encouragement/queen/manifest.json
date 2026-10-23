@@ -1,0 +1,126 @@
+{
+  "voice": "queen",
+  "fileCount": 16,
+  "files": [
+    {
+      "filename": "clubs_quote_003_queen.mp3",
+      "path": "audio/encouragement/queen/clubs_quote_003_queen.mp3",
+      "relativePath": "encouragement/queen/clubs_quote_003_queen.mp3",
+      "suit": "clubs",
+      "category": "suit",
+      "quoteNumber": "003"
+    },
+    {
+      "filename": "clubs_quote_004_queen.mp3",
+      "path": "audio/encouragement/queen/clubs_quote_004_queen.mp3",
+      "relativePath": "encouragement/queen/clubs_quote_004_queen.mp3",
+      "suit": "clubs",
+      "category": "suit",
+      "quoteNumber": "004"
+    },
+    {
+      "filename": "diamonds_quote_003_queen.mp3",
+      "path": "audio/encouragement/queen/diamonds_quote_003_queen.mp3",
+      "relativePath": "encouragement/queen/diamonds_quote_003_queen.mp3",
+      "suit": "diamonds",
+      "category": "suit",
+      "quoteNumber": "003"
+    },
+    {
+      "filename": "diamonds_quote_004_queen.mp3",
+      "path": "audio/encouragement/queen/diamonds_quote_004_queen.mp3",
+      "relativePath": "encouragement/queen/diamonds_quote_004_queen.mp3",
+      "suit": "diamonds",
+      "category": "suit",
+      "quoteNumber": "004"
+    },
+    {
+      "filename": "general_quote_001_queen.mp3",
+      "path": "audio/encouragement/queen/general_quote_001_queen.mp3",
+      "relativePath": "encouragement/queen/general_quote_001_queen.mp3",
+      "category": "general",
+      "quoteNumber": "001"
+    },
+    {
+      "filename": "general_quote_002_queen.mp3",
+      "path": "audio/encouragement/queen/general_quote_002_queen.mp3",
+      "relativePath": "encouragement/queen/general_quote_002_queen.mp3",
+      "category": "general",
+      "quoteNumber": "002"
+    },
+    {
+      "filename": "general_quote_003_queen.mp3",
+      "path": "audio/encouragement/queen/general_quote_003_queen.mp3",
+      "relativePath": "encouragement/queen/general_quote_003_queen.mp3",
+      "category": "general",
+      "quoteNumber": "003"
+    },
+    {
+      "filename": "general_quote_004_queen.mp3",
+      "path": "audio/encouragement/queen/general_quote_004_queen.mp3",
+      "relativePath": "encouragement/queen/general_quote_004_queen.mp3",
+      "category": "general",
+      "quoteNumber": "004"
+    },
+    {
+      "filename": "general_quote_005_queen.mp3",
+      "path": "audio/encouragement/queen/general_quote_005_queen.mp3",
+      "relativePath": "encouragement/queen/general_quote_005_queen.mp3",
+      "category": "general",
+      "quoteNumber": "005"
+    },
+    {
+      "filename": "general_quote_006_queen.mp3",
+      "path": "audio/encouragement/queen/general_quote_006_queen.mp3",
+      "relativePath": "encouragement/queen/general_quote_006_queen.mp3",
+      "category": "general",
+      "quoteNumber": "006"
+    },
+    {
+      "filename": "general_quote_007_queen.mp3",
+      "path": "audio/encouragement/queen/general_quote_007_queen.mp3",
+      "relativePath": "encouragement/queen/general_quote_007_queen.mp3",
+      "category": "general",
+      "quoteNumber": "007"
+    },
+    {
+      "filename": "general_quote_008_queen.mp3",
+      "path": "audio/encouragement/queen/general_quote_008_queen.mp3",
+      "relativePath": "encouragement/queen/general_quote_008_queen.mp3",
+      "category": "general",
+      "quoteNumber": "008"
+    },
+    {
+      "filename": "hearts_quote_003_queen.mp3",
+      "path": "audio/encouragement/queen/hearts_quote_003_queen.mp3",
+      "relativePath": "encouragement/queen/hearts_quote_003_queen.mp3",
+      "suit": "hearts",
+      "category": "suit",
+      "quoteNumber": "003"
+    },
+    {
+      "filename": "hearts_quote_004_queen.mp3",
+      "path": "audio/encouragement/queen/hearts_quote_004_queen.mp3",
+      "relativePath": "encouragement/queen/hearts_quote_004_queen.mp3",
+      "suit": "hearts",
+      "category": "suit",
+      "quoteNumber": "004"
+    },
+    {
+      "filename": "spades_quote_003_queen.mp3",
+      "path": "audio/encouragement/queen/spades_quote_003_queen.mp3",
+      "relativePath": "encouragement/queen/spades_quote_003_queen.mp3",
+      "suit": "spades",
+      "category": "suit",
+      "quoteNumber": "003"
+    },
+    {
+      "filename": "spades_quote_004_queen.mp3",
+      "path": "audio/encouragement/queen/spades_quote_004_queen.mp3",
+      "relativePath": "encouragement/queen/spades_quote_004_queen.mp3",
+      "suit": "spades",
+      "category": "suit",
+      "quoteNumber": "004"
+    }
+  ]
+}

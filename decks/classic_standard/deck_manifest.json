@@ -1,0 +1,16 @@
+{
+  "id": "classic_standard",
+  "name": "Classic Casino Standard",
+  "era": "Classic",
+  "icon": "♠️",
+  "subtitle": "Late 19th-Century Commercial Engraving & Traditional Casino Heritage",
+  "faceTitle": "King David (King of Spades) 👑",
+  "totalCards": 54,
+  "suits": {
+    "spades": "Victorian Engraved Spade",
+    "hearts": "Classic Casino Heart",
+    "diamonds": "Faceted Casino Diamond",
+    "clubs": "Traditional Trefoil Club"
+  },
+  "generatedAt": "2026-10-16T22:15:27Z"
+}

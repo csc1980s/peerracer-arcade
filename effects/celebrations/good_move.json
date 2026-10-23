@@ -1,0 +1,84 @@
+{
+  "name": "Good Move - Quick Positive Feedback",
+  "description": "Short, sweet celebration for good moves that don't trigger major events",
+  "version": "1.0",
+  "cardAnimation": {
+    "sequence": [
+      {
+        "name": "quick_pop",
+        "duration": 600,
+        "easing": "easeOutBack",
+        "properties": {
+          "scale": {
+            "keyframes": [
+              {"time": 0, "value": 1.0},
+              {"time": 0.4, "value": 1.12},
+              {"time": 1.0, "value": 1.0}
+            ]
+          }
+        }
+      },
+      {
+        "name": "subtle_glow",
+        "duration": 800,
+        "easing": "easeInOutQuad",
+        "properties": {
+          "glow": {
+            "color": "#ffd700",
+            "intensity": {
+              "keyframes": [
+                {"time": 0, "value": 0},
+                {"time": 0.4, "value": 0.5},
+                {"time": 1.0, "value": 0}
+              ]
+            },
+            "blur": 8
+          }
+        }
+      }
+    ]
+  },
+  "particles": {
+    "emitters": [
+      {
+        "name": "mini_sparkles",
+        "shape": "star",
+        "position": "card_center",
+        "count": 15,
+        "duration": 800,
+        "particleLifetime": 600,
+        "colors": ["#ffd700", "#ffdf00", "#ffffff"],
+        "size": {
+          "start": 4,
+          "end": 1
+        },
+        "opacity": {
+          "start": 0.9,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -60, "max": 60},
+          "y": {"min": -80, "max": -30}
+        },
+        "gravity": 40,
+        "blendMode": "add"
+      }
+    ]
+  },
+  "audio": {
+    "triggerDelay": 50,
+    "voiceType": "suit_based",
+    "volume": 0.6,
+    "fadeIn": 150,
+    "fadeOut": 300,
+    "probability": 0.3
+  },
+  "triggers": {
+    "conditions": [
+      "ace_to_foundation",
+      "valid_move",
+      "card_flip",
+      "tableau_clear"
+    ]
+  }
+}

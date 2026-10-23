@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PeerRacer Arcade | Solitaire, Casino & Casual Games</title>
+  <meta name="description" content="A legally pristine, original suite of card games including Klondike, FreeCell, Spider, and Casino Blackjack 21, featuring vector SVG cards, user gameplay music, multiplayer profiles, and leaderboards.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261023_bjfit">
+  <link rel="stylesheet" href="assets/css/admirals_gambit.css">
+  <!-- Jade Pavilion (Mahjong tile matching) -->
+  <link rel="stylesheet" href="assets/css/mahjong.css?v=20261022_v1">
+  <!-- Ninefold (Sudoku) -->
+  <link rel="stylesheet" href="assets/css/sudoku.css?v=20261022_v1">
+  <!-- Keystone Drop (falling blocks) -->
+  <link rel="stylesheet" href="assets/css/keystone_drop.css?v=20261022_v2">
+  <!-- Bone Yard (Dominoes) -->
+  <link rel="stylesheet" href="assets/css/dominoes.css?v=20261022_v1">
+  <link rel="stylesheet" href="assets/css/race.css?v=20261022_p2p">
+  <!-- Jimothy's Trash Conveyor Frenzy -->
+  <link rel="stylesheet" href="assets/css/trash_conveyor.css?v=20261023_v1">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "/node_modules/three/build/three.module.js",
+      "three/examples/jsm/": "/node_modules/three/examples/jsm/",
+      "three/addons/": "/node_modules/three/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body class="theme-emerald">
+  <!-- Victory Waterfall Canvas Overlay -->
+  <canvas id="victory-canvas"></canvas>
+
+  <div id="app-container">
+    <!-- Top Navigation & Control Header -->
+    <header id="game-header">
+      <div class="header-left">
+        <!-- Brand Crest -->
+        <div class="header-brand">
+          <div class="brand-crest">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="brand-title">PEERRACER ARCADE</h1>
+            <div class="brand-subtitle">SOLITAIRE &bull; CASINO &bull; CASUAL GAMES &bull; RACE A FRIEND</div>
+          </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="header-selector">
+          <label for="select-game-mode" class="sr-only">Game Mode</label>
+          <select id="select-game-mode" class="custom-select">
+            <optgroup label="Solitaire &amp; Casino">
+            <option value="klondike_1">Klondike (Draw 1)</option>
+            <option value="klondike_3">Klondike (Draw 3)</option>
+            <option value="freecell">FreeCell</option>
+            <option value="spider_1">Spider (1 Suit - Relaxed)</option>
+            <option value="spider_2">Spider (2 Suits - Classic)</option>
+            <option value="spider_4">Spider (4 Suits - Master)</option>
+            <option value="pyramid">Pyramid Solitaire</option>
+            <option value="tripeaks">TriPeaks Solitaire</option>
+            <option value="blackjack">Blackjack (Casino 21)</option>
+            <option value="poker_holdem">Texas Hold'em Poker (Table)</option>
+            <option value="poker_jacks">Video Poker (Jacks or Better)</option>
+            <option value="poker_deuces">Video Poker (Deuces Wild)</option>
+            <option value="poker_joker">Video Poker (Joker Poker)</option>
+            </optgroup>
+            <optgroup label="PeerRacer Arcade">
+            <option value="word_tiles">Word Tiles (Turn-Based Board)</option>
+            <option value="tank_minefield">Tank Minefield (3D First-Person)</option>
+            <option value="admirals_gambit">⚓ Admiral's Gambit (Naval Warfare)</option>
+            <option value="mahjong">🀄 Jade Pavilion (Mahjong Tile Matching)</option>
+            <option value="sudoku">✦ Ninefold (Sudoku Number Puzzle)</option>
+            <option value="keystone_drop">▣ Keystone Drop (Falling Blocks)</option>
+            <option value="dominoes">🁣 Bone Yard (Dominoes: Block, Draw, All Fives, Mexican Train, Chickenfoot)</option>
+            <option value="trash_conveyor">🦝 Jimothy's Trash Conveyor Frenzy (Catch &amp; Sort)</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- In-Game Card Deck Selector -->
+        <div class="header-selector deck-header-selector">
+          <label for="select-deck-collection" class="sr-only">Card Deck</label>
+          <select id="select-deck-collection" class="custom-select" title="Switch Card Deck Collection">
+            <option value="">🎴 Vector Clean-Room (SVG)</option>
+            <option value="english_pattern">♠️ English Pattern (Standard)</option>
+            <option value="classic_standard">♠️ Classic Casino Standard</option>
+            <option value="royal_cats">🐱 Royal Cats (Puss in Boots)</option>
+            <option value="cartoon_animals">🦊 Cartoon Animals Fable</option>
+            <option value="anime_fantasy">⚔️ Anime Fantasy Shonen</option>
+            <option value="art_nouveau">🌿 Art Nouveau Stile Liberty</option>
+            <option value="victorian_christmas">🎄 Victorian Christmas</option>
+            <option value="art_deco_elegance">✨ Art Deco Elegance</option>
+            <option value="steampunk_clockwork">⚙️ Steampunk Clockwork</option>
+            <option value="wild_west_frontier">🤠 Wild West Frontier</option>
+            <option value="botanical_garden">🌺 Botanical Garden</option>
+            <option value="gothic_cathedral">⛪ Gothic Cathedral</option>
+            <option value="cyberpunk_neon">🌃 Cyberpunk Neon</option>
+            <option value="minimalist_zen">🎋 Minimalist Zen</option>
+            <option value="cosmic_constellation">🌌 Cosmic Constellation</option>
+            <option value="retro_synthwave">🌆 Retro Synthwave 1984</option>
+          </select>
+        </div>
+      </div>
+
+
+
+      <!-- User Profile & Leaderboard Switcher -->
+      <div class="user-profile-bar">
+        <button id="btn-profile-pill" class="user-pill" title="Switch User or View Hall of Fame">
+          <span id="active-user-avatar" class="user-avatar-tag">👑</span>
+          <div class="user-meta-text">
+            <span id="active-user-name" class="user-name">Player 1</span>
+            <span id="active-user-score" class="user-pts">0 pts</span>
+          </div>
+        </button>
+        <button id="btn-leaderboard" class="btn btn-icon-round" title="Leaderboard & Hall of Fame">
+          🏆
+        </button>
+      </div>
+
+      <!-- Shared Casino Vault Bankroll Pill -->
+      <div class="casino-vault-bar">
+        <button id="btn-casino-vault" class="casino-vault-pill" title="Shared Casino Bankroll! Play Solitaire to earn more Casino Cash.">
+          <span class="vault-chip-icon">🎰</span>
+          <div class="vault-meta-text">
+            <span class="vault-label">CASINO VAULT</span>
+            <span id="vault-bankroll-val" class="vault-val">$1,000</span>
+          </div>
+          <span id="vault-gain-badge" class="vault-gain-badge hidden">+25</span>
+        </button>
+      </div>
+
+      <!-- Integrated Gameplay Music Widget -->
+      <div class="music-widget-tray">
+        <button id="btn-music-prev" class="btn-music-ctrl" title="Previous Track">⏮</button>
+        <button id="btn-music-play" class="btn-music-ctrl play-btn" title="Play / Pause Music">▶</button>
+        <button id="btn-music-next" class="btn-music-ctrl" title="Next Track">⏭</button>
+        <div class="music-track-info" id="btn-open-music-modal" title="Click to open Music Folder Settings">
+          <div class="music-equalizer-bars" id="music-eq-anim">
+            <span></span><span></span><span></span>
+          </div>
+          <span id="music-track-title" class="track-title-text">game play music: Ready</span>
+        </div>
+      </div>
+
+      <!-- Quick Action Controls -->
+      <div class="header-actions">
+        <!-- Save & Resume -->
+        <button id="btn-save-game" class="btn btn-icon" title="Save Current Game (Atomic Persistence)">
+          <span>💾</span>
+          <span class="btn-text">Save</span>
+        </button>
+        <button id="btn-resume-game" class="btn btn-secondary hidden" title="Resume Saved Game">
+          <span>📂</span>
+          <span class="btn-text">Resume</span>
+        </button>
+
+        <button id="btn-undo" class="btn btn-icon" title="Undo Move (Ctrl+Z)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 10h10a5 5 0 0 1 5 5v2M3 10l6-6M3 10l6 6"/>
+          </svg>
+          <span class="btn-text">Undo</span>
+        </button>
+
+        <button id="btn-teacher" class="btn btn-icon btn-coach-glow" title="Teacher: Voice Tutorial & Game Strategy (T)">
+          <span>🎓</span>
+          <span class="btn-text">Teacher</span>
+        </button>
+
+        <button id="btn-hint" class="btn btn-icon btn-hint-glow" title="Tactical Hint (H)">
+          <span>💡</span>
+          <span class="btn-text">Hint</span>
+        </button>
+
+        <button id="btn-p2p-duel" class="btn btn-gold btn-p2p-glow" title="Peer-to-Peer Duplicate High Score Duel">
+          <span>⚔️</span>
+          <span class="btn-text">P2P Duel</span>
+        </button>
+
+        <button id="btn-solvable" class="btn btn-secondary" title="Verified Solvable Deals">
+          <span class="badge-dot"></span>
+          <span class="btn-text">Seeds</span>
+        </button>
+
+        <button id="btn-new-game" class="btn btn-primary" title="New Game (N)">
+          <span>✦</span>
+          <span>New</span>
+        </button>
+
+        <!-- Settings, Menu, Card Sizes & Sound -->
+        <div class="aux-group">
+          <button id="btn-deck-studio" class="btn btn-icon-round" title="Browse 14 Card Deck Sets (D)" style="font-size: 1.05rem;" aria-label="Deck Collections Studio">
+            🎴
+          </button>
+          <button id="btn-card-sizes" class="btn btn-secondary btn-card-sizes" title="View Proper Card Dimensions & Specs (Guide)">
+            <span>📏</span>
+            <span class="btn-text">Card Sizes</span>
+          </button>
+          <button id="btn-settings" class="btn btn-secondary btn-menu" title="Menu: Customization, Themes & Settings (Shortcut: M)">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span class="btn-text">Menu</span>
+          </button>
+          <button id="btn-toggle-sound" class="btn btn-icon-round" title="Toggle SFX Audio">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sub-bar: Stats HUD & Deal Seed -->
+    <div id="sub-bar">
+      <div class="deal-seed-info">
+        <span class="seed-label">DEAL SEED:</span>
+        <span id="deal-code-badge" class="seed-badge">KL-0000-0000-0</span>
+        <span class="seed-clean-room-tag">CLEAN-ROOM PRNG</span>
+      </div>
+
+      <!-- Game Status HUD -->
+      <div class="hud-stats">
+        <div class="stat-pill">
+          <span class="stat-label">SCORE</span>
+          <span id="score-display" class="stat-val">0</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-label">MOVES</span>
+          <span id="moves-display" class="stat-val">0</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-label">TIME</span>
+          <span id="timer-display" class="stat-val">00:00</span>
+        </div>
+        <div class="stat-pill hide-mobile">
+          <span class="stat-label">ALL-TIME HIGH</span>
+          <span id="high-score-display" class="stat-val">0</span>
+        </div>
+      </div>
+
+      <div class="sub-bar-right-actions">
+        <button id="btn-test-celebration" class="btn btn-secondary btn-sm" title="Launch Fireworks & Golden Confetti Celebration">
+          <span>🎉</span>
+          <span>Celebration Show</span>
+        </button>
+
+        <button id="btn-auto-complete" class="btn btn-gold hidden">
+          <span>⭐</span>
+          <span>Auto Complete</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Real-Time P2P Opponent Ghost HUD Banner -->
+    <div id="p2p-ghost-hud" class="p2p-ghost-banner hidden">
+      <div class="ghost-left">
+        <span class="ghost-badge">⚔️ P2P DUEL</span>
+        <span id="ghost-opponent-name" class="ghost-player">Opponent: Waiting...</span>
+      </div>
+      <div class="ghost-stats">
+        <div class="ghost-stat-item">
+          <span class="ghost-lbl">SCORE:</span>
+          <span id="ghost-opponent-score" class="ghost-val">0</span>
+        </div>
+        <div class="ghost-stat-item">
+          <span class="ghost-lbl">CARDS LEFT:</span>
+          <span id="ghost-opponent-cards" class="ghost-val">28</span>
+        </div>
+        <div class="ghost-stat-item">
+          <span class="ghost-lbl">STREAK:</span>
+          <span id="ghost-opponent-streak" class="ghost-val">x0</span>
+        </div>
+      </div>
+      <div class="ghost-right">
+        <span id="ghost-match-status" class="ghost-status-live">● DUEL IN PROGRESS</span>
+        <button id="btn-leave-p2p-duel" class="btn btn-sm btn-secondary" style="margin-left: 10px;">Leave Duel</button>
+      </div>
+    </div>
+
+
+    <!-- Prominent Hint Notification Toast Banner -->
+    <div id="hint-banner" class="hint-banner hidden">
+      <div class="hint-content">
+        <span class="hint-icon">💡</span>
+        <span id="hint-text" class="hint-message">Tactical Hint Ready</span>
+      </div>
+      <button id="btn-close-hint" class="hint-close-btn">&times;</button>
+    </div>
+
+    <!-- P2P Live Challenge Invitation Notification Toast -->
+    <div id="p2p-invite-toast" class="p2p-invite-toast hidden">
+      <div class="invite-toast-left">
+        <span class="invite-toast-icon">⚔️</span>
+        <div class="invite-toast-text">
+          <div class="invite-toast-title">
+            <span class="pulse-indicator">●</span>
+            <strong>P2P Race Invitation!</strong>
+          </div>
+          <span id="invite-toast-desc" class="invite-toast-desc">Player hosted a challenge</span>
+        </div>
+      </div>
+      <div class="invite-toast-actions">
+        <button id="btn-invite-join" class="btn btn-sm btn-gold">⚔️ Join Race</button>
+        <button id="btn-invite-dismiss" class="btn btn-sm btn-secondary">&times;</button>
+      </div>
+    </div>
+
+    <!-- Main Card Table Area -->
+    <main id="card-table">
+      <!-- P2P 5-Player Time Challenge Arena Left Dock (Overlay Drawer) -->
+      <aside id="p2p-challenge-dock" class="p2p-challenge-dock collapsed">
+        <div class="dock-collapse-handle" id="btn-toggle-p2p-dock" title="Toggle P2P Arena Dock">
+          <span class="dock-toggle-icon" id="dock-toggle-icon">▶</span>
+          <span class="dock-toggle-label">⚔️ PVP ARENA</span>
+        </div>
+
+        <div class="p2p-dock-container" id="p2p-dock-container">
+          <!-- Dock Header -->
+          <div class="p2p-dock-header">
+            <div class="dock-header-title">
+              <span class="dock-header-icon">⚔️</span>
+              <div class="dock-title-text">
+                <span class="dock-main-title">PVP TIME ARENA</span>
+                <span class="dock-sub-title">5-Player Same-Seed Challenge</span>
+              </div>
+            </div>
+            <div class="dock-header-actions" style="display:flex;align-items:center;gap:8px;">
+              <span id="dock-status-badge" class="dock-badge badge-lobby">LOBBY</span>
+              <button id="btn-dock-close" class="dock-close-btn" title="Close PVP Dock" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:#d4af37;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.75rem;padding:0;">✕</button>
+            </div>
+          </div>
+
+          <!-- PANEL 1: LOBBY / AVAILABLE CHALLENGES (Shown when not racing) -->
+          <div id="p2p-lobby-panel" class="p2p-dock-panel">
+            <div class="dock-action-group">
+              <button id="btn-dock-quick-race" class="btn btn-gold btn-block" title="Instantly start a 5-player race against challenger ghosts">
+                <span>⚡</span> Quick 5-Player Race
+              </button>
+              <button id="btn-dock-create-challenge" class="btn btn-primary btn-block" title="Create a new 5-player challenge room with current deal">
+                <span>➕</span> Create New Challenge
+              </button>
+            </div>
+
+            <!-- Direct Match Code Join -->
+            <div class="dock-join-row">
+              <input type="text" id="input-dock-match-code" class="dock-input" placeholder="Paste Match Code..." />
+              <button id="btn-dock-join-code" class="btn btn-secondary btn-sm">Join</button>
+            </div>
+
+            <!-- Available Open Challenges -->
+            <div class="dock-section-header">
+              <span class="dock-section-title">AVAILABLE CHALLENGES</span>
+              <span class="dock-refresh-icon" id="btn-refresh-challenges" title="Refresh Challenges">↻</span>
+            </div>
+
+            <div id="available-challenges-list" class="available-challenges-list">
+              <!-- Dynamically rendered challenge cards -->
+            </div>
+          </div>
+
+          <!-- PANEL 2: LIVE TIME CHALLENGE RACE & ADVANCEMENT (Shown during active race) -->
+          <div id="p2p-race-panel" class="p2p-dock-panel hidden">
+            <!-- Room Info & Live Stopwatch / Countdown -->
+            <div class="race-status-card">
+              <div class="race-status-row">
+                <span class="race-live-dot" id="race-live-dot">●</span>
+                <span id="race-room-id" class="race-room-id">DUEL-KLON-0000</span>
+                <span id="race-game-tag" class="race-game-tag">Klondike</span>
+              </div>
+              <div class="race-timer-display">
+                <span id="race-timer-label" class="race-timer-label">STOPWATCH:</span>
+                <span id="race-stopwatch" class="race-timer-val">00:00.0</span>
+              </div>
+            </div>
+
+            <!-- Waiting Room Lobby Banner -->
+            <div id="race-waiting-banner" class="race-waiting-banner hidden">
+              <span class="waiting-banner-icon">⏳</span>
+              <div class="waiting-banner-text">
+                <span class="waiting-banner-title">WAITING ROOM</span>
+                <span class="waiting-banner-desc">Race starts when all 5 members join or in 5 min.</span>
+              </div>
+            </div>
+
+            <!-- Host Early Start Button (Available while waiting) -->
+            <div id="race-start-now-container" class="race-start-now-row hidden">
+              <button id="btn-race-start-now" class="btn btn-gold btn-sm btn-block" title="Start race now with competitive challengers">
+                <span>⚡</span> Start Race Now
+              </button>
+            </div>
+
+            <!-- 5-Player Live Advancement List -->
+            <div class="dock-section-header">
+              <span class="dock-section-title">5-PLAYER ADVANCEMENT</span>
+              <span class="dock-live-tag" id="dock-advancement-tag">LIVE SYNC</span>
+            </div>
+
+            <div id="race-racers-list" class="race-racers-list">
+              <!-- Dynamically populated 5 player rows -->
+            </div>
+
+            <!-- Race Action Controls -->
+            <div class="race-controls-row">
+              <button id="btn-race-share-code" class="btn btn-secondary btn-sm" title="Copy shareable match code for friends">
+                <span>📋</span> Share Code
+              </button>
+              <button id="btn-race-leave" class="btn btn-secondary btn-sm btn-danger-soft" title="Leave challenge and return to solo">
+                <span>❌</span> Leave
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- SOLITAIRE LAYOUT (Klondike, FreeCell, Spider) -->
+      <div id="solitaire-view">
+        <section class="table-upper">
+          <div id="stock-waste-group" class="piles-group">
+            <div id="stock-pile" class="card-slot stock-slot" title="Stock Pile (Press D)"></div>
+            <div id="waste-pile" class="card-slot waste-slot" title="Waste Pile"></div>
+          </div>
+          <div id="freecells-container" class="piles-group freecells-group"></div>
+          <div id="foundations-container" class="piles-group foundations-group"></div>
+        </section>
+        <section id="tableau-container" class="tableau-area"></section>
+
+        <!-- Floating Auto-Solve to Foundation Banner & Controls (Microsoft Solitaire style) -->
+        <div id="auto-solve-banner" class="auto-solve-banner hidden">
+          <div class="auto-solve-banner-glow"></div>
+          <div class="auto-solve-content">
+            <span class="auto-solve-icon">⚡</span>
+            <div class="auto-solve-info">
+              <span id="auto-solve-title" class="auto-solve-title">All Columns Completed!</span>
+              <span id="auto-solve-subtitle" class="auto-solve-subtitle">Solving to foundations (Microsoft style)...</span>
+            </div>
+            <div class="auto-solve-controls">
+              <button id="btn-instant-solve" class="btn btn-gold btn-sm" title="Instantly move all cards to foundation">
+                <span>⚡</span> Instant
+              </button>
+              <button id="btn-pause-solve" class="btn btn-secondary btn-sm" title="Pause auto-solving">
+                <span id="pause-solve-icon">⏸</span> <span id="pause-solve-text">Pause</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button id="floating-auto-solve-btn" class="floating-auto-solve-btn hidden" title="All columns completed! Solve to foundation">
+          <span class="solve-pulse-ring"></span>
+          <span class="solve-btn-icon">⚡</span>
+          <span class="solve-btn-text">Solve to Foundation</span>
+        </button>
+      </div>
+
+      <!-- BLACKJACK 21 CASINO TABLE VIEW -->
+      <div id="blackjack-view" class="blackjack-container hidden">
+        <!-- Dealer Half -->
+        <div class="blackjack-dealer-section">
+          <div class="bj-section-header">
+            <span class="bj-label">DEALER'S HAND</span>
+            <span id="dealer-total-badge" class="bj-total-badge">--</span>
+          </div>
+          <div id="bj-dealer-cards" class="bj-cards-row"></div>
+        </div>
+
+        <!-- Center Casino Status & Felt Decal -->
+        <div class="blackjack-felt-center">
+          <div class="bj-banner-text">BLACKJACK PAYS 3 TO 2 &bull; DEALER MUST STAND ON 17</div>
+          <div id="bj-status-message" class="bj-status-callout">Place your bets to deal!</div>
+        </div>
+
+        <!-- Player Hands Section (Supports Split) -->
+        <div class="blackjack-player-section">
+          <div class="bj-section-header">
+            <span class="bj-label" id="player-hand-label">PLAYER'S HAND</span>
+            <span id="player-total-badge" class="bj-total-badge">--</span>
+          </div>
+          <div id="bj-player-hands-container" class="bj-player-hands-grid"></div>
+        </div>
+
+        <!-- Betting & Action Bar -->
+        <div class="blackjack-controls-bar">
+          <!-- Bankroll & Active Bet -->
+          <div class="bj-bankroll-display">
+            <div class="chip-balance-box">
+              <span class="chip-lbl">BANKROLL</span>
+              <span id="bj-bankroll-val" class="chip-val">$1,000</span>
+            </div>
+            <div class="chip-balance-box">
+              <span class="chip-lbl">CURRENT BET</span>
+              <span id="bj-bet-val" class="chip-val bet-gold">$0</span>
+            </div>
+          </div>
+
+          <!-- Betting Chips Tray (Click to Add Bet) -->
+          <div id="bj-chips-tray" class="bj-chips-tray">
+            <button class="casino-chip chip-5" data-val="5" title="Add $5">$5</button>
+            <button class="casino-chip chip-25" data-val="25" title="Add $25">$25</button>
+            <button class="casino-chip chip-100" data-val="100" title="Add $100">$100</button>
+            <button class="casino-chip chip-500" data-val="500" title="Add $500">$500</button>
+          </div>
+
+          <!-- Betting Actions -->
+          <div id="bj-betting-buttons" class="bj-action-group">
+            <button id="btn-bj-toggle-seats" class="btn btn-secondary btn-sm" title="Toggle 3-Player Table or Solo Table">👥 3-Player Table</button>
+            <button id="btn-bj-clear-bet" class="btn btn-secondary">Clear Bet</button>
+            <button id="btn-bj-deal" class="btn btn-primary btn-large-deal">DEAL</button>
+          </div>
+
+          <!-- In-Play Actions (Hit, Stand, Double, Split) -->
+          <div id="bj-play-buttons" class="bj-action-group hidden">
+            <button id="btn-bj-hit" class="btn btn-action-hit">HIT</button>
+            <button id="btn-bj-stand" class="btn btn-action-stand">STAND</button>
+            <button id="btn-bj-double" class="btn btn-action-double">DOUBLE</button>
+            <button id="btn-bj-split" class="btn btn-action-split hidden">SPLIT</button>
+          </div>
+
+          <!-- Round Resolved Actions (Continuous Deal Next Hand, Change Bet, Rebuy) -->
+          <div id="bj-resolved-buttons" class="bj-action-group hidden">
+            <button id="btn-bj-rebet-deal" class="btn btn-primary btn-large-deal">⚡ DEAL NEXT HAND</button>
+            <button id="btn-bj-next-hand" class="btn btn-secondary">Change Bet</button>
+            <button id="btn-bj-rebuy" class="btn btn-danger hidden">💰 Rebuy $1,000</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PYRAMID SOLITAIRE VIEW -->
+      <div id="pyramid-view" class="pyramid-container hidden">
+        <div class="pyramid-top-bar">
+          <div class="pyramid-piles-group">
+            <div id="pyr-stock-pile" class="card-slot stock-slot" title="Draw Card / Recycle (Stock)"></div>
+            <div id="pyr-waste-pile" class="card-slot waste-slot" title="Waste Pile"></div>
+          </div>
+          <div class="pyramid-status-card">
+            <div class="target-rule-pill">🎯 SUM TARGET: <strong>13</strong> &bull; King = Solo</div>
+            <div id="pyr-recycles-badge" class="recycles-pill">♻️ Recycles Left: 3</div>
+            <div id="pyr-selection-status" class="selection-status-text">Select an open card</div>
+          </div>
+        </div>
+        <!-- 7-Row Overlapping Pyramid Grid -->
+        <div id="pyramid-board" class="pyramid-board-area"></div>
+      </div>
+
+      <!-- TRIPEAKS SOLITAIRE VIEW -->
+      <div id="tripeaks-view" class="tripeaks-container hidden">
+        <div class="tripeaks-top-bar">
+          <div class="tripeaks-piles-group">
+            <div id="tp-stock-pile" class="card-slot stock-slot" title="Draw from Stock (Resets Streak)">
+              <span id="tp-stock-count-badge" class="stock-counter-badge">23</span>
+            </div>
+            <div id="tp-waste-pile" class="card-slot waste-slot" title="Waste Pile (Play +/- 1 Rank)"></div>
+          </div>
+          <div class="tripeaks-status-card">
+            <div id="tp-streak-meter" class="streak-meter-pill">🔥 STREAK: x0 (+0 pts)</div>
+            <div class="peaks-cleared-bar">
+              <span id="tp-peak-0" class="peak-badge">Peak 1</span>
+              <span id="tp-peak-1" class="peak-badge">Peak 2</span>
+              <span id="tp-peak-2" class="peak-badge">Peak 3</span>
+            </div>
+          </div>
+        </div>
+        <!-- 3 Peaks Tableau Grid -->
+        <div id="tripeaks-board" class="tripeaks-board-area"></div>
+      </div>
+
+      <!-- TEXAS HOLD'EM CASINO POKER TABLE VIEW -->
+      <div id="holdem-view" class="holdem-table-container hidden">
+        <!-- Opponents Row (Victoria, Duke, Sovereign) -->
+        <div id="holdem-opponents-row" class="holdem-opponents-row"></div>
+
+        <!-- Center Felt: Community Cards (Flop, Turn, River) & Pot -->
+        <div class="holdem-center-table">
+          <div class="holdem-pot-box">
+            <span class="pot-lbl">TOTAL POT</span>
+            <span id="holdem-pot-val" class="pot-val">$0</span>
+          </div>
+
+          <!-- 5 Community Cards with empty placeholder frames -->
+          <div id="holdem-community-cards" class="holdem-community-cards-container"></div>
+
+          <div id="holdem-status-msg" class="holdem-status-callout">Pre-Flop: Place your bets</div>
+        </div>
+
+        <!-- Active Player Section: Hole Cards, Hand Name Badge, Stack -->
+        <div class="holdem-player-section">
+          <div class="holdem-player-meta">
+            <div class="chip-balance-box">
+              <span class="chip-lbl">YOUR CHIPS</span>
+              <span id="holdem-player-chips-val" class="chip-val gold-glow">$1,000</span>
+            </div>
+            <div class="chip-balance-box">
+              <span class="chip-lbl">CURRENT BET</span>
+              <span id="holdem-player-bet-val" class="chip-val bet-gold">$0</span>
+            </div>
+          </div>
+
+          <!-- Prominent Player Hole Cards (Bottom Center) -->
+          <div id="holdem-player-cards-container" class="holdem-player-cards-container"></div>
+        </div>
+
+        <!-- Action Controls Bar -->
+        <div class="holdem-controls-bar">
+          <div id="holdem-action-buttons" class="holdem-action-group">
+            <button id="btn-holdem-fold" class="btn btn-action-fold">FOLD</button>
+            <button id="btn-holdem-check" class="btn btn-action-check">CHECK</button>
+            <button id="btn-holdem-call" class="btn btn-action-call">CALL</button>
+            <button id="btn-holdem-raise" class="btn btn-action-raise">RAISE $20</button>
+            <button id="btn-holdem-allin" class="btn btn-action-allin">ALL-IN</button>
+          </div>
+          <div id="holdem-showdown-buttons" class="holdem-action-group hidden">
+            <button id="btn-holdem-next-hand" class="btn btn-primary btn-large-deal">⚡ DEAL NEXT HAND</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5-CARD DRAW POKER VIEW -->
+      <div id="poker-view" class="poker-container hidden">
+
+        <!-- Simple, Elegant Hand Status & Game Title Header -->
+        <div class="poker-header-banner">
+          <span id="poker-variation-title" class="poker-mode-tag">5-CARD DRAW POKER</span>
+          <div id="poker-hand-eval-badge" class="poker-eval-badge">
+            <span class="badge-sparkle">✦</span>
+            <span id="poker-hand-eval-text">Click cards to HOLD, then press DRAW</span>
+          </div>
+        </div>
+
+        <!-- Prominent 5-Card Stage: Large, Fanned & Clearly Visible -->
+        <div class="poker-stage">
+          <div id="poker-cards-container" class="poker-cards-row">
+            <!-- 5 Large, Fanned Cards rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Clean, Intuitive Action Bar (No confusing coin grids) -->
+        <div class="poker-console-bar">
+          <div class="poker-credits-panel">
+            <div class="chip-balance-box">
+              <span class="chip-lbl">SCORE</span>
+              <span id="poker-credits-val" class="chip-val gold-glow">1,000</span>
+            </div>
+            <div class="chip-balance-box">
+              <span class="chip-lbl">LAST WIN</span>
+              <span id="poker-win-payout-val" class="chip-val win-glow">0</span>
+            </div>
+          </div>
+
+          <div class="poker-buttons-group">
+            <button id="btn-poker-view-paytable" class="btn btn-secondary btn-sm" title="View Payout Table & Hand Rules">📜 Paytable</button>
+            <button id="btn-poker-auto-hold" class="btn btn-gold btn-sm" title="Suggested Hold Hint">💡 Hold Hint</button>
+            <button id="btn-poker-deal-draw" class="btn btn-primary btn-large-deal">DEAL / DRAW</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORD TILES: SOVEREIGN LEXICON VIEW -->
+      <div id="word-tiles-view" class="word-tiles-container hidden"></div>
+
+      <!-- JADE PAVILION: MAHJONG TILE MATCHING VIEW -->
+      <div id="mahjong-view" class="mahjong-container hidden"></div>
+
+      <!-- NINEFOLD: SUDOKU VIEW -->
+      <div id="sudoku-view" class="sudoku-container hidden"></div>
+
+      <!-- KEYSTONE DROP: FALLING BLOCKS VIEW -->
+      <div id="keystone-drop-view" class="keystone-drop-container hidden"></div>
+
+      <!-- BONE YARD: DOMINOES VIEW -->
+      <div id="dominoes-view" class="dominoes-container hidden"></div>
+
+      <!-- JIMOTHY'S TRASH CONVEYOR FRENZY VIEW -->
+      <div id="trash-conveyor-view" class="trash-conveyor-container hidden"></div>
+
+      <!-- TANK MINEFIELD: IRON PERIMETER VIEW -->
+      <div id="tank-minefield-view" class="tank-minefield-container hidden"></div>
+
+      <!-- ADMIRAL'S GAMBIT: IRON FLEET VIEW -->
+      <div id="admirals-gambit-view" class="admirals-gambit-container hidden"></div>
+
+    </main>
+  </div>
+
+  <!-- MODAL: Multiplayer Profiles & Leaderboard -->
+  <div id="leaderboard-modal" class="modal-overlay">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <h2 class="modal-title">Hall of Fame & Competitive Leaderboard</h2>
+        <button id="btn-close-leaderboard" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Profile Switcher & Creator -->
+        <div class="profile-creator-bar">
+          <div class="profile-create-form">
+            <select id="select-new-avatar" class="avatar-select">
+              <option value="👑">👑 Crown</option>
+              <option value="🦁">🦁 Lion</option>
+              <option value="🦅">🦅 Eagle</option>
+              <option value="🐺">🐺 Wolf</option>
+              <option value="🐉">🐉 Dragon</option>
+              <option value="♠">♠ Spade</option>
+              <option value="♥">♥ Heart</option>
+              <option value="♦">♦ Diamond</option>
+              <option value="♣">♣ Club</option>
+              <option value="⭐">⭐ Star</option>
+            </select>
+            <input type="text" id="input-new-username" class="custom-input" placeholder="Enter Player Name..." maxlength="18">
+            <button id="btn-create-profile" class="btn btn-primary">Add Player</button>
+          </div>
+        </div>
+
+        <h3 class="section-title" style="margin-top: 16px;">All-Time Score Rankings</h3>
+        <div id="leaderboard-table-container" class="leaderboard-table-wrapper"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Gameplay Music Settings -->
+  <div id="music-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">Gameplay Music Studio</h2>
+        <button id="btn-close-music-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="music-folder-info-card">
+          <h4>Personal Music Directory</h4>
+          <p>Drop your personal MP3, OGG, or WAV files into:</p>
+          <code class="path-code">d:\solitaire\game play music\</code>
+          <p class="subtext">By loading user-supplied files, zero copyrighted audio is distributed with the game!</p>
+        </div>
+
+        <div class="music-modal-controls">
+          <button id="btn-refresh-music" class="btn btn-primary">🔄 Scan Music Folder</button>
+          <label class="btn btn-secondary file-picker-label">
+            📁 Select Local Audio Files
+            <input type="file" id="music-file-picker" multiple accept="audio/*" class="sr-only">
+          </label>
+          <button id="btn-toggle-lofi-synth" class="btn btn-gold">🎹 Toggle Procedural Lo-Fi Synth</button>
+        </div>
+
+        <div class="volume-slider-group">
+          <label for="slider-music-volume">Music Volume: <span id="lbl-music-volume">50%</span></label>
+          <input type="range" id="slider-music-volume" min="0" max="100" value="50" class="slider-control">
+        </div>
+
+        <h3 class="section-title" style="margin-top: 18px;">Track Playlist (<span id="playlist-track-count">0</span>)</h3>
+        <div class="music-search-bar" style="margin-top: 10px; margin-bottom: 8px;">
+          <input type="text" id="input-search-music" class="custom-input" placeholder="🔍 Search audio tracks by title or file name..." style="width: 100%; box-sizing: border-box; padding: 9px 14px; font-size: 0.88rem; border-radius: 8px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.18); color: #fff;">
+        </div>
+        <div id="modal-playlist-list" class="modal-playlist-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Teacher Voice Tutorial & Strategy Guide -->
+  <div id="teacher-tutorial-modal" class="modal-overlay">
+    <div class="modal-card teacher-modal-card" id="teacher-modal-card-content"></div>
+  </div>
+
+  <!-- MODAL: Solvable Deals Catalog -->
+  <div id="solvable-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">Verified Solvable Deals Catalog</h2>
+        <button id="btn-close-solvable" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-intro">
+          All deals in this catalog are verified solvable using our clean-room <strong>SplitMix64</strong> PRNG and heuristic solver. Zero Microsoft seeds or proprietary numbers.
+        </p>
+        <div id="solvable-deals-list" class="deal-catalog-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Themes & Customization Studio -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-card modal-large mod-studio-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 class="modal-title">🛠️ Artisan Mod & Customization Studio</h2>
+          <span class="seed-clean-room-tag">DROP-IN MODS &bull; LIVE ASSET OVERRIDES</span>
+        </div>
+        <button id="btn-close-settings" class="modal-close">&times;</button>
+      </div>
+
+      <div class="mod-studio-tabs-bar">
+        <button id="mod-tab-btn-bg" class="btn btn-secondary btn-sm active" data-tab="mod-panel-bg">🎨 Table Backgrounds</button>
+        <button id="mod-tab-btn-backs" class="btn btn-secondary btn-sm" data-tab="mod-panel-backs">🎴 Card Backs</button>
+        <button id="mod-tab-btn-faces" class="btn btn-secondary btn-sm" data-tab="mod-panel-faces">🃏 Card Faces & Sprites</button>
+        <button id="mod-tab-btn-chips" class="btn btn-secondary btn-sm" data-tab="mod-panel-chips">🪙 Casino Chips</button>
+        <button id="mod-tab-btn-word-themes" class="btn btn-secondary btn-sm" data-tab="mod-panel-word-themes">🔤 Word Game Themes</button>
+        <button id="mod-tab-btn-celebrations" class="btn btn-secondary btn-sm" data-tab="mod-panel-celebrations">🎉 Celebrations & Royal Voices</button>
+        <button id="mod-tab-btn-guide" class="btn btn-secondary btn-sm" data-tab="mod-panel-guide" style="border-color: rgba(56, 189, 248, 0.5); background: rgba(56, 189, 248, 0.12);">📏 Card Sizes &amp; Modder Guide</button>
+      </div>
+
+      <div class="modal-body mod-studio-body">
+        <!-- Panel 1: Table Backgrounds -->
+        <div id="mod-panel-bg" class="mod-tab-panel">
+          <div class="mod-section-header">
+            <h3>Custom Table Backgrounds & Felts</h3>
+            <p class="subtext">Select a built-in felt, a discovered mod wallpaper from <code>mods/backgrounds/</code>, or upload a custom image.</p>
+          </div>
+          <div class="mod-uploader-row">
+            <label class="btn btn-gold btn-sm file-picker-label">
+              📁 Upload Custom Background
+              <input type="file" id="mod-upload-bg" accept="image/*" class="sr-only">
+            </label>
+            <button id="btn-clear-mod-bg" class="btn btn-secondary btn-sm">↺ Reset to Classic Felt</button>
+          </div>
+          <h4 class="sub-heading">Discovered Mod Backgrounds</h4>
+          <div id="mod-background-options" class="theme-options-grid mod-grid"></div>
+
+          <h4 class="sub-heading" style="margin-top: 18px;">Classic Casino Felts</h4>
+          <div id="table-felt-options" class="felt-options-grid"></div>
+        </div>
+
+        <!-- Panel 2: Card Backs -->
+        <div id="mod-panel-backs" class="mod-tab-panel hidden">
+          <div class="mod-section-header">
+            <h3>Card Back Textures & Vector Art</h3>
+            <p class="subtext">Pick from 100% original vector art, discovered custom backs in <code>mods/card_backs/</code>, or upload your own 5:7 texture.</p>
+          </div>
+          <div class="mod-uploader-row">
+            <label class="btn btn-gold btn-sm file-picker-label">
+              📁 Upload Custom Card Back
+              <input type="file" id="mod-upload-card-back" accept="image/*" class="sr-only">
+            </label>
+            <button id="btn-clear-mod-card-back" class="btn btn-secondary btn-sm">↺ Reset to Vector Art</button>
+          </div>
+          <h4 class="sub-heading">Discovered Mod Card Backs</h4>
+          <div id="mod-card-backs-list" class="theme-options-grid mod-grid"></div>
+
+          <h4 class="sub-heading" style="margin-top: 18px;">Original Vector Card Backs</h4>
+          <div id="card-back-options" class="theme-options-grid"></div>
+        </div>
+
+        <!-- Panel 3: Card Faces & Sprites -->
+        <div id="mod-panel-faces" class="mod-tab-panel hidden">
+          <div class="mod-section-header">
+            <h3>Custom Card Faces & Joker Sprites</h3>
+            <p class="subtext">Drop custom face designs into <code>mods/card_faces/</code>, activate a complete themed deck, or upload specific card overrides.</p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 6px;">
+            <h4 class="sub-heading" style="margin: 0;">Complete 54-Card Themed Collections</h4>
+            <a href="/decks_showcase.html" target="_blank" style="font-size: 0.85rem; color: #d4af37; text-decoration: none; font-weight: 600;">✨ Open 14-Deck Showcase &amp; 54-Card Viewer ↗</a>
+          </div>
+          <p class="subtext" style="margin-bottom: 12px;">Activate any complete collection to play with authentic English Pattern iconography, reversible 180° court art, matching card backs, and casino table felts:</p>
+          <div id="mod-deck-themes-list" class="theme-options-grid mod-grid" style="margin-bottom: 24px;"></div>
+
+          <div class="mod-uploader-row">
+            <select id="mod-face-card-select" class="custom-select custom-select-sm">
+              <option value="JOKER">🃏 JOKER (Wild Card)</option>
+              <option value="AS">♠ Ace of Spades (AS)</option>
+              <option value="KS">♠ King of Spades (KS)</option>
+              <option value="QS">♠ Queen of Spades (QS)</option>
+              <option value="JS">♠ Jack of Spades (JS)</option>
+              <option value="AH">♥ Ace of Hearts (AH)</option>
+              <option value="KH">♥ King of Hearts (KH)</option>
+              <option value="AD">♦ Ace of Diamonds (AD)</option>
+              <option value="AC">♣ Ace of Clubs (AC)</option>
+            </select>
+            <label class="btn btn-gold btn-sm file-picker-label">
+              📁 Upload Card Face Sprite
+              <input type="file" id="mod-upload-card-face" accept="image/*" class="sr-only">
+            </label>
+            <button id="btn-clear-mod-faces" class="btn btn-secondary btn-sm">↺ Reset All Face Overrides</button>
+          </div>
+          <h4 class="sub-heading">Discovered Card Face Mods</h4>
+          <div id="mod-card-faces-list" class="theme-options-grid mod-grid"></div>
+        </div>
+
+        <!-- Panel 4: Casino Chips -->
+        <div id="mod-panel-chips" class="mod-tab-panel hidden">
+          <div class="mod-section-header">
+            <h3>Custom Casino Chips</h3>
+            <p class="subtext">Customize the betting chips used in Blackjack and Casino games. Drop files into <code>mods/chips/</code>.</p>
+          </div>
+          <div class="mod-uploader-row">
+            <label class="btn btn-gold btn-sm file-picker-label">
+              📁 Upload Custom Chip
+              <input type="file" id="mod-upload-chip" accept="image/*" class="sr-only">
+            </label>
+            <button id="btn-clear-mod-chips" class="btn btn-secondary btn-sm">↺ Reset Chips</button>
+          </div>
+          <h4 class="sub-heading">Discovered Chip Mods</h4>
+          <div id="mod-chips-list" class="theme-options-grid mod-grid"></div>
+        </div>
+
+        <!-- Panel 5: Modder Guide & Specs -->
+        <div id="mod-panel-guide" class="mod-tab-panel hidden">
+          <div class="p2p-explainer-card mod-guide-card">
+            <h4>📖 Playing Card Sizes, Formats & Exact Pixel Dimensions</h4>
+            
+            <!-- Quick Highlight Callout -->
+            <div class="card-size-highlight-banner" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(56, 189, 248, 0.2) 100%); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px;">
+              <h5 style="margin: 0 0 6px 0; font-size: 1.05rem; color: #f5d77f; display: flex; align-items: center; gap: 8px;">
+                <span>🎯</span> <strong>Standard Playing Card Dimensions: 5:7 Aspect Ratio</strong>
+              </h5>
+              <p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #f1f5f9;">
+                Standard Size: <strong>280 &times; 392 px</strong> &bull; Recommended High-Res: <strong>350 &times; 490 px</strong> &bull; Ultra / Retina: <strong>560 &times; 784 px</strong> or <strong>700 &times; 980 px</strong>.<br>
+                Cards use standard <strong>5:7 proportion</strong>. File formats accepted: <code>.png</code>, <code>.svg</code>, <code>.webp</code>, <code>.jpg</code>.
+              </p>
+            </div>
+
+            <!-- In-Game Board Card Display Size (Zoom) -->
+            <div class="card-scale-control-panel" style="background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h5 style="margin: 0 0 4px 0; font-size: 0.95rem; color: #38bdf8;">🎮 In-Game Board Card Display Size (Zoom)</h5>
+                <p style="margin: 0; font-size: 0.82rem; color: #94a3b8;">Adjust the scale of cards on the active table felt to fit your monitor:</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <select id="select-card-scale" class="custom-select custom-select-sm" style="min-width: 190px;">
+                  <option value="0.85">Compact (85% &bull; 143&times;200 px)</option>
+                  <option value="1.0" selected>Standard (100% &bull; 168&times;235 px)</option>
+                  <option value="1.15">Large (115% &bull; 193&times;270 px)</option>
+                  <option value="1.30">Extra Large (130% &bull; 218&times;305 px)</option>
+                </select>
+              </div>
+            </div>
+
+            <p>You can customize every visual element in PeerRacer Arcade simply by placing files into the folders below:</p>
+            <div class="specs-grid">
+              <div class="spec-card">
+                <h5>🎨 Backgrounds / Felts</h5>
+                <p><strong>Folder:</strong> <code>d:\solitaire\mods\backgrounds\</code></p>
+                <p><strong>Aspect Ratio:</strong> 16:9 widescreen or seamless square pattern</p>
+                <p><strong>Recommended Resolution:</strong> 1920 &times; 1080 px or 2560 &times; 1440 px</p>
+                <p><strong>Supported Formats:</strong> <code>.svg</code>, <code>.png</code>, <code>.jpg</code>, <code>.webp</code></p>
+              </div>
+              <div class="spec-card">
+                <h5>🎴 Card Backs</h5>
+                <p><strong>Folder:</strong> <code>d:\solitaire\mods\card_backs\</code></p>
+                <p><strong>Aspect Ratio:</strong> 5:7 standard playing card</p>
+                <p><strong>Recommended Resolution:</strong> 350 &times; 490 px (or 700 &times; 980 px high-DPI)</p>
+                <p><strong>Supported Formats:</strong> <code>.svg</code>, <code>.png</code>, <code>.webp</code></p>
+              </div>
+              <div class="spec-card">
+                <h5>🃏 Card Faces / Sprites</h5>
+                <p><strong>Folder:</strong> <code>d:\solitaire\mods\card_faces\</code></p>
+                <p><strong>Aspect Ratio:</strong> 5:7 standard playing card</p>
+                <p><strong>Naming Convention:</strong> <code>[Rank][Suit].png</code> (e.g., <code>AS.png</code>, <code>KH.png</code>, <code>10C.png</code>, <code>JOKER.png</code>)</p>
+                <p><strong>Recommended Resolution:</strong> 350 &times; 490 px</p>
+                <p><strong>Supported Formats:</strong> <code>.svg</code>, <code>.png</code>, <code>.webp</code></p>
+              </div>
+              <div class="spec-card">
+                <h5>🪙 Casino Chips</h5>
+                <p><strong>Folder:</strong> <code>d:\solitaire\mods\chips\</code></p>
+                <p><strong>Aspect Ratio:</strong> 1:1 circular chip</p>
+                <p><strong>Recommended Resolution:</strong> 256 &times; 256 px or 512 &times; 512 px with transparency</p>
+                <p><strong>Supported Formats:</strong> <code>.svg</code>, <code>.png</code>, <code>.webp</code></p>
+              </div>
+            </div>
+            <div class="mod-reset-row" style="margin-top: 16px;">
+              <button id="btn-reset-all-mods" class="btn btn-danger btn-sm">⚠️ Reset All Mods to Factory Defaults</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel: Celebrations & Royal Voices -->
+        <div id="mod-panel-celebrations" class="mod-tab-panel hidden">
+          <div class="mod-section-header">
+            <h3>🎉 Celebrations & Royal Multi-Voice System</h3>
+            <p class="subtext">Configure celebratory particle animations, encouragement frequency, and Shakespearean royal voice acting.</p>
+          </div>
+
+          <div class="celebration-settings-grid">
+            <!-- Visual Celebrations Card -->
+            <div class="celebration-setting-card">
+              <h4>✨ Visual Celebrations</h4>
+              <label class="setting-toggle-row">
+                <span>Enable In-Game Celebrations</span>
+                <input type="checkbox" id="setting-enable-celebrations" checked>
+              </label>
+              <label class="setting-toggle-row">
+                <span>Particle Fireworks & Confetti</span>
+                <input type="checkbox" id="setting-enable-particles" checked>
+              </label>
+              <label class="setting-toggle-row" title="Animated breathing portraits, golden specular sweeps & particle gleams for Kings, Queens & Jacks">
+                <span>✨ Living Court Cards (Golden Loops)</span>
+                <input type="checkbox" id="setting-enable-living-cards" checked>
+              </label>
+              <div class="setting-select-row">
+                <label for="setting-animation-intensity">Animation Intensity</label>
+                <select id="setting-animation-intensity" class="custom-select custom-select-sm">
+                  <option value="low">Low (Subtle Glows & Quick Sparkles)</option>
+                  <option value="medium" selected>Medium (Standard Radiance & Trails)</option>
+                  <option value="high">High (Grand Royale Fireworks & Cascades)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Royal Voice Settings Card -->
+            <div class="celebration-setting-card">
+              <h4>👑 Royal Voice Acting</h4>
+              <label class="setting-toggle-row">
+                <span>Enable Royal Voice Encouragement</span>
+                <input type="checkbox" id="setting-enable-voice" checked>
+              </label>
+              <div class="setting-slider-row">
+                <div class="slider-label-row">
+                  <span>Voice Volume</span>
+                  <span id="label-voice-volume">85%</span>
+                </div>
+                <input type="range" id="setting-voice-volume" min="0" max="100" value="85" class="custom-range">
+              </div>
+
+              <h5 style="margin-top: 14px; margin-bottom: 8px; color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Court Voices</h5>
+              <label class="setting-toggle-row">
+                <span>King (Deep, Regal Monarch)</span>
+                <input type="checkbox" id="setting-voice-king" checked>
+              </label>
+              <label class="setting-toggle-row">
+                <span>Queen (Warm, Elegant Lady)</span>
+                <input type="checkbox" id="setting-voice-queen" checked>
+              </label>
+              <label class="setting-toggle-row">
+                <span>Jack (Energetic, Quick Courtier)</span>
+                <input type="checkbox" id="setting-voice-jack" checked>
+              </label>
+
+              <div class="audition-buttons-row">
+                <button id="btn-test-voice-king" class="btn btn-secondary btn-sm" title="Preview King Voice">👑 Audition King</button>
+                <button id="btn-test-voice-queen" class="btn btn-secondary btn-sm" title="Preview Queen Voice">👸 Audition Queen</button>
+                <button id="btn-test-voice-jack" class="btn btn-secondary btn-sm" title="Preview Jack Voice">🗡️ Audition Jack</button>
+              </div>
+            </div>
+
+            <!-- Pedagogical Coach Voice Settings Card -->
+            <div class="celebration-setting-card" style="margin-top: 16px;">
+              <h4>🎙️ Pedagogical Coach Speech (Neural Web Speech)</h4>
+              <label class="setting-toggle-row">
+                <span>Enable Coach Vocal Guidance & Spoken Explanations</span>
+                <input type="checkbox" id="setting-enable-coach-voice" checked>
+              </label>
+              <p class="subtext" style="margin: 6px 0 12px; font-size: 0.82rem; color: #94a3b8; line-height: 1.4;">
+                Speaks tactical Solitaire tips, move advice, and strategy tutorials aloud using browser neural speech synthesis with automatic background music ducking.
+              </p>
+              <div class="audition-buttons-row">
+                <button id="btn-test-coach-voice" class="btn btn-secondary btn-sm" title="Test Coach Speech">🗣️ Test Coach Voice</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 5: Word Game Themes -->
+        <div id="mod-panel-word-themes" class="mod-tab-panel hidden">
+          <div class="mod-section-header">
+            <h3>🔤 Word Game Themes & Materials</h3>
+            <p class="subtext">Select an artisan theme for Word Tiles (Sovereign Lexicon) generated with AI image generator, or upload a custom square board background.</p>
+          </div>
+
+          <div class="mod-uploader-row">
+            <label class="btn btn-gold btn-sm file-picker-label">
+              📁 Upload Custom Board Background
+              <input type="file" id="wt-upload-custom-board" accept="image/*" class="sr-only">
+            </label>
+            <button id="btn-reset-wt-theme" class="btn btn-secondary btn-sm">↺ Reset to Victorian Christmas</button>
+          </div>
+
+          <h4 class="sub-heading">Artisan Themed Collections (Powered by AI)</h4>
+          <div id="wt-theme-options-grid" class="theme-options-grid mod-grid"></div>
+        </div>
+
+        <div class="legal-attribution-box" style="margin-top: 20px;">
+          <h4>Legal & Clean-Room Provenance</h4>
+          <p>This software operates under the MIT License. All vector art, audio synthesis waveforms, PRNG engines, and game rules validators were authored independently without Microsoft Solitaire Collection binaries or assets.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Victory Celebration -->
+  <div id="win-modal" class="modal-overlay">
+    <div class="modal-card win-celebration-card">
+      <div class="win-crown">👑</div>
+      <h2 class="win-title">VICTORY ACHIEVED</h2>
+      <p class="win-subtitle">You have successfully mastered the board!</p>
+      <div class="win-stats-grid">
+        <div class="win-stat-box">
+          <span class="win-stat-val" id="win-time">00:00</span>
+          <span class="win-stat-lbl">Time</span>
+        </div>
+        <div class="win-stat-box">
+          <span class="win-stat-val" id="win-moves">0</span>
+          <span class="win-stat-lbl">Moves</span>
+        </div>
+        <div class="win-stat-box">
+          <span class="win-stat-val" id="win-score">0</span>
+          <span class="win-stat-lbl">Final Score</span>
+        </div>
+      </div>
+
+      <!-- Casino Vault Reward Banner -->
+      <div id="win-casino-reward-row" class="win-casino-reward-banner hidden">
+        <span class="win-casino-icon">🎰</span>
+        <div class="win-casino-text">
+          <span class="win-casino-title">CASINO VAULT VICTORY BONUS!</span>
+          <span class="win-casino-desc">Earned for mastering Solitaire — added to your shared Casino Bankroll:</span>
+        </div>
+        <strong id="win-casino-reward-val" class="win-casino-amount">+$250</strong>
+      </div>
+
+      <div class="win-celebration-selector">
+        <span class="celebration-lbl">Celebration Style:</span>
+        <div class="celebration-buttons" id="win-celebration-modes">
+          <button class="btn btn-secondary btn-sm active" data-mode="grand_royale">👑 Grand Royale</button>
+          <button class="btn btn-secondary btn-sm" data-mode="fireworks">🎆 Fireworks</button>
+          <button class="btn btn-secondary btn-sm" data-mode="golden_confetti">✨ Gold Confetti</button>
+        </div>
+      </div>
+
+      <button id="btn-win-play-again" class="btn btn-primary btn-large">Deal Next Challenge</button>
+    </div>
+  </div>
+
+  <!-- MODAL: Shared Casino Vault & Cross-Game Rewards -->
+  <div id="casino-vault-modal" class="modal-overlay">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 class="modal-title">🎰 Shared Casino Vault & Bankroll Cross-Progression</h2>
+          <span class="seed-clean-room-tag">ZERO RISK &bull; 100% SKILL-EARNED</span>
+        </div>
+        <button id="btn-close-vault-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="vault-hero-card">
+          <div class="vault-hero-balance">
+            <span class="vault-hero-lbl">CURRENT CASINO BANKROLL</span>
+            <span id="vault-modal-balance" class="vault-hero-amount">$1,000</span>
+            <span class="vault-hero-sub">Shared seamlessly across Blackjack (21), Texas Hold'em, and Video Poker</span>
+          </div>
+          <button id="btn-vault-rebuy-quick" class="btn btn-gold btn-sm">⚡ Reset / Top-Up $1,000</button>
+        </div>
+
+        <div class="p2p-explainer-card" style="margin-top: 16px;">
+          <h4>How Solitaire Powers Your Casino Bankroll</h4>
+          <p>
+            Playing non-casino games earns you <strong>real-time Casino Cash</strong> to wager in Blackjack, Table Poker, and Video Poker!
+          </p>
+          <ul class="vault-perks-list">
+            <li><strong>Live Move & Score Conversion:</strong> Earn $1 in Casino Cash for every 4 points scored in Klondike, FreeCell, Spider, Pyramid, and TriPeaks.</li>
+            <li><strong>Massive Victory Bonuses:</strong>
+              <div class="vault-bonuses-grid">
+                <span class="bonus-tag">Klondike 1: <strong>+$250</strong></span>
+                <span class="bonus-tag">Klondike 3: <strong>+$500</strong></span>
+                <span class="bonus-tag">FreeCell: <strong>+$350</strong></span>
+                <span class="bonus-tag">Spider 1-Suit: <strong>+$250</strong></span>
+                <span class="bonus-tag">Spider 2-Suits: <strong>+$500</strong></span>
+                <span class="bonus-tag">Spider 4-Suits: <strong>+$1,000</strong></span>
+                <span class="bonus-tag">TriPeaks: <strong>+$300</strong></span>
+                <span class="bonus-tag">Pyramid: <strong>+$300</strong></span>
+              </div>
+            </li>
+            <li><strong>Never Go Broke:</strong> When chips run low in casino games, sharpen your mind and rebuild your stack playing Solitaire with pure patience and strategy!</li>
+          </ul>
+        </div>
+
+        <div class="vault-quick-launch-row">
+          <button class="btn btn-primary" id="btn-vault-play-solitaire">♠ Play Solitaire to Earn Chips</button>
+          <button class="btn btn-secondary" id="btn-vault-play-casino">🎲 Hit the Casino Games</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Video Poker Paytable & Winning Combinations -->
+  <div id="poker-paytable-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 class="modal-title" id="poker-paytable-modal-title">📜 Video Poker Paytable</h2>
+          <span class="seed-clean-room-tag" id="poker-paytable-modal-tag">AUTHENTIC CASINO MULTIPLIERS</span>
+        </div>
+        <button id="btn-close-paytable-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="poker-paytable-container" class="poker-paytable-wrapper">
+          <!-- Dynamic paytable generated by SolitaireApp based on variation -->
+        </div>
+        <div id="poker-paytable-notes" class="poker-paytable-notes">
+          <!-- Explanatory notes about wild cards and minimum winning hands -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Peer-to-Peer Duplicate Duel & Arena -->
+  <div id="p2p-modal" class="modal-overlay">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 class="modal-title">⚔️ P2P Duplicate Competition & High Score Arena</h2>
+          <span class="seed-clean-room-tag">ZERO SERVER MIDDLEMAN &bull; PROVABLY FAIR</span>
+        </div>
+        <button id="btn-close-p2p-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="p2p-explainer-card">
+          <h4>How Peer-to-Peer Duplicate Tournaments Work</h4>
+          <p>
+            In duplicate competition, you and your opponent play the <strong>exact same card shuffle and draw order</strong> generated by our clean-room PRNG.
+            Compete on high score, completion speed, and streak multipliers! WebRTC and local channels stream live ghost progress without external server fees.
+          </p>
+        </div>
+
+        <div class="p2p-tabs-bar">
+          <button id="tab-p2p-available" class="btn btn-secondary btn-sm active">🌐 Available Hosted Duels <span id="p2p-modal-hosted-count" class="badge-pill">0</span></button>
+          <button id="tab-p2p-host" class="btn btn-secondary btn-sm">👑 Host a Duel</button>
+          <button id="tab-p2p-join" class="btn btn-secondary btn-sm">🚀 Join with Code</button>
+          <button id="tab-p2p-verify" class="btn btn-secondary btn-sm">🛡️ Verify Opponent Replay</button>
+        </div>
+
+        <!-- Panel 0: Available Hosted Duels on P2P Network -->
+        <div id="panel-p2p-available" class="p2p-panel">
+          <div class="p2p-network-header">
+            <div class="network-status-text">
+              <span class="pulse-indicator">●</span>
+              <span>P2P Network Discovery &bull; Live open duels and time challenges</span>
+            </div>
+            <button id="btn-scan-network" class="btn btn-secondary btn-sm">↻ Scan Network</button>
+          </div>
+          <div id="modal-available-duels-list" class="modal-duels-grid">
+            <!-- Dynamically populated hosted duels -->
+          </div>
+        </div>
+
+        <!-- Panel 1: Host a Duel -->
+        <div id="panel-p2p-host" class="p2p-panel hidden">
+          <div class="p2p-form-row">
+            <label for="select-p2p-game">Discipline:</label>
+            <select id="select-p2p-game" class="custom-select">
+              <option value="blackjack">🎰 Blackjack 21 (Table Showdown)</option>
+              <option value="poker_holdem">♠️ Texas Hold'em Poker (Championship)</option>
+              <option value="poker_joker">🃏 Video Poker (Joker Poker)</option>
+              <option value="poker_deuces">✌️ Video Poker (Deuces Wild)</option>
+              <option value="poker_jacks">👑 Video Poker (Jacks or Better)</option>
+              <option value="klondike_1">Klondike Solitaire (Draw 1 Duel)</option>
+              <option value="freecell">FreeCell Solitaire (Classic Master)</option>
+              <option value="spider_1">Spider Solitaire (1-Suit Dash)</option>
+              <option value="spider_2">Spider Solitaire (2-Suit Battle)</option>
+              <option value="spider_4">Spider Solitaire (4-Suit Grandmaster)</option>
+              <option value="tripeaks">TriPeaks Solitaire (Streak Arena)</option>
+              <option value="pyramid">Pyramid Solitaire (Sum-13 Pairs)</option>
+            </select>
+            <button id="btn-generate-duel" class="btn btn-primary">Generate Match Code & Broadcast</button>
+          </div>
+
+          <div id="host-code-display-box" class="code-box-container hidden">
+            <label>Share this Match Code with your opponent:</label>
+            <div class="code-copy-row">
+              <input type="text" id="input-host-match-code" class="custom-input code-input" readonly>
+              <button id="btn-copy-match-code" class="btn btn-gold">📋 Copy Code</button>
+            </div>
+            <p class="subtext">
+              🟢 <strong>Broadcasting live on P2P network!</strong> Other players can discover and join your hosted duel from their Available Challenges list.
+            </p>
+          </div>
+        </div>
+
+        <!-- Panel 2: Join a Duel -->
+        <div id="panel-p2p-join" class="p2p-panel hidden">
+          <div class="p2p-form-row">
+            <input type="text" id="input-join-match-code" class="custom-input" placeholder="Paste Match Code here (e.g. eyJpZCI6...)">
+            <button id="btn-start-joined-duel" class="btn btn-primary">Launch Duplicate Match</button>
+          </div>
+        </div>
+
+        <!-- Panel 3: Anti-Cheat Replay Verification -->
+        <div id="panel-p2p-verify" class="p2p-panel hidden">
+          <p class="modal-intro">
+            Paste an opponent's exported <strong>Certificate of Completion</strong>. Our engine will replay every move timestamp against the seed to mathematically verify that the score is 100% legitimate and free of memory tampering.
+          </p>
+          <textarea id="textarea-cert-input" class="custom-textarea" rows="4" placeholder="Paste completion certificate JSON..."></textarea>
+          <div class="verify-action-row">
+            <button id="btn-run-verification" class="btn btn-gold">🛡️ Verify Cryptographic Move Log</button>
+          </div>
+          <div id="verification-verdict-box" class="verdict-box hidden"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5-Player Time Challenge Podium Celebration Modal -->
+  <div id="p2p-podium-modal" class="modal-overlay">
+    <div class="modal-card p2p-podium-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-title-icon">🏆</span>
+          <h2>Time Challenge Podium Results</h2>
+        </div>
+        <button class="modal-close" id="btn-close-podium">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="podium-hero-banner" class="podium-hero-banner">
+          <div class="podium-trophy-anim">🏆</div>
+          <h3 id="podium-verdict-title">1st Place Victory!</h3>
+          <p id="podium-verdict-desc">You completed the challenge faster than all competitors!</p>
+          <div id="podium-vault-award" class="podium-vault-award">
+            <span>🎰 Casino Vault Award:</span>
+            <span id="podium-award-chips" class="podium-award-val">+$1,000</span>
+          </div>
+        </div>
+
+        <div class="podium-standings-table">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>RANK</th>
+                <th>RACER</th>
+                <th>FINISH TIME</th>
+                <th>CARDS LEFT</th>
+                <th>MOVES</th>
+                <th>VAULT REWARD</th>
+              </tr>
+            </thead>
+            <tbody id="podium-standings-body">
+              <!-- Rendered standings rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-podium-rematch" class="btn btn-gold">⚔️ Rematch (Same Seed)</button>
+        <button id="btn-podium-new-race" class="btn btn-primary">🎲 New Time Challenge</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Entry Point (ES Module with cache-busting version) -->
+  <script type="module" src="src/ui/app.js?v=20261023_v6"></script>
+
+</body>
+</html>

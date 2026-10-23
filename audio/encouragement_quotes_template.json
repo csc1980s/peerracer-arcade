@@ -1,0 +1,138 @@
+{
+  "description": "Encouragement quotes for Victorian Christmas Solitaire celebrations",
+  "version": "1.0",
+  "suits": {
+    "hearts": [
+      {
+        "quote": "Brilliant move! Your strategy shines like holly berries!",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_placed", "hearts_suit_run"]
+      },
+      {
+        "quote": "Marvelous! Your grace in play is unmatched!",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_placed", "hearts_sequence"]
+      },
+      {
+        "quote": "Excellent work! Keep that momentum going!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_placed", "high_card_combo"]
+      }
+    ],
+    "diamonds": [
+      {
+        "quote": "Magnificent! Your skill sparkles like winter frost!",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_placed", "diamonds_suit_run"]
+      },
+      {
+        "quote": "Wonderfully done! Your elegance shows through!",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_placed", "diamonds_sequence"]
+      },
+      {
+        "quote": "Great job! You're on fire!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_placed", "high_card_combo"]
+      }
+    ],
+    "spades": [
+      {
+        "quote": "Outstanding! Your wisdom grows like the mighty oak!",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_placed", "spades_suit_run"]
+      },
+      {
+        "quote": "Beautiful play! Nature itself would applaud!",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_placed", "spades_sequence"]
+      },
+      {
+        "quote": "Sharp thinking! Keep it up!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_placed", "high_card_combo"]
+      }
+    ],
+    "clubs": [
+      {
+        "quote": "Superb! Your moves are sweeter than candy!",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_placed", "clubs_suit_run"]
+      },
+      {
+        "quote": "Delightful! Your strategy is perfectly sweet!",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_placed", "clubs_sequence"]
+      },
+      {
+        "quote": "Awesome move! You're crushing it!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_placed", "high_card_combo"]
+      }
+    ]
+  },
+  "general": [
+    {
+      "quote": "Victory is yours! A game well played!",
+      "context": "game_won",
+      "triggers": ["game_won", "perfect_game"]
+    },
+    {
+      "quote": "Splendid! Every move brings you closer to triumph!",
+      "context": "good_streak",
+      "triggers": ["multiple_good_moves"]
+    },
+    {
+      "quote": "Well done! Your skills are truly remarkable!",
+      "context": "general_encouragement",
+      "triggers": ["valid_move", "good_play"]
+    }
+  ],
+  "instructions": {
+    "howToUse": [
+      "1. Copy this template to a new file named 'encouragement_quotes.json'",
+      "2. Replace the example quotes with your 30 encouragement quotes",
+      "3. Organize quotes by suit (hearts, diamonds, spades, clubs)",
+      "4. Specify cardType (king, queen, jack) to assign appropriate voice",
+      "5. Add general quotes that work for any suit",
+      "6. Run: python generate_multi_voice_audio.py"
+    ],
+    "voiceMapping": {
+      "king": "Deep, authoritative male voice (130 wpm, 80 Hz pitch)",
+      "queen": "Elegant female voice (150 wpm, 200 Hz pitch)",
+      "jack": "Energetic male tenor (170 wpm, 160 Hz pitch)"
+    },
+    "cardTypeOptions": [
+      "king - Use deep king voice",
+      "queen - Use elegant queen voice",
+      "jack - Use energetic jack voice",
+      "generic - Use voicePreference field to specify"
+    ],
+    "triggerOptions": [
+      "king_placed - King card placed on foundation",
+      "queen_placed - Queen card placed on foundation",
+      "jack_placed - Jack card placed on foundation",
+      "hearts_suit_run - 3+ hearts in sequence",
+      "diamonds_suit_run - 3+ diamonds in sequence",
+      "spades_suit_run - 3+ spades in sequence",
+      "clubs_suit_run - 3+ clubs in sequence",
+      "high_card_combo - Multiple face cards played",
+      "game_won - Player wins the game",
+      "perfect_game - Player wins with no mistakes",
+      "valid_move - Any valid card placement",
+      "good_play - Above-average move"
+    ]
+  }
+}

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Chiptune Music Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .subtitle {
+      text-align: center;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+    .track-grid {
+      display: grid;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      color: white;
+      padding: 15px 25px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    button.active {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      box-shadow: 0 0 30px rgba(245, 87, 108, 0.5);
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .controls button {
+      flex: 1;
+    }
+    .sfx-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .sfx-grid button {
+      font-size: 0.9em;
+      padding: 10px;
+    }
+    .status {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      font-size: 0.9em;
+    }
+    .status.playing {
+      background: rgba(76, 175, 80, 0.2);
+    }
+    .info {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      font-size: 0.85em;
+      line-height: 1.6;
+    }
+    .channel-indicator {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .channel {
+      padding: 5px 15px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 5px;
+      font-size: 0.8em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Chiptune Music</h1>
+    <p class="subtitle">NES/Game Boy Soundtrack Suite</p>
+
+    <div class="controls">
+      <button id="initBtn">🎮 Initialize Audio</button>
+      <button id="muteBtn" disabled>🔇 Mute</button>
+    </div>
+
+    <div class="track-grid">
+      <button class="track-btn" data-track="title" disabled>
+        📜 Track 1: "Cartridge Sunrise"<br>
+        <small>Title Screen • 108 BPM • C Major</small>
+      </button>
+      <button class="track-btn" data-track="gameplay" disabled>
+        🎮 Track 2: "Puzzle Parade"<br>
+        <small>Gameplay • 126 BPM • G Major</small>
+      </button>
+      <button class="track-btn" data-track="tension" disabled>
+        ⚡ Track 3: "Combo Cascade"<br>
+        <small>Tension • 168 BPM • A Minor</small>
+      </button>
+      <button class="track-btn" data-track="victory" disabled>
+        🏆 Track 4: "Clear the Board!"<br>
+        <small>Victory • 150 BPM • C Major</small>
+      </button>
+    </div>
+
+    <button id="stopBtn" disabled style="width: 100%; background: #e74c3c;">
+      ⏹️ Stop Music
+    </button>
+
+    <div class="info">
+      <strong>Sound Effects:</strong>
+    </div>
+    <div class="sfx-grid">
+      <button class="sfx-btn" data-sfx="cardFlip" disabled>🃏 Card Flip</button>
+      <button class="sfx-btn" data-sfx="cardPlace" disabled>📍 Card Place</button>
+      <button class="sfx-btn" data-sfx="cardDeal" disabled>🎴 Card Deal</button>
+      <button class="sfx-btn" data-sfx="invalidMove" disabled>❌ Invalid</button>
+      <button class="sfx-btn" data-sfx="win" disabled>🎉 Win</button>
+    </div>
+
+    <div class="channel-indicator">
+      <div class="channel">Square 1</div>
+      <div class="channel">Square 2</div>
+      <div class="channel">Triangle</div>
+      <div class="channel">Noise</div>
+    </div>
+
+    <div id="status" class="status">
+      Click "Initialize Audio" to start
+    </div>
+  </div>
+
+  <!-- Load Tone.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js"></script>
+
+  <script>
+    // Simple NES Chiptune Engine (inline version)
+    class ChiptuneMusic {
+      constructor() {
+        this.isInitialized = false;
+        this.isPlaying = false;
+        this.currentTrack = null;
+        this.isMuted = false;
+        this.channels = {
+          square1: null,
+          square2: null,
+          triangle: null,
+          noise: null
+        };
+        this.parts = [];
+      }
+
+      async initialize() {
+        if (this.isInitialized) return;
+
+        await Tone.start();
+        console.log('🎵 Audio initialized');
+
+        // Square 1 - 25% duty cycle (bright lead)
+        this.channels.square1 = new Tone.Synth({
+          oscillator: { type: 'pulse', width: 0.25 },
+          envelope: { attack: 0.002, decay: 0.1, sustain: 0.5, release: 0.1 }
+        }).toDestination();
+        this.channels.square1.volume.value = -8;
+
+        // Square 2 - 50% duty cycle (harmony)
+        this.channels.square2 = new Tone.Synth({
+          oscillator: { type: 'pulse', width: 0.5 },
+          envelope: { attack: 0.002, decay: 0.15, sustain: 0.4, release: 0.15 }
+        }).toDestination();
+        this.channels.square2.volume.value = -12;
+
+        // Triangle - Bass
+        this.channels.triangle = new Tone.Synth({
+          oscillator: { type: 'triangle' },
+          envelope: { attack: 0.001, decay: 0.2, sustain: 0.6, release: 0.2 }
+        }).toDestination();
+        this.channels.triangle.volume.value = -10;
+
+        // Noise - Percussion
+        this.channels.noise = new Tone.NoiseSynth({
+          noise: { type: 'white', playbackRate: 3 },
+          envelope: { attack: 0.001, decay: 0.05, sustain: 0 }
+        }).toDestination();
+        this.channels.noise.volume.value = -15;
+
+        this.isInitialized = true;
+      }
+
+      playTitleMusic() {
+        this.stop();
+        Tone.Transport.bpm.value = 108;
+
+        const melody = [
+          ['E4','8n'],['G4','8n'],['A4','8n'],['G4','8n'],['E4','8n'],['D4','8n'],['C4','8n'],['D4','8n'],
+          ['E4','8n'],['G4','8n'],['C5','8n'],['B4','8n'],['A4','8n'],['G4','8n'],['E4','4n'],
+          ['G4','8n'],['A4','8n'],['G4','8n'],['E4','8n'],['D4','8n'],['E4','8n'],['G4','4n'],
+          ['A4','8n'],['G4','8n'],['E4','8n'],['D4','8n'],['C4','2n']
+        ];
+
+        const bass = [
+          ['C2','4n'],['G2','4n'],['B1','4n'],['G1','4n'],
+          ['A1','4n'],['E2','4n'],['F1','4n'],['C2','4n']
+        ];
+
+        this.playSequence('square1', melody, true);
+        this.playSequence('triangle', bass, true);
+
+        Tone.Transport.start();
+        this.isPlaying = true;
+      }
+
+      playGameplayMusic() {
+        this.stop();
+        Tone.Transport.bpm.value = 126;
+
+        const melody = [
+          ['B4','8n'],['D5','8n'],['G5','8n'],['D5','8n'],['B4','8n'],['A4','8n'],['G4','8n'],['A4','8n'],
+          ['A4','8n'],['C5','8n'],['F#5','8n'],['D5','8n'],['A4','8n'],['G4','8n'],['F#4','8n'],['G4','8n'],
+          ['G4','8n'],['B4','8n'],['E5','8n'],['B4','8n'],['G4','8n'],['F#4','8n'],['E4','8n'],['F#4','8n'],
+          ['E4','8n'],['G4','8n'],['C5','8n'],['G4','8n'],['E4','8n'],['D4','8n'],['C4','8n'],['D4','8n']
+        ];
+
+        const bass = [
+          ['G2','8n'],['G2','8n'],['B2','8n'],['D3','8n'],['B2','8n'],['A2','8n'],['G2','8n'],['D2','8n'],
+          ['F#2','8n'],['F#2','8n'],['A2','8n'],['D3','8n'],['A2','8n'],['F#2','8n'],['E2','8n'],['D2','8n']
+        ];
+
+        this.playSequence('square1', melody, true);
+        this.playSequence('triangle', bass, true);
+
+        Tone.Transport.start();
+        this.isPlaying = true;
+      }
+
+      playTensionMusic() {
+        this.stop();
+        Tone.Transport.bpm.value = 168;
+
+        const melody = [
+          ['A5','16n'],['E5','16n'],['A5','16n'],['C6','16n'],['B5','16n'],['A5','16n'],['G5','16n'],['E5','16n'],
+          ['G5','16n'],['D5','16n'],['G5','16n'],['B5','16n'],['A5','16n'],['G5','16n'],['F5','16n'],['D5','16n'],
+          ['F5','16n'],['C6','16n'],['F6','16n'],['A6','16n'],['G6','16n'],['F6','16n'],['E6','16n'],['C6','16n'],
+          ['E5','16n'],['B5','16n'],['E6','16n'],['G#6','16n'],['A6','16n'],['G#6','16n'],['E6','16n'],['B5','16n']
+        ];
+
+        this.playSequence('square1', melody, true);
+
+        Tone.Transport.start();
+        this.isPlaying = true;
+      }
+
+      playVictoryMusic() {
+        this.stop();
+        Tone.Transport.bpm.value = 150;
+
+        const melody = [
+          ['C5','8n'],['E5','8n'],['G5','8n'],['C6','8n'],['G5','8n'],['E5','8n'],['C5','4n'],
+          ['D5','8n'],['F5','8n'],['A5','8n'],['D6','8n'],['A5','8n'],['F5','8n'],['D5','4n'],
+          ['E5','8n'],['G5','8n'],['C6','8n'],['E6','8n'],['D6','8n'],['C6','8n'],['G5','4n'],
+          ['C6','8n'],['D6','8n'],['E6','8n'],['G6','8n'],['C7','2n']
+        ];
+
+        this.playSequence('square1', melody, false);
+
+        Tone.Transport.start();
+        this.isPlaying = true;
+
+        setTimeout(() => this.stop(), 5000);
+      }
+
+      playSequence(channel, notes, loop) {
+        const synth = this.channels[channel];
+        if (!synth) return;
+
+        let curTime = 0;
+        const timedEvents = [];
+        for (let i = 0; i < notes.length; i++) {
+          const [pitch, dur] = notes[i];
+          timedEvents.push([curTime, { pitch, dur }]);
+          curTime += Tone.Time(dur).toSeconds();
+        }
+
+        const part = new Tone.Part((time, value) => {
+          synth.triggerAttackRelease(value.pitch, value.dur, time);
+        }, timedEvents).start(0);
+
+        if (loop) {
+          part.loop = true;
+          part.loopEnd = curTime;
+        }
+
+        this.parts.push(part);
+      }
+
+      stop() {
+        this.parts.forEach(part => {
+          part.stop();
+          part.dispose();
+        });
+        this.parts = [];
+        Tone.Transport.stop();
+        Tone.Transport.cancel();
+        Tone.Transport.position = 0;
+        this.isPlaying = false;
+      }
+
+      toggleMute() {
+        this.isMuted = !this.isMuted;
+        Tone.Destination.volume.value = this.isMuted ? -Infinity : 0;
+        return this.isMuted;
+      }
+
+      // Sound effects
+      sfx = {
+        cardFlip: () => this.channels.noise?.triggerAttackRelease('32n'),
+        cardPlace: () => this.channels.square1?.triggerAttackRelease('C4', '16n'),
+        cardDeal: () => this.channels.square2?.triggerAttackRelease('G3', '32n'),
+        invalidMove: () => {
+          this.channels.square1?.triggerAttackRelease('C3', '16n');
+          setTimeout(() => this.channels.square1?.triggerAttackRelease('B2', '16n'), 100);
+        },
+        win: () => {
+          ['C5','E5','G5','C6'].forEach((note, i) => {
+            setTimeout(() => this.channels.square1?.triggerAttackRelease(note, '16n'), i * 100);
+          });
+        }
+      };
+    }
+
+    // Initialize music engine
+    const music = new ChiptuneMusic();
+
+    // UI Elements
+    const initBtn = document.getElementById('initBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const trackBtns = document.querySelectorAll('.track-btn');
+    const sfxBtns = document.querySelectorAll('.sfx-btn');
+    const status = document.getElementById('status');
+
+    // Initialize
+    initBtn.addEventListener('click', async () => {
+      try {
+        await music.initialize();
+
+        initBtn.textContent = '✅ Audio Ready';
+        initBtn.disabled = true;
+        muteBtn.disabled = false;
+        stopBtn.disabled = false;
+        trackBtns.forEach(btn => btn.disabled = false);
+        sfxBtns.forEach(btn => btn.disabled = false);
+
+        status.textContent = 'Audio engine initialized! Select a track to play.';
+        status.classList.add('playing');
+      } catch (error) {
+        status.textContent = 'Error: ' + error.message;
+      }
+    });
+
+    // Track buttons
+    trackBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const track = btn.dataset.track;
+        trackBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        switch(track) {
+          case 'title':
+            music.playTitleMusic();
+            status.textContent = '🎵 Now Playing: "Cartridge Sunrise"';
+            break;
+          case 'gameplay':
+            music.playGameplayMusic();
+            status.textContent = '🎵 Now Playing: "Puzzle Parade"';
+            break;
+          case 'tension':
+            music.playTensionMusic();
+            status.textContent = '🎵 Now Playing: "Combo Cascade"';
+            break;
+          case 'victory':
+            music.playVictoryMusic();
+            status.textContent = '🎵 Now Playing: "Clear the Board!"';
+            setTimeout(() => {
+              trackBtns.forEach(b => b.classList.remove('active'));
+              status.textContent = 'Victory jingle completed!';
+            }, 5000);
+            break;
+        }
+      });
+    });
+
+    // Stop button
+    stopBtn.addEventListener('click', () => {
+      music.stop();
+      trackBtns.forEach(b => b.classList.remove('active'));
+      status.textContent = 'Music stopped.';
+    });
+
+    // Mute button
+    muteBtn.addEventListener('click', () => {
+      const isMuted = music.toggleMute();
+      muteBtn.textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
+    });
+
+    // Sound effects
+    sfxBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sfx = btn.dataset.sfx;
+        music.sfx[sfx]();
+      });
+    });
+  </script>
+</body>
+</html>

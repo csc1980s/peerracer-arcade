@@ -1,0 +1,57 @@
+
+========================================
+SOLITAIRE GAME RULES VALIDATION TESTS
+========================================
+
+--- SECTION 1: Card Model & Rule Logic ---
+
+✓ Card creation and properties
+✓ Card suit and color calculations
+✓ Tableau stacking rule - alternating colors
+✓ Tableau stacking rule - Kings on empty columns
+✓ Foundation building rule - Aces start foundations
+✓ Foundation building rule - same suit ascending
+✓ Spider stacking rule - descending rank
+
+--- SECTION 2: Command Validator Tests ---
+
+✓ Deck invariant verification - standard deck
+✓ Deck invariant verification - detects duplicates
+✓ MOVE command - valid tableau to foundation
+✓ MOVE command - invalid move rejected
+✓ MOVE command - face-down card rejected
+✓ DRAW command - draws cards from stock to waste
+✓ RECYCLE command - moves waste back to stock
+
+--- SECTION 3: Klondike Game Logic Tests ---
+
+✓ Klondike initial state setup
+✓ Klondike draw functionality
+✓ Klondike recycle functionality
+✓ Klondike undo functionality
+✓ Klondike win condition detection
+✓ Klondike auto-complete detection
+✓ Klondike smart move - foundation priority
+✓ Klondike tactical hint system
+
+--- SECTION 4: State Immutability Tests ---
+
+✓ CommandValidator returns new state object
+✓ Undo preserves state integrity
+
+--- SECTION 5: Edge Cases & Error Handling ---
+
+✓ Cannot move from empty pile
+✓ Cannot draw from empty stock
+✓ Score cannot go below zero
+✓ Multi-card moves maintain order
+
+========================================
+TEST RESULTS SUMMARY
+========================================
+Total Tests: 28
+Passed: 28
+Failed: 0
+Success Rate: 100.0%
+========================================
+

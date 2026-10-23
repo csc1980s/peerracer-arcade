@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Native Web Audio Chiptune</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+    }
+    h1 { text-align: center; margin-bottom: 30px; }
+    button {
+      background: #e94560;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      width: 100%;
+      margin: 10px 0;
+    }
+    button:hover { background: #c23954; transform: translateY(-2px); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .status {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+    }
+    .playing { background: rgba(76, 175, 80, 0.3); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Native Web Audio Chiptune</h1>
+    <p style="text-align: center; margin-bottom: 20px; opacity: 0.9;">
+      No external libraries - Pure JavaScript!
+    </p>
+
+    <button id="startBtn">🎮 Start Audio Engine</button>
+    <button id="beepBtn" disabled>🔊 Test Beep (440Hz)</button>
+    <button id="scaleBtn" disabled>🎹 Play C Major Scale</button>
+    <button id="melodyBtn" disabled>🎵 Play Simple Melody</button>
+    <button id="titleBtn" disabled>📜 Title Music (Loop)</button>
+    <button id="stopBtn" disabled>⏹️ Stop</button>
+
+    <div id="status" class="status">
+      Click "Start Audio Engine" to begin
+    </div>
+  </div>
+
+  <script>
+    const status = document.getElementById('status');
+    let audioContext = null;
+    let isPlaying = false;
+    let currentLoop = null;
+
+    // Frequencies for notes (NES-accurate)
+    const notes = {
+      'C3': 130.81, 'D3': 146.83, 'E3': 164.81, 'F3': 174.61,
+      'G3': 196.00, 'A3': 220.00, 'B3': 246.94,
+      'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
+      'G4': 392.00, 'A4': 440.00, 'B4': 493.88,
+      'C5': 523.25, 'D5': 587.33, 'E5': 659.25, 'F5': 698.46,
+      'G5': 783.99, 'A5': 880.00, 'B5': 987.77, 'C6': 1046.50
+    };
+
+    // Start audio engine
+    document.getElementById('startBtn').addEventListener('click', () => {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioContext = new AudioContext();
+
+      status.textContent = `✅ Audio Engine Started! (${audioContext.state})`;
+      status.classList.add('playing');
+
+      document.getElementById('startBtn').disabled = true;
+      document.getElementById('beepBtn').disabled = false;
+      document.getElementById('scaleBtn').disabled = false;
+      document.getElementById('melodyBtn').disabled = false;
+      document.getElementById('titleBtn').disabled = false;
+      document.getElementById('stopBtn').disabled = false;
+    });
+
+    // Play a square wave note (NES pulse channel)
+    function playSquareNote(frequency, duration, startTime = 0, volume = 0.3) {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.type = 'square';
+      oscillator.frequency.value = frequency;
+
+      gainNode.gain.value = volume;
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      const start = audioContext.currentTime + startTime;
+      oscillator.start(start);
+      oscillator.stop(start + duration);
+
+      return oscillator;
+    }
+
+    // Play a triangle wave note (NES triangle bass)
+    function playTriangleNote(frequency, duration, startTime = 0, volume = 0.2) {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.type = 'triangle';
+      oscillator.frequency.value = frequency;
+
+      gainNode.gain.value = volume;
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      const start = audioContext.currentTime + startTime;
+      oscillator.start(start);
+      oscillator.stop(start + duration);
+
+      return oscillator;
+    }
+
+    // Test beep
+    document.getElementById('beepBtn').addEventListener('click', () => {
+      playSquareNote(440, 0.2);
+      status.textContent = '🔊 Playing 440Hz beep...';
+    });
+
+    // Play scale
+    document.getElementById('scaleBtn').addEventListener('click', () => {
+      const scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
+      scale.forEach((note, i) => {
+        playSquareNote(notes[note], 0.15, i * 0.15);
+      });
+      status.textContent = '🎹 Playing C major scale...';
+    });
+
+    // Play simple melody
+    document.getElementById('melodyBtn').addEventListener('click', () => {
+      const melody = [
+        ['C4', 0.0], ['E4', 0.2], ['G4', 0.4], ['C5', 0.6],
+        ['G4', 0.8], ['E4', 1.0], ['C4', 1.2]
+      ];
+
+      melody.forEach(([note, time]) => {
+        playSquareNote(notes[note], 0.15, time);
+      });
+
+      status.textContent = '🎵 Playing simple melody...';
+    });
+
+    // Play title music (from your composition)
+    document.getElementById('titleBtn').addEventListener('click', () => {
+      stopLoop();
+
+      const bpm = 108;
+      const beatDuration = 60 / bpm;
+      const eighthNote = beatDuration / 2;
+
+      // "Cartridge Sunrise" - First 8 bars
+      const melody = [
+        // Bar 1
+        ['E4', 0], ['G4', 1], ['A4', 2], ['G4', 3],
+        ['E4', 4], ['D4', 5], ['C4', 6], ['D4', 7],
+        // Bar 2
+        ['E4', 8], ['G4', 9], ['C5', 10], ['B4', 11],
+        ['A4', 12], ['G4', 13], ['E4', 14],
+        // Bar 3
+        ['G4', 16], ['A4', 17], ['G4', 18], ['E4', 19],
+        ['D4', 20], ['E4', 21], ['G4', 22],
+        // Bar 4
+        ['A4', 24], ['G4', 25], ['E4', 26], ['D4', 27],
+        ['C4', 28]
+      ];
+
+      const bass = [
+        ['C3', 0], ['G3', 4], ['B3', 8], ['G3', 12],
+        ['A3', 16], ['E3', 20], ['F3', 24], ['C3', 28]
+      ];
+
+      function playLoop() {
+        // Play melody (square wave)
+        melody.forEach(([note, step]) => {
+          playSquareNote(notes[note], eighthNote * 0.75, step * eighthNote);
+        });
+
+        // Play bass (triangle wave)
+        bass.forEach(([note, step]) => {
+          playTriangleNote(notes[note], beatDuration * 0.9, step * eighthNote);
+        });
+
+        // Loop after melody finishes
+        const loopDuration = (32 * eighthNote) * 1000; // Convert to ms
+        currentLoop = setTimeout(playLoop, loopDuration);
+      }
+
+      playLoop();
+      isPlaying = true;
+      status.textContent = '🎵 Playing "Cartridge Sunrise" (looping)...';
+      status.classList.add('playing');
+    });
+
+    // Stop button
+    function stopLoop() {
+      if (currentLoop) {
+        clearTimeout(currentLoop);
+        currentLoop = null;
+      }
+      isPlaying = false;
+      status.textContent = 'Stopped.';
+      status.classList.remove('playing');
+    }
+
+    document.getElementById('stopBtn').addEventListener('click', stopLoop);
+  </script>
+</body>
+</html>

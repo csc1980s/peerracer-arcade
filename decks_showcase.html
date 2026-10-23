@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArtCraft PhotoCraft | 14 Themed Playing Card Collections</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0b10;
+      --card-bg: rgba(18, 20, 29, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --gold: #d4af37;
+      --gold-glow: rgba(212, 175, 55, 0.4);
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: radial-gradient(circle at 50% 0%, #171b26 0%, #0a0b10 100%);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      padding: 40px 20px 80px 20px;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+    }
+    .badge-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.8rem;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #fff 30%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    p.subtitle {
+      color: var(--text-sub);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text-sub);
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--gold);
+      color: #0a0b10;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+    .decks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .deck-card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .deck-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212, 175, 55, 0.5);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
+    .deck-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .deck-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .deck-icon {
+      font-size: 1.6rem;
+    }
+    .deck-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .era-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .era-vintage { background: rgba(212, 175, 55, 0.15); color: #facc15; border: 1px solid rgba(212, 175, 55, 0.4); }
+    .era-modern { background: rgba(0, 240, 255, 0.15); color: #38bdf8; border: 1px solid rgba(0, 240, 255, 0.4); }
+
+    .deck-subtitle {
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+    }
+
+    .deck-card-visuals {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 8px 0 16px 0;
+    }
+    .card-frame {
+      width: 124px;
+      height: 174px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #000;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    .card-frame:hover {
+      transform: scale(1.06);
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.35);
+    }
+    .card-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .visual-label {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .deck-details {
+      flex: 1;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+    .spec-row {
+      display: flex;
+      margin: 4px 0;
+      font-size: 0.8rem;
+    }
+    .spec-lbl {
+      color: var(--text-sub);
+      width: 85px;
+      flex-shrink: 0;
+    }
+    .spec-val {
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    .palette-strip {
+      display: flex;
+      gap: 6px;
+      margin: 14px 0 10px 0;
+      align-items: center;
+    }
+    .color-swatch {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .deck-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+    }
+    .play-link {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.05) 100%);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      margin-left: auto;
+    }
+    .play-link:hover {
+      background: var(--gold);
+      color: #0a0b10;
+      box-shadow: 0 0 12px var(--gold-glow);
+    }
+    .preview-felt-btn, .view-all-cards-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .view-all-cards-btn {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--gold);
+      color: #facc15;
+    }
+    .preview-felt-btn:hover, .view-all-cards-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    /* Modal Lightbox */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 6, 10, 0.88);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    #image-modal {
+      z-index: 2000;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-card {
+      background: #11131c;
+      border: 1px solid var(--gold);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .modal-close:hover {
+      color: #fff;
+    }
+    .modal-img-container {
+      width: 260px;
+      height: 364px;
+      margin: 16px auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #000;
+    }
+    .modal-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Full 54-Card Deck Gallery Modal */
+    .gallery-modal-card {
+      background: #11131c;
+      border: 1px solid var(--gold);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 1100px;
+      width: 95%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
+      position: relative;
+    }
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 16px;
+    }
+    .gallery-scrollable {
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 8px;
+    }
+    .suit-section {
+      margin-bottom: 24px;
+    }
+    .suit-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cards-row-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+      gap: 10px;
+    }
+    .mini-card-frame {
+      aspect-ratio: 5/7;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #000;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .mini-card-frame:hover {
+      transform: scale(1.1);
+      border-color: var(--gold);
+      z-index: 5;
+    }
+    .mini-card-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: var(--text-sub);
+      font-size: 0.85rem;
+    }
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-bar">
+      <span>🎨 ARTCRAFT PHOTOCRAFT PIPELINE</span>
+      <span>&bull;</span>
+      <span>300 DPI POKER SCALE & DIGITAL VECTOR</span>
+    </div>
+    <h1>15 Premium Playing Card Deck Collections</h1>
+    <p class="subtitle">
+      Authentic clean-room designs researched for professional print and in-game play. Featuring the iconic <strong>Classic Bicycle Standard</strong> (1885 Rider Back benchmark), the swashbuckling <strong>Royal Cats</strong> (Puss in Boots animated style), the complete 54-card Victorian Christmas deck, and 12 historical & modern artistic collections.
+    </p>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All 15 Collections</button>
+      <button class="filter-btn" data-filter="classic">♠️ Bicycle & Classic</button>
+      <button class="filter-btn" data-filter="animation">🐱 Royal Cats & Animation</button>
+      <button class="filter-btn" data-filter="vintage">🏛️ Vintage Historical</button>
+      <button class="filter-btn" data-filter="modern">⚡ Modern & Cyber</button>
+    </div>
+  </header>
+
+  <main class="decks-grid" id="decks-container"></main>
+
+  <!-- Modal Lightbox (Single Card Zoom) -->
+  <div class="modal-overlay" id="image-modal">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <h3 id="modal-title" style="font-family:'Cinzel',serif; color:#fff; margin-bottom:4px;">Card Preview</h3>
+      <p id="modal-subtitle" style="font-size:0.85rem; color:var(--gold);"></p>
+      <div class="modal-img-container">
+        <img id="modal-img" src="" alt="Enlarged Card">
+      </div>
+      <p style="font-size:0.75rem; color:var(--text-sub);">High-Resolution 300 DPI Vector SVG Source</p>
+    </div>
+  </div>
+
+  <!-- Full 54-Card Gallery Modal for Victorian Christmas -->
+  <div class="modal-overlay" id="gallery-modal">
+    <div class="gallery-modal-card">
+      <div class="gallery-header">
+        <div>
+          <h2 id="gallery-modal-title" style="font-family:'Cinzel',serif; color:#fff; font-size:1.4rem;">Full 54-Card Deck</h2>
+          <p id="gallery-modal-subtitle" style="font-size:0.85rem; color:var(--gold);"></p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <button id="btn-activate-full-deck" style="background:var(--gold); color:#0a0b10; border:none; padding:8px 16px; border-radius:6px; font-weight:700; cursor:pointer;">🎮 Activate Full Deck in Game</button>
+          <button class="modal-close" id="gallery-close" style="position:static; font-size:1.8rem;">&times;</button>
+        </div>
+      </div>
+      <div class="gallery-scrollable" id="gallery-cards-content">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Authored via Storyteller ArtCraft PhotoCraft Automation Specification &bull; Open-Source MIT License</p>
+    <p style="margin-top: 6px;">Integrated directly with <a href="http://localhost:3000/">Solitaire Sovereign</a> in <code>mods/card_backs/</code>, <code>mods/card_faces/</code>, and <code>mods/backgrounds/</code></p>
+  </footer>
+
+  <script type="module">
+    import { DECK_DEFINITIONS } from './scripts/deck_definitions.js';
+
+    const container = document.getElementById('decks-container');
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalTitle = document.getElementById('modal-title');
+    const modalSubtitle = document.getElementById('modal-subtitle');
+    const modalClose = document.getElementById('modal-close');
+
+    const galleryModal = document.getElementById('gallery-modal');
+    const galleryContent = document.getElementById('gallery-cards-content');
+    const galleryClose = document.getElementById('gallery-close');
+    const btnActivateDeck = document.getElementById('btn-activate-full-deck');
+
+    function openModal(title, subtitle, src) {
+      modalTitle.textContent = title;
+      modalSubtitle.textContent = subtitle;
+      modalImg.src = src;
+      modal.classList.add('active');
+    }
+
+    modalClose.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+
+    galleryClose.addEventListener('click', () => galleryModal.classList.remove('active'));
+    galleryModal.addEventListener('click', (e) => {
+      if (e.target === galleryModal) galleryModal.classList.remove('active');
+    });
+
+    let currentGalleryDeck = null;
+
+    btnActivateDeck.addEventListener('click', () => {
+      if (currentGalleryDeck) {
+        localStorage.setItem('solitaire_mod_deck_theme', currentGalleryDeck.id);
+        localStorage.setItem('solitaire_mod_card_back', `/decks/${currentGalleryDeck.id}/card_back.png`);
+        localStorage.setItem('solitaire_mod_background', `/mods/backgrounds/${currentGalleryDeck.id}_felt.svg`);
+        window.location.href = '/';
+      }
+    });
+
+    function openDeckGallery(deck) {
+      currentGalleryDeck = deck;
+      const galleryTitle = document.getElementById('gallery-modal-title');
+      const gallerySubtitle = document.getElementById('gallery-modal-subtitle');
+      if (galleryTitle) galleryTitle.textContent = `${deck.icon || '✨'} ${deck.name.toUpperCase()} — FULL 54-CARD DECK`;
+      if (gallerySubtitle) gallerySubtitle.textContent = `/decks/${deck.id}/ (Complete 54-Card Set)`;
+
+      const suits = [
+        { name: `♥ Hearts (${deck.suits.hearts})`, key: 'hearts' },
+        { name: `♦ Diamonds (${deck.suits.diamonds})`, key: 'diamonds' },
+        { name: `♠ Spades (${deck.suits.spades})`, key: 'spades' },
+        { name: `♣ Clubs (${deck.suits.clubs})`, key: 'clubs' }
+      ];
+      const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+      let html = '';
+
+      suits.forEach(s => {
+        html += `
+          <div class="suit-section">
+            <h4 class="suit-title">${s.name}</h4>
+            <div class="cards-row-grid">
+        `;
+        ranks.forEach(r => {
+          const cardName = `${r} of ${s.key}`;
+          const cardUrl = `/decks/${deck.id}/${r}_${s.key}.png`;
+          html += `
+            <div class="mini-card-frame" title="Click to enlarge: ${cardName}" onclick="window.previewSingleCard('${cardName}', '${deck.name} Collection', '${cardUrl}')">
+              <img src="${cardUrl}" onerror="this.onerror=null;this.src='/decks/${deck.id}/${r}_${s.key}.svg'" alt="${cardName}">
+            </div>
+          `;
+        });
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      // Special cards (Jokers and Card Back)
+      html += `
+        <div class="suit-section">
+          <h4 class="suit-title">🃏 Special Cards & Card Back</h4>
+          <div class="cards-row-grid">
+            <div class="mini-card-frame" title="Wild Joker (High)" onclick="window.previewSingleCard('High Wild Joker', '${deck.name} Collection', '/decks/${deck.id}/joker_1.png')">
+              <img src="/decks/${deck.id}/joker_1.png" onerror="this.onerror=null;this.src='/decks/${deck.id}/joker_1.svg'" alt="Joker 1">
+            </div>
+            <div class="mini-card-frame" title="Monochrome Joker (Low)" onclick="window.previewSingleCard('Low Monochrome Joker', '${deck.name} Collection', '/decks/${deck.id}/joker_2.png')">
+              <img src="/decks/${deck.id}/joker_2.png" onerror="this.onerror=null;this.src='/decks/${deck.id}/joker_2.svg'" alt="Joker 2">
+            </div>
+            <div class="mini-card-frame" title="${deck.name} Card Back" onclick="window.previewSingleCard('${deck.name} Card Back', '180° Rotational Point Symmetry', '/decks/${deck.id}/card_back.png')">
+              <img src="/decks/${deck.id}/card_back.png" onerror="this.onerror=null;this.src='/decks/${deck.id}/card_back.svg'" alt="Card Back">
+            </div>
+            <div class="mini-card-frame" title="Signature Face" onclick="window.previewSingleCard('${deck.faceTitle}', '${deck.name} Collection', '/decks/${deck.id}/${deck.faceFile || 'A_spades.png'}')">
+              <img src="/decks/${deck.id}/${deck.faceFile || 'A_spades.png'}" onerror="this.onerror=null;this.src='/decks/${deck.id}/AS.svg'" alt="Signature Face">
+            </div>
+          </div>
+        </div>
+      `;
+
+      galleryContent.innerHTML = html;
+      galleryModal.classList.add('active');
+    }
+
+    window.previewSingleCard = (title, subtitle, url) => {
+      openModal(title, subtitle, url);
+    };
+
+    function renderDecks(filter = 'all') {
+      container.innerHTML = '';
+      const list = filter === 'all' ? DECK_DEFINITIONS : DECK_DEFINITIONS.filter(d => {
+        const era = (d.era || '').toLowerCase();
+        const name = (d.name || '').toLowerCase();
+        if (filter === 'animation') return era.includes('animation') || name.includes('cat');
+        if (filter === 'classic') return era.includes('classic') || era.includes('bicycle');
+        if (filter === 'vintage') return era.includes('vintage') || era.includes('historical');
+        if (filter === 'modern') return era.includes('modern') || era.includes('cyber');
+        return era.includes(filter.toLowerCase());
+      });
+
+      list.forEach(deck => {
+        const card = document.createElement('div');
+        card.className = 'deck-card';
+        card.innerHTML = `
+          <div class="deck-header">
+            <div class="deck-title-group">
+              <span class="deck-icon">${deck.icon}</span>
+              <h2 class="deck-title">${deck.name}</h2>
+            </div>
+            <span class="era-tag era-${deck.era.toLowerCase()}">${deck.era}</span>
+          </div>
+
+          <div class="deck-subtitle">${deck.subtitle}</div>
+
+          <div class="deck-card-visuals">
+            <div>
+              <div class="card-frame" title="Click to enlarge Card Back">
+                <img src="/decks/${deck.id}/card_back.png" onerror="this.onerror=null;this.src='/mods/card_backs/${deck.id}.svg'" alt="${deck.name} Back" data-zoom="back">
+              </div>
+              <div class="visual-label">Card Back</div>
+            </div>
+            <div>
+              <div class="card-frame" style="background:#1a1c23;" title="Click to enlarge Card Face">
+                <img src="/decks/${deck.id}/${deck.faceFile || 'A_spades.png'}" onerror="this.onerror=null;this.src='/mods/card_faces/${deck.id}_face.svg'" alt="${deck.name} Face" data-zoom="face">
+              </div>
+              <div class="visual-label">${deck.faceTitle || 'Card Face'}</div>
+            </div>
+          </div>
+
+          <div class="deck-details">
+            <div class="spec-row">
+              <span class="spec-lbl">Hearts:</span>
+              <span class="spec-val">${deck.suits.hearts}</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-lbl">Diamonds:</span>
+              <span class="spec-val">${deck.suits.diamonds}</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-lbl">Spades:</span>
+              <span class="spec-val">${deck.suits.spades}</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-lbl">Clubs:</span>
+              <span class="spec-val">${deck.suits.clubs}</span>
+            </div>
+            <div class="spec-row" style="margin-top: 8px;">
+              <span class="spec-lbl">Court Lore:</span>
+              <span class="spec-val" style="font-size:0.75rem;">${deck.court.king}</span>
+            </div>
+          </div>
+
+          <div class="palette-strip">
+            <span style="font-size:0.72rem; color:var(--text-sub); margin-right:4px;">Palette:</span>
+            <div class="color-swatch" style="background:${deck.primaryColor};" title="Primary: ${deck.primaryColor}"></div>
+            <div class="color-swatch" style="background:${deck.secondaryColor};" title="Secondary: ${deck.secondaryColor}"></div>
+            <div class="color-swatch" style="background:${deck.accentColor};" title="Accent: ${deck.accentColor}"></div>
+            <div class="color-swatch" style="background:${deck.textColor};" title="Text: ${deck.textColor}"></div>
+          </div>
+
+          <div class="deck-actions">
+            <button class="preview-felt-btn" data-felt="/mods/backgrounds/${deck.id}_felt.svg" data-name="${deck.name}">Table Felt</button>
+            <button class="view-all-cards-btn" data-action="explore-54">${deck.icon} Explore All 54 Cards</button>
+            <button class="play-link-btn" data-action="play-deck" style="background:var(--gold); color:#000; font-weight:800; border:none; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:0.85rem;">Play in Game ♠</button>
+          </div>
+        `;
+
+        // Add zoom listeners
+        const backImg = card.querySelector('[data-zoom="back"]');
+        const faceImg = card.querySelector('[data-zoom="face"]');
+        const feltBtn = card.querySelector('.preview-felt-btn');
+        const exploreBtn = card.querySelector('[data-action="explore-54"]');
+        const playBtn = card.querySelector('[data-action="play-deck"]');
+
+        backImg.addEventListener('click', () => {
+          openModal(`${deck.name} — Card Back`, deck.subtitle, `/decks/${deck.id}/card_back.png`);
+        });
+
+        faceImg.addEventListener('click', () => {
+          openModal(`${deck.name} — ${deck.faceTitle}`, 'Signature Themed Front Card Face', `/decks/${deck.id}/${deck.faceFile || 'A_spades.png'}`);
+        });
+
+        feltBtn.addEventListener('click', () => {
+          openModal(`${deck.name} — Casino Table Felt`, 'Matching 1920x1080 Wallpaper', `/mods/backgrounds/${deck.id}_felt.svg`);
+        });
+
+        if (exploreBtn) {
+          exploreBtn.addEventListener('click', () => {
+            openDeckGallery(deck);
+          });
+        }
+
+        if (playBtn) {
+          playBtn.addEventListener('click', () => {
+            localStorage.setItem('solitaire_mod_deck_theme', deck.id);
+            localStorage.setItem('solitaire_mod_card_back', `/decks/${deck.id}/card_back.png`);
+            localStorage.setItem('solitaire_mod_background', `/mods/backgrounds/${deck.id}_felt.svg`);
+            window.location.href = '/';
+          });
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    renderDecks();
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderDecks(btn.dataset.filter);
+      });
+    });
+  </script>
+</body>
+</html>

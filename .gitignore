@@ -1,0 +1,31 @@
+# Environment variables (contains passwords)
+.env
+
+# Node modules
+node_modules
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build outputs
+dist/
+build/
+
+# Big art and local clutter stay out of GitHub
+*.bak
+*.pre_*.bak
+.aider*
+scratch/

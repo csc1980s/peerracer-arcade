@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <clipPath id="candyCircle">
+      <circle cx="32" cy="32" r="26"/>
+    </clipPath>
+  </defs>
+  <circle cx="32" cy="32" r="26" fill="#ffffff" stroke="#c9184a" stroke-width="3"/>
+  <g clip-path="url(#candyCircle)" fill="#d90429">
+    <polygon points="0,0 12,0 0,12"/>
+    <polygon points="16,0 36,0 0,36 0,16"/>
+    <polygon points="40,0 60,0 0,60 0,40"/>
+    <polygon points="64,4 64,24 24,64 4,64"/>
+    <polygon points="64,28 64,48 48,64 28,64"/>
+  </g>
+</svg>

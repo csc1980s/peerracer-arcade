@@ -1,0 +1,251 @@
+{
+  "description": "Old English-style encouragement quotes for Victorian Christmas Solitaire",
+  "version": "1.0",
+  "language": "Early Modern English (Shakespearean)",
+  "suits": {
+    "hearts": [
+      {
+        "quote": "This King's heart rejoiceth at this young squire's steady progress; press on with valor!",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_placed", "hearts_suit_run"],
+        "quoteNumber": 1
+      },
+      {
+        "quote": "Though the journey be long, my royal favor resteth upon thy gentle spirit.",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_sequence", "hearts_sequence_complete"],
+        "quoteNumber": 2
+      },
+      {
+        "quote": "Thy noble deeds do warm my gracious heart; soft fortune smile upon thee.",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_placed", "hearts_suit_run"],
+        "quoteNumber": 11
+      },
+      {
+        "quote": "Let love and patience guide thy hand, for grace shall overcome all obstacles.",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_sequence", "hearts_sequence_complete"],
+        "quoteNumber": 12
+      },
+      {
+        "quote": "A cheerful courtier saluteth thy gallant efforts! Onward, brave friend!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_placed", "hearts_suit_run"],
+        "quoteNumber": 21
+      },
+      {
+        "quote": "By my loyal heart, I swear thy perseverance shall win the day!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_sequence", "high_card_combo"],
+        "quoteNumber": 22
+      }
+    ],
+    "diamonds": [
+      {
+        "quote": "Behold, thy fortune blazeth brighter than the gems upon my crown!",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_placed", "diamonds_suit_run"],
+        "quoteNumber": 5
+      },
+      {
+        "quote": "No treasury hath greater wealth than a heart that refusept to yield.",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_sequence", "diamonds_sequence_complete"],
+        "quoteNumber": 6
+      },
+      {
+        "quote": "Thou art a jewel most rare, radiating brilliant light in moments dark.",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_placed", "diamonds_suit_run"],
+        "quoteNumber": 15
+      },
+      {
+        "quote": "Keep true thy vision, and grand treasures shall attend thy victory.",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_sequence", "diamonds_sequence_complete"],
+        "quoteNumber": 16
+      },
+      {
+        "quote": "A sparkling path openeth before us—let us leap toward good fortune!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_placed", "diamonds_suit_run"],
+        "quoteNumber": 25
+      },
+      {
+        "quote": "Good cheer, friend! The brightest rewards favor the bold spirit!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_sequence", "high_card_combo"],
+        "quoteNumber": 26
+      }
+    ],
+    "spades": [
+      {
+        "quote": "Let thy sword cut true through doubt; victory shall bow before thee!",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_placed", "spades_suit_run"],
+        "quoteNumber": 7
+      },
+      {
+        "quote": "A sovereign wisdom guideth thy hand—fear not the dark paths ahead.",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_sequence", "spades_sequence_complete"],
+        "quoteNumber": 8
+      },
+      {
+        "quote": "Keen sight and quick wit shall see thee through the fiercest storm.",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_placed", "spades_suit_run"],
+        "quoteNumber": 17
+      },
+      {
+        "quote": "Be not dismayed by shadow, for thy mind is sharper than any blade.",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_sequence", "spades_sequence_complete"],
+        "quoteNumber": 18
+      },
+      {
+        "quote": "I keep swift watch on the vanguard; thy next maneuver shall be grand!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_placed", "spades_suit_run"],
+        "quoteNumber": 27
+      },
+      {
+        "quote": "Trust in thy craftiness and steel, for no trap shall hold thee!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_sequence", "high_card_combo"],
+        "quoteNumber": 28
+      }
+    ],
+    "clubs": [
+      {
+        "quote": "By mine own strong arm, thy purpose holdeth firm against the tempest!",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_placed", "clubs_suit_run"],
+        "quoteNumber": 3
+      },
+      {
+        "quote": "A commander hath no finer soldier than one who persisteth through hardship.",
+        "cardType": "king",
+        "voicePreference": "king",
+        "triggers": ["king_sequence", "clubs_sequence_complete"],
+        "quoteNumber": 4
+      },
+      {
+        "quote": "With quiet strength and mighty resolve, thou shalt conquer every realm.",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_placed", "clubs_suit_run"],
+        "quoteNumber": 13
+      },
+      {
+        "quote": "Though the path be tangled, thy purpose shinept clear as dawn.",
+        "cardType": "queen",
+        "voicePreference": "queen",
+        "triggers": ["queen_sequence", "clubs_sequence_complete"],
+        "quoteNumber": 14
+      },
+      {
+        "quote": "My stout oak cudgel standeth with thee; strike hard and fear nothing!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_placed", "clubs_suit_run"],
+        "quoteNumber": 23
+      },
+      {
+        "quote": "We shall carve a way through these thickets, come what may!",
+        "cardType": "jack",
+        "voicePreference": "jack",
+        "triggers": ["jack_sequence", "high_card_combo"],
+        "quoteNumber": 24
+      }
+    ]
+  },
+  "general": [
+    {
+      "quote": "Rise, noble soul, for victory belongeth to the steadfast!",
+      "context": "king_general_encouragement",
+      "voicePreference": "king",
+      "triggers": ["good_play", "multiple_good_moves"],
+      "quoteNumber": 9
+    },
+    {
+      "quote": "Stand tall, for thou art proven worthy of royal acclaim!",
+      "context": "king_general_encouragement",
+      "voicePreference": "king",
+      "triggers": ["ace_to_foundation", "tableau_clear"],
+      "quoteNumber": 10
+    },
+    {
+      "quote": "Hold fast, dear heart; the crown of triumph waiteth for thee.",
+      "context": "queen_general_encouragement",
+      "voicePreference": "queen",
+      "triggers": ["good_play", "valid_move"],
+      "quoteNumber": 19
+    },
+    {
+      "quote": "Thy steady persistence doth adorn thee more than royal silks.",
+      "context": "queen_general_encouragement",
+      "voicePreference": "queen",
+      "triggers": ["card_flip", "valid_move"],
+      "quoteNumber": 20
+    },
+    {
+      "quote": "Ready thy stance, fellow adventurer! The day is ours to win!",
+      "context": "jack_general_encouragement",
+      "voicePreference": "jack",
+      "triggers": ["good_play", "valid_move"],
+      "quoteNumber": 29
+    },
+    {
+      "quote": "Hark! A brilliant move! Swift fortune speedeth thee onward!",
+      "context": "jack_general_encouragement",
+      "voicePreference": "jack",
+      "triggers": ["ace_to_foundation", "good_play"],
+      "quoteNumber": 30
+    },
+    {
+      "quote": "Victory is thine! A game well played, most excellent strategist!",
+      "context": "game_won",
+      "voicePreference": "king",
+      "triggers": ["game_won", "perfect_game"],
+      "quoteNumber": 31
+    },
+    {
+      "quote": "Splendid! Every move bringeth thee closer to glorious triumph!",
+      "context": "good_streak",
+      "voicePreference": "queen",
+      "triggers": ["multiple_good_moves"],
+      "quoteNumber": 32
+    }
+  ],
+  "notes": {
+    "totalQuotes": 30,
+    "suitQuotes": 24,
+    "generalQuotes": 6,
+    "kingQuotes": 10,
+    "queenQuotes": 10,
+    "jackQuotes": 10,
+    "style": "Early Modern English / Shakespearean dialect",
+    "theme": "Victorian Christmas with Old English phrasing"
+  }
+}

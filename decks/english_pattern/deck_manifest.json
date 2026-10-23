@@ -1,0 +1,16 @@
+{
+  "id": "english_pattern",
+  "name": "English Pattern (Standard)",
+  "era": "Classic",
+  "icon": "♠️",
+  "subtitle": "Traditional Anglo-American pattern: flat colour, bold outlines, reversible courts",
+  "faceTitle": "King of Spades",
+  "totalCards": 54,
+  "suits": {
+    "spades": "Classic Spade",
+    "hearts": "Classic Heart",
+    "diamonds": "Classic Diamond",
+    "clubs": "Classic Club"
+  },
+  "generatedAt": "2026-10-22T19:39:25.135Z"
+}

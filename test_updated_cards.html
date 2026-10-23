@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Index Test - Digital UI Optimized</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a2536;
+      color: #fff;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      color: #d4af37;
+      text-align: center;
+    }
+    .info {
+      max-width: 800px;
+      margin: 0 auto 30px;
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card-wrapper {
+      text-align: center;
+    }
+    .card {
+      width: 168px;
+      height: 235px;
+      border-radius: 11px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+    .card svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .label {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #d4af37;
+    }
+    .spec {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 5px;
+    }
+    .highlight {
+      background: rgba(212, 175, 55, 0.2);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🃏 Digital UI Optimized Card Indices</h1>
+
+  <div class="info">
+    <h3>✅ Updated Specification Applied</h3>
+    <p><strong>Rank Height:</strong> <span class="highlight">12.45%</span> of card height</p>
+    <p><strong>Suit Pip Height:</strong> <span class="highlight">7.96%</span> of card height (64% of rank)</p>
+    <p><strong>Index Position:</strong> Centered on X=13.14 (100×140 viewBox)</p>
+    <p><strong>"10" Rank:</strong> Condensed to ~79% width with <code>textLength</code></p>
+    <p><strong>Rotation:</strong> Perfect C₂ symmetry (180° for bottom-right)</p>
+  </div>
+
+  <div class="card-container" id="cards"></div>
+
+  <script type="module">
+    import { DeckRenderer } from './src/art/deck_renderer.js';
+    import { Card } from './src/core/card.js';
+
+    const testCards = [
+      new Card(0, true),  // Ace of Clubs
+      new Card(13, true), // Ace of Diamonds
+      new Card(26, true), // Ace of Hearts
+      new Card(39, true), // Ace of Spades
+      new Card(9, true),  // 10 of Clubs
+      new Card(22, true), // 10 of Diamonds
+      new Card(35, true), // 10 of Hearts
+      new Card(48, true), // 10 of Spades
+      new Card(10, true), // Jack of Clubs
+      new Card(11, true), // Queen of Clubs
+      new Card(12, true), // King of Clubs
+      new Card(52, true), // Joker
+    ];
+
+    const container = document.getElementById('cards');
+
+    testCards.forEach(card => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'card-wrapper';
+
+      const cardDiv = document.createElement('div');
+      cardDiv.className = 'card';
+      cardDiv.innerHTML = DeckRenderer.renderCardFaceSVG(card);
+
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.textContent = card.fullName;
+
+      const spec = document.createElement('div');
+      spec.className = 'spec';
+      if (card.rankName === '10') {
+        spec.innerHTML = 'Condensed: <code>textLength="13.7"</code>';
+      } else if (card.isJoker) {
+        spec.textContent = 'Centered indices';
+      } else {
+        spec.textContent = 'Rank: 17.4px | Pip: 11.14px';
+      }
+
+      wrapper.appendChild(cardDiv);
+      wrapper.appendChild(label);
+      wrapper.appendChild(spec);
+      container.appendChild(wrapper);
+    });
+  </script>
+</body>
+</html>

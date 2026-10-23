@@ -1,0 +1,174 @@
+{
+  "title": "Solitaire Sovereign Premium Card Deck Collections",
+  "standard": "ArtCraft PhotoCraft Clean-Room Vector & Raster Pipeline",
+  "baseDeck": "classic_standard",
+  "totalDecks": 15,
+  "decks": [
+    {
+      "number": 0,
+      "id": "classic_standard",
+      "name": "Classic Casino Standard",
+      "era": "Classic",
+      "icon": "\u2660\ufe0f",
+      "cardBack": "card_back_blue.png",
+      "cardFace": "K_spades.png",
+      "faceTitle": "King David (King of Spades) \ud83d\udc51",
+      "background": "classic_green_felt.svg"
+    },
+    {
+      "number": 1,
+      "id": "victorian_christmas",
+      "name": "Victorian Christmas",
+      "era": "Vintage",
+      "icon": "\ud83c\udf84",
+      "cardBack": "card_back.png",
+      "cardFace": "K_hearts.png",
+      "faceTitle": "Father Christmas (King of Hearts) \ud83d\udc51",
+      "background": "victorian_christmas_felt.svg"
+    },
+    {
+      "number": 2,
+      "id": "art_deco_elegance",
+      "name": "Art Deco Elegance",
+      "era": "Vintage",
+      "icon": "\u2728",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Chrysler Spire (Ace of Spades) \ud83d\uddfd",
+      "background": "art_deco_elegance_felt.svg"
+    },
+    {
+      "number": 3,
+      "id": "steampunk_clockwork",
+      "name": "Steampunk Clockwork",
+      "era": "Vintage",
+      "icon": "\u2699\ufe0f",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Clockwork Escapement (Ace of Spades) \u2699\ufe0f",
+      "background": "steampunk_clockwork_felt.svg"
+    },
+    {
+      "number": 4,
+      "id": "wild_west_frontier",
+      "name": "Wild West Frontier",
+      "era": "Vintage",
+      "icon": "\ud83e\udd20",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Sheriff Longhorn (Ace of Spades) \ud83e\udd20",
+      "background": "wild_west_frontier_felt.svg"
+    },
+    {
+      "number": 5,
+      "id": "botanical_garden",
+      "name": "Botanical Garden",
+      "era": "Vintage",
+      "icon": "\ud83c\udf3a",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Royal Damask Rose (Ace of Spades) \ud83c\udf39",
+      "background": "botanical_garden_felt.svg"
+    },
+    {
+      "number": 6,
+      "id": "gothic_cathedral",
+      "name": "Gothic Cathedral",
+      "era": "Vintage",
+      "icon": "\u26ea",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Rose Window (Ace of Spades) \u26ea",
+      "background": "gothic_cathedral_felt.svg"
+    },
+    {
+      "number": 7,
+      "id": "art_nouveau",
+      "name": "Art Nouveau Stile Liberty",
+      "era": "Vintage",
+      "icon": "\ud83c\udf3f",
+      "cardBack": "card_back.png",
+      "cardFace": "K_diamonds.png",
+      "faceTitle": "Imperial Romanesque Sovereign (King of Diamonds) \ud83d\udc51",
+      "background": "art_nouveau_felt.svg"
+    },
+    {
+      "number": 8,
+      "id": "cyberpunk_neon",
+      "name": "Cyberpunk Neon",
+      "era": "Modern",
+      "icon": "\ud83c\udf03",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Holo-Circuit Matrix (Ace of Spades) \u26a1",
+      "background": "cyberpunk_neon_felt.svg"
+    },
+    {
+      "number": 9,
+      "id": "minimalist_zen",
+      "name": "Minimalist Zen",
+      "era": "Modern",
+      "icon": "\ud83c\udf8b",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Ens\u014d Sakura (Ace of Spades) \ud83c\udf8b",
+      "background": "minimalist_zen_felt.svg"
+    },
+    {
+      "number": 10,
+      "id": "cosmic_constellation",
+      "name": "Cosmic Constellation",
+      "era": "Modern",
+      "icon": "\ud83c\udf0c",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Celestial Astrolabe (Ace of Spades) \ud83c\udf0c",
+      "background": "cosmic_constellation_felt.svg"
+    },
+    {
+      "number": 11,
+      "id": "retro_synthwave",
+      "name": "Retro Synthwave 1984",
+      "era": "Modern",
+      "icon": "\ud83c\udf06",
+      "cardBack": "card_back.png",
+      "cardFace": "A_spades.png",
+      "faceTitle": "Outrun Sunset (Ace of Spades) \ud83c\udf06",
+      "background": "retro_synthwave_felt.svg"
+    },
+    {
+      "number": 12,
+      "id": "cartoon_animals",
+      "name": "Cartoon Animals Fable",
+      "era": "Modern",
+      "icon": "\ud83e\udd8a",
+      "cardBack": "card_back.png",
+      "cardFace": "K_spades.png",
+      "faceTitle": "Lion Monarch (King of Spades) \ud83e\udd81",
+      "background": "cartoon_animals_felt.svg"
+    },
+    {
+      "number": 13,
+      "id": "anime_fantasy",
+      "name": "Anime Fantasy Shonen",
+      "era": "Modern",
+      "icon": "\u2694\ufe0f",
+      "cardBack": "card_back.png",
+      "cardFace": "K_spades.png",
+      "faceTitle": "Astral Blade Emperor (King of Spades) \ud83d\udc51",
+      "background": "anime_fantasy_felt.svg"
+    },
+    {
+      "number": 14,
+      "id": "royal_cats",
+      "name": "Royal Cats (Puss in Boots)",
+      "era": "Fantasy / Animation",
+      "icon": "\ud83d\udc31",
+      "cardBack": "card_back_red.png",
+      "cardFace": "JS.png",
+      "faceTitle": "Don Gato the Swashbuckler (Jack of Spades) \ud83d\udde1\ufe0f",
+      "background": "royal_cats_felt.svg"
+    }
+  ],
+  "generatedAt": "2026-10-17T01:10:00.000Z"
+}

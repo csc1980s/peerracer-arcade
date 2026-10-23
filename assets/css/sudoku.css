@@ -1,0 +1,326 @@
+/* ==========================================================================
+   Ninefold — Sudoku
+   Ivory paper board with gold box rules on the Solitaire Sovereign felt.
+   ========================================================================== */
+
+/* The app's PvP arena handle ignores .hidden; keep it off the Sudoku board. */
+#card-table:has(#sudoku-view:not(.hidden)) #p2p-challenge-dock.hidden {
+  display: none !important;
+}
+
+.sudoku-container {
+  width: 100%;
+  padding: 14px 16px 22px;
+  box-sizing: border-box;
+}
+
+.sd-layout {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* ---- Board ------------------------------------------------------------ */
+
+.sd-board-col {
+  position: relative;
+}
+
+.sd-board {
+  --sd-size: min(76vh, calc(100vw - 420px), 640px);
+  width: var(--sd-size);
+  height: var(--sd-size);
+  min-width: 300px;
+  min-height: 300px;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  background: #f8f2e2;
+  border: 4px solid #b8902b;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px rgba(20, 40, 30, 0.9),
+    0 18px 40px rgba(0, 0, 0, 0.5),
+    inset 0 0 40px rgba(170, 140, 80, 0.18);
+  overflow: hidden;
+  user-select: none;
+  transition: box-shadow 0.4s ease;
+}
+
+.sd-board.sd-won {
+  box-shadow:
+    0 0 0 2px rgba(20, 40, 30, 0.9),
+    0 0 36px rgba(243, 206, 86, 0.75),
+    0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+.sd-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(120, 100, 60, 0.28);
+  border-bottom: 1px solid rgba(120, 100, 60, 0.28);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+  outline: none;
+}
+
+.sd-cell:nth-child(9n) { border-right: none; }
+.sd-cell:nth-child(n + 73) { border-bottom: none; }
+.sd-cell.sd-edge-r { border-right: 3px solid #b8902b; }
+.sd-cell.sd-edge-b { border-bottom: 3px solid #b8902b; }
+
+.sd-val {
+  font-family: var(--font-serif, 'Cinzel', Georgia, serif);
+  font-size: calc(var(--sd-size) / 9 * 0.56);
+  font-weight: 700;
+  line-height: 1;
+  color: #1c1a17;
+}
+
+.sd-cell.sd-entered .sd-val {
+  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-weight: 600;
+  color: #1f6f8b;
+}
+
+.sd-cell.sd-wrong .sd-val,
+.sd-cell.sd-conflict .sd-val {
+  color: #c2362b;
+}
+
+.sd-cell.sd-wrong {
+  background: rgba(194, 54, 43, 0.12);
+}
+
+.sd-cell.sd-peer { background: rgba(79, 178, 134, 0.13); }
+.sd-cell.sd-same { background: rgba(212, 175, 55, 0.32); }
+.sd-cell.sd-selected {
+  background: rgba(212, 175, 55, 0.55);
+  box-shadow: inset 0 0 0 2px #997819;
+}
+.sd-cell:hover:not(.sd-selected) { background: rgba(79, 178, 134, 0.22); }
+
+.sd-cell.sd-hint {
+  animation: sd-hint-pulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes sd-hint-pulse {
+  from { box-shadow: inset 0 0 0 2px rgba(31, 122, 85, 0.4); background: rgba(79, 228, 160, 0.18); }
+  to   { box-shadow: inset 0 0 0 4px rgba(31, 122, 85, 1); background: rgba(79, 228, 160, 0.42); }
+}
+
+.sd-notes {
+  position: absolute;
+  inset: 6%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  pointer-events: none;
+}
+
+.sd-notes:empty { display: none; }
+
+.sd-notes span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-size: calc(var(--sd-size) / 9 * 0.2);
+  font-weight: 600;
+  color: #5a6f66;
+  line-height: 1;
+}
+
+.sd-notes span.sd-note-hl {
+  color: #1c1a17;
+  background: rgba(212, 175, 55, 0.55);
+  border-radius: 3px;
+}
+
+/* ---- Side panel ------------------------------------------------------- */
+
+.sd-panel {
+  width: 330px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  background: var(--glass-bg, rgba(18, 26, 22, 0.72));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.12));
+  border-radius: 14px;
+  box-shadow: var(--glass-shadow, 0 8px 32px rgba(0, 0, 0, 0.37));
+  backdrop-filter: blur(10px);
+  color: #f3efe2;
+  font-family: var(--font-sans, sans-serif);
+}
+
+.sd-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-family: var(--font-serif, Georgia, serif);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+}
+
+.sd-brand-mark { color: #4fb286; text-shadow: 0 0 10px rgba(79, 178, 134, 0.6); }
+
+.sd-brand-name {
+  background: var(--gold-gradient, linear-gradient(135deg, #f5d77f, #d4af37, #aa841c));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sd-daily-badge {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(79, 178, 134, 0.2);
+  border: 1px solid rgba(79, 178, 134, 0.6);
+  color: #bdf0d6;
+}
+
+.sd-daily-badge.hidden { display: none; }
+
+.sd-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.sd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9fb3a6;
+}
+
+.sd-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sd-stat { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+.sd-stat-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #9fb3a6; }
+.sd-stat-val { font-size: 1.2rem; font-weight: 700; color: var(--gold-primary, #d4af37); }
+
+.sd-tools {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.sd-tools .btn { justify-content: center; white-space: nowrap; }
+
+.sd-tools .sd-active {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: var(--gold-primary, #d4af37);
+  color: #fff3c4;
+}
+
+.sd-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.sd-pad-btn {
+  position: relative;
+  aspect-ratio: 1.35;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: linear-gradient(160deg, #fffaf0 0%, #efe4c8 100%);
+  color: #1c1a17;
+  cursor: pointer;
+  font-family: var(--font-serif, Georgia, serif);
+  box-shadow: 0 3px 0 #b8a06a, 0 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, opacity 0.2s ease;
+}
+
+.sd-pad-btn:hover { transform: translateY(-1px); }
+.sd-pad-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #b8a06a, 0 3px 6px rgba(0, 0, 0, 0.3); }
+
+.sd-pad-digit { font-size: 1.7rem; font-weight: 700; }
+
+.sd-pad-btn.sd-pencil-mode .sd-pad-digit {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #5a6f66;
+}
+
+.sd-pad-left {
+  position: absolute;
+  top: 4px;
+  right: 7px;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #7a6a45;
+}
+
+.sd-pad-btn.sd-done { opacity: 0.45; }
+.sd-pad-btn.sd-done .sd-pad-left { color: #1f7a55; }
+
+.sd-help {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #9fb3a6;
+  line-height: 1.4;
+}
+
+/* ---- Toast ------------------------------------------------------------ */
+
+.sd-toast {
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translate(-50%, 100%);
+  z-index: 5;
+  width: max-content;
+  max-width: 100%;
+  padding: 7px 14px;
+  border-radius: 12px;
+  background: rgba(14, 24, 19, 0.92);
+  border: 1px solid rgba(79, 178, 134, 0.6);
+  color: #e9f5ee;
+  font-size: 0.85rem;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sd-toast.show { animation: sd-toast var(--sd-toast-ms, 2600ms) ease forwards; }
+
+@keyframes sd-toast {
+  0% { opacity: 0; }
+  8%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .sd-board { --sd-size: min(calc(100vw - 40px), 70vh); }
+  .sd-panel { width: 100%; }
+  .sd-pad { grid-template-columns: repeat(9, 1fr); gap: 6px; }
+  .sd-pad-btn { aspect-ratio: 0.85; }
+  .sd-pad-digit { font-size: 1.35rem; }
+  .sd-toast { bottom: auto; top: 6px; transform: translateX(-50%); }
+}

@@ -1,0 +1,108 @@
+{
+  "version": "1.0",
+  "description": "Victorian Christmas Solitaire Card Celebration Effects",
+  "effectsDirectory": "D:\\solitaire\\effects\\celebrations",
+  "audioDirectory": "D:\\solitaire\\audio\\encouragement",
+  "effects": {
+    "faceCards": {
+      "king": {
+        "file": "king_celebration.json",
+        "voiceType": "king",
+        "triggers": ["king_placed", "king_sequence", "high_card_combo_king"]
+      },
+      "queen": {
+        "file": "queen_celebration.json",
+        "voiceType": "queen",
+        "triggers": ["queen_placed", "queen_sequence", "high_card_combo_queen"]
+      },
+      "jack": {
+        "file": "jack_celebration.json",
+        "voiceType": "jack",
+        "triggers": ["jack_placed", "jack_sequence", "high_card_combo_jack"]
+      }
+    },
+    "suits": {
+      "hearts": {
+        "file": "hearts_suit_combo.json",
+        "voiceType": "suit_based",
+        "theme": "holly_berries_ivy",
+        "triggers": ["hearts_suit_run", "hearts_sequence_complete", "all_hearts_face_cards"]
+      },
+      "diamonds": {
+        "file": "diamonds_suit_combo.json",
+        "voiceType": "suit_based",
+        "theme": "frosted_ice_crystals",
+        "triggers": ["diamonds_suit_run", "diamonds_sequence_complete", "all_diamonds_face_cards"]
+      },
+      "spades": {
+        "file": "spades_suit_combo.json",
+        "voiceType": "suit_based",
+        "theme": "fraser_fir_forest",
+        "triggers": ["spades_suit_run", "spades_sequence_complete", "all_spades_face_cards"]
+      },
+      "clubs": {
+        "file": "clubs_suit_combo.json",
+        "voiceType": "suit_based",
+        "theme": "crossed_candy_canes",
+        "triggers": ["clubs_suit_run", "clubs_sequence_complete", "all_clubs_face_cards"]
+      }
+    },
+    "gameEvents": {
+      "winGame": {
+        "file": "win_game.json",
+        "voiceType": "random_celebration",
+        "triggers": ["game_won", "perfect_game", "all_suits_complete"]
+      },
+      "goodMove": {
+        "file": "good_move.json",
+        "voiceType": "suit_based",
+        "triggers": ["ace_to_foundation", "valid_move", "card_flip", "tableau_clear"],
+        "probability": 0.3
+      }
+    }
+  },
+  "loadOrder": [
+    "king_celebration.json",
+    "queen_celebration.json",
+    "jack_celebration.json",
+    "hearts_suit_combo.json",
+    "diamonds_suit_combo.json",
+    "spades_suit_combo.json",
+    "clubs_suit_combo.json",
+    "win_game.json",
+    "good_move.json"
+  ],
+  "voiceMapping": {
+    "king": {
+      "audioPath": "king",
+      "pitch": 80,
+      "rate": 130,
+      "description": "Deep, authoritative male voice"
+    },
+    "queen": {
+      "audioPath": "queen",
+      "pitch": 200,
+      "rate": 150,
+      "description": "Elegant female voice"
+    },
+    "jack": {
+      "audioPath": "jack",
+      "pitch": 160,
+      "rate": 170,
+      "description": "Energetic male tenor voice"
+    },
+    "suit_based": {
+      "description": "Voice selected based on highest card rank in sequence"
+    },
+    "random_celebration": {
+      "description": "Randomly selected from king/queen/jack voices"
+    }
+  },
+  "globalSettings": {
+    "masterVolume": 0.75,
+    "particlesEnabled": true,
+    "audioEnabled": true,
+    "maxSimultaneousEffects": 3,
+    "performanceMode": "auto"
+  }
+}

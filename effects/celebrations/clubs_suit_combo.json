@@ -1,0 +1,204 @@
+{
+  "name": "Clubs Suit Combo - Crossed Candy Canes",
+  "description": "Clubs suit celebration with candy canes, peppermints, and festive holiday sweets",
+  "version": "1.0",
+  "cardAnimation": {
+    "sequence": [
+      {
+        "name": "card_sweet_bounce",
+        "duration": 1600,
+        "easing": "easeInOutBack",
+        "stagger": 130,
+        "properties": {
+          "translateY": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.4, "value": -14},
+              {"time": 0.7, "value": -8},
+              {"time": 1.0, "value": 0}
+            ]
+          },
+          "scale": {
+            "keyframes": [
+              {"time": 0, "value": 1.0},
+              {"time": 0.35, "value": 1.09},
+              {"time": 0.65, "value": 1.04},
+              {"time": 1.0, "value": 1.0}
+            ]
+          },
+          "rotation": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.3, "value": 5},
+              {"time": 0.6, "value": -3},
+              {"time": 1.0, "value": 0}
+            ]
+          }
+        }
+      },
+      {
+        "name": "peppermint_glow",
+        "duration": 1900,
+        "easing": "easeInOutSine",
+        "properties": {
+          "glow": {
+            "color": "#ff0000",
+            "intensity": {
+              "keyframes": [
+                {"time": 0, "value": 0},
+                {"time": 0.35, "value": 0.65},
+                {"time": 0.75, "value": 0.45},
+                {"time": 1.0, "value": 0}
+              ]
+            },
+            "blur": 12
+          }
+        }
+      }
+    ]
+  },
+  "particles": {
+    "emitters": [
+      {
+        "name": "candy_canes",
+        "shape": "candy_cane",
+        "position": "screen_around",
+        "count": 25,
+        "duration": 2500,
+        "particleLifetime": 2200,
+        "colors": ["#ff0000", "#ffffff"],
+        "pattern": "striped",
+        "size": {
+          "start": 16,
+          "end": 10
+        },
+        "opacity": {
+          "start": 0.95,
+          "end": 0.3
+        },
+        "velocity": {
+          "x": {"min": -75, "max": 75},
+          "y": {"min": -95, "max": -35}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -180, "max": 180},
+          "randomize": true
+        },
+        "gravity": 42,
+        "sway": {
+          "amplitude": 28,
+          "frequency": 2.2
+        },
+        "blendMode": "normal"
+      },
+      {
+        "name": "peppermint_swirls",
+        "shape": "circle",
+        "position": "screen_top",
+        "count": 35,
+        "duration": 2800,
+        "particleLifetime": 2400,
+        "colors": ["#ff0000", "#ff1493", "#ffffff", "#ffe4e1"],
+        "pattern": "radial_stripes",
+        "size": {
+          "start": 14,
+          "end": 8
+        },
+        "opacity": {
+          "start": 0.9,
+          "end": 0.1
+        },
+        "velocity": {
+          "x": {"min": -65, "max": 65},
+          "y": {"min": -80, "max": -30}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -360, "max": 360},
+          "speed": 3,
+          "randomize": true
+        },
+        "gravity": 38,
+        "sway": {
+          "amplitude": 30,
+          "frequency": 2.5
+        },
+        "blendMode": "normal"
+      },
+      {
+        "name": "sugar_crystals",
+        "shape": "star",
+        "position": "card_bounds",
+        "count": 50,
+        "duration": 2200,
+        "particleLifetime": 1800,
+        "colors": ["#ffffff", "#fff5ee", "#ffe4e1", "#ffc0cb"],
+        "size": {
+          "start": 6,
+          "end": 2
+        },
+        "opacity": {
+          "start": 0.85,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -95, "max": 95},
+          "y": {"min": -110, "max": -50}
+        },
+        "gravity": 32,
+        "twinkle": {
+          "frequency": 6,
+          "amplitude": 0.6
+        },
+        "blendMode": "add"
+      },
+      {
+        "name": "ribbon_candy",
+        "shape": "ribbon",
+        "position": "screen_edges",
+        "count": 20,
+        "duration": 2400,
+        "particleLifetime": 2000,
+        "colors": ["#ff0000", "#00ff00", "#ff69b4", "#ffd700"],
+        "size": {
+          "width": 8,
+          "height": {"start": 20, "end": 12}
+        },
+        "opacity": {
+          "start": 0.8,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -70, "max": 70},
+          "y": {"min": -85, "max": -40}
+        },
+        "rotation": {
+          "start": 0,
+          "end": {"min": -270, "max": 270},
+          "randomize": true
+        },
+        "gravity": 45,
+        "sway": {
+          "amplitude": 32,
+          "frequency": 2
+        },
+        "blendMode": "normal"
+      }
+    ]
+  },
+  "audio": {
+    "triggerDelay": 190,
+    "voiceType": "suit_based",
+    "volume": 0.8,
+    "fadeIn": 320,
+    "fadeOut": 480
+  },
+  "triggers": {
+    "conditions": [
+      "clubs_suit_run",
+      "clubs_sequence_complete",
+      "all_clubs_face_cards"
+    ]
+  }
+}

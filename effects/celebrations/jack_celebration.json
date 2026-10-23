@@ -1,0 +1,183 @@
+{
+  "name": "Jack Celebration - Energetic & Quick",
+  "description": "Dynamic celebration animation for Jacks with lightning sparks and electric energy",
+  "version": "1.0",
+  "cardAnimation": {
+    "sequence": [
+      {
+        "name": "card_bounce",
+        "duration": 1200,
+        "easing": "easeOutBounce",
+        "properties": {
+          "translateY": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.3, "value": -25},
+              {"time": 0.5, "value": -20},
+              {"time": 0.7, "value": -10},
+              {"time": 0.85, "value": -5},
+              {"time": 1.0, "value": 0}
+            ]
+          },
+          "scale": {
+            "keyframes": [
+              {"time": 0, "value": 1.0},
+              {"time": 0.2, "value": 1.12},
+              {"time": 0.4, "value": 1.08},
+              {"time": 1.0, "value": 1.0}
+            ]
+          }
+        }
+      },
+      {
+        "name": "electric_flash",
+        "duration": 1000,
+        "easing": "easeInOutQuad",
+        "properties": {
+          "glow": {
+            "color": "#00ffff",
+            "intensity": {
+              "keyframes": [
+                {"time": 0, "value": 0},
+                {"time": 0.15, "value": 0.9},
+                {"time": 0.3, "value": 0.5},
+                {"time": 0.5, "value": 0.7},
+                {"time": 0.7, "value": 0.3},
+                {"time": 1.0, "value": 0}
+              ]
+            },
+            "blur": 10
+          }
+        }
+      },
+      {
+        "name": "quick_spin",
+        "duration": 600,
+        "easing": "easeInOutBack",
+        "properties": {
+          "rotation": {
+            "keyframes": [
+              {"time": 0, "value": 0},
+              {"time": 0.5, "value": 10},
+              {"time": 1.0, "value": 0}
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "particles": {
+    "emitters": [
+      {
+        "name": "lightning_bolts",
+        "shape": "lightning",
+        "position": "card_edges",
+        "count": 15,
+        "duration": 1200,
+        "particleLifetime": 800,
+        "colors": ["#00ffff", "#87ceeb", "#4169e1", "#1e90ff"],
+        "size": {
+          "width": 2,
+          "height": {"start": 30, "end": 50}
+        },
+        "opacity": {
+          "start": 1.0,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -120, "max": 120},
+          "y": {"min": -150, "max": -60}
+        },
+        "rotation": {
+          "randomize": true
+        },
+        "blendMode": "add"
+      },
+      {
+        "name": "energy_sparks",
+        "shape": "star",
+        "position": "card_burst",
+        "count": 60,
+        "duration": 1500,
+        "particleLifetime": 1000,
+        "colors": ["#00ffff", "#00bfff", "#87ceeb", "#ffffff"],
+        "size": {
+          "start": 6,
+          "end": 2
+        },
+        "opacity": {
+          "start": 1.0,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -140, "max": 140},
+          "y": {"min": -160, "max": -40}
+        },
+        "acceleration": {
+          "x": 0,
+          "y": 80
+        },
+        "gravity": 60,
+        "blendMode": "add"
+      },
+      {
+        "name": "electric_rings",
+        "shape": "ring",
+        "position": "card_center",
+        "count": 5,
+        "duration": 1000,
+        "particleLifetime": 800,
+        "colors": ["#00ffff", "#4682b4"],
+        "size": {
+          "start": 20,
+          "end": 100
+        },
+        "strokeWidth": {
+          "start": 3,
+          "end": 1
+        },
+        "opacity": {
+          "start": 0.8,
+          "end": 0
+        },
+        "blendMode": "add"
+      },
+      {
+        "name": "speed_trails",
+        "shape": "line",
+        "position": "card_bounds",
+        "count": 25,
+        "duration": 800,
+        "particleLifetime": 500,
+        "colors": ["#4169e1", "#6495ed", "#b0e0e6"],
+        "size": {
+          "width": 2,
+          "height": {"start": 15, "end": 5}
+        },
+        "opacity": {
+          "start": 0.6,
+          "end": 0
+        },
+        "velocity": {
+          "x": {"min": -100, "max": 100},
+          "y": {"min": -120, "max": -50}
+        },
+        "blendMode": "add"
+      }
+    ]
+  },
+  "audio": {
+    "triggerDelay": 100,
+    "voiceType": "jack",
+    "volume": 0.85,
+    "fadeIn": 200,
+    "fadeOut": 400
+  },
+  "triggers": {
+    "conditions": [
+      "jack_placed",
+      "jack_sequence",
+      "high_card_combo_jack"
+    ]
+  }
+}
