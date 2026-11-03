@@ -93,6 +93,16 @@ export class SplitMix64 {
   }
 
   /**
+   * Fresh random seed that fits the 40 bits a deal code carries, so the
+   * code shown for a deal always reproduces that exact deal.
+   * Returned as a Number (JSON-safe for saves and duel payloads).
+   * @returns {number}
+   */
+  static newSeed() {
+    return Math.floor(Math.random() * 0x10000000000); // [0, 2^40)
+  }
+
+  /**
    * Generate a readable, shareable deal code string
    * @param {string} prefix e.g. "KL" for Klondike, "FC" for FreeCell
    * @param {number|bigint} seedValue

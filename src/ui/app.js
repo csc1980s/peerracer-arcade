@@ -25,13 +25,14 @@ import {
   CommunityCardsComponent,
   OpponentSeatComponent
 } from './components/poker_card_display.js?v=20261016_rev22';
-import { P2PDuelManager } from '../core/p2p_duel.js?v=20261016_rev22';
+import { P2PDuelManager } from '../core/p2p_duel.js?v=20261102_seedfix';
 import { DeckRenderer, CARD_BACK_THEMES } from '../art/deck_renderer.js?v=20261016_rev22';
 import { ProceduralSoundEngine } from '../audio/sound_synth.js?v=20261016_rev22';
 import { GameplayMusicPlayer } from '../audio/music_player.js?v=20261016_rev22';
 import { ProfileManager } from '../core/profile_manager.js?v=20261016_rev22';
 import { VictoryCascade } from './victory_cascade.js?v=20261016_rev22';
-import { HeuristicSolver } from '../core/solver.js?v=20261016_rev22';
+import { HeuristicSolver } from '../core/solver.js?v=20261102_seedfix';
+import { SplitMix64 } from '../core/prng.js?v=20261102_seedfix';
 import { Card } from '../core/card.js?v=20261016_rev22';
 import { PedagogicalCoach } from './pedagogical_coach.js?v=20261016_rev22';
 import { ModManager } from '../core/mod_manager.js?v=20261016_rev22';
@@ -757,7 +758,9 @@ export class SolitaireApp {
     this.autoSolveBanner?.classList.add('hidden');
     this.floatingAutoSolveBtn?.classList.add('hidden');
 
-    const seed = specificSeed !== null ? specificSeed : Date.now();
+    // Catalog seeds arrive as BigInt from parseDealCode; keep seeds as Numbers so saves can JSON them.
+    const seed = specificSeed === null ? SplitMix64.newSeed()
+      : (typeof specificSeed === 'bigint' ? Number(specificSeed) : specificSeed);
     // A PeerRacer race supplies the deal settings; a player starting a game on their own leaves any race.
     const raceDeal = this.raceOverrides;
     this.raceOverrides = null;
@@ -3439,7 +3442,18 @@ export class SolitaireApp {
     const listEl = document.getElementById('solvable-deals-list');
     listEl.innerHTML = '';
 
-    const deals = catalog[this.gameType] || catalog['klondike_draw1'];
+    const catalogKeys = {
+      klondike_1: 'klondike_draw1',
+      klondike_3: 'klondike_draw3',
+      freecell: 'freecell',
+      spider_1: 'spider_1suit',
+      spider_2: 'spider_2suit',
+      spider_4: 'spider_4suit'
+    };
+    const deals = catalog[catalogKeys[this.gameType]] || [];
+    if (deals.length === 0) {
+      listEl.innerHTML = '<p class="modal-intro">No catalog deals for this game yet.</p>';
+    }
     deals.forEach(deal => {
       const item = document.createElement('div');
       item.className = 'deal-catalog-item';
@@ -3450,11 +3464,12 @@ export class SolitaireApp {
         </div>
         <div class="deal-meta">
           <span class="difficulty-tag diff-${deal.difficulty.toLowerCase()}">${deal.difficulty}</span>
+          ${deal.verified ? '' : '<span class="difficulty-tag" title="Not checked by the solver">Unverified</span>'}
           <button class="btn btn-primary btn-sm">Play Deal</button>
         </div>
       `;
       item.querySelector('button').onclick = () => {
-        const parsed = HeuristicSolver.parseDealCode ? HeuristicSolver.parseDealCode(deal.code) : { seed: Date.now() };
+        const parsed = SplitMix64.parseDealCode(deal.code);
         modal.classList.remove('active');
         this.startNewGame(parsed.seed);
       };
@@ -4278,7 +4293,7 @@ export class SolitaireApp {
   createP2PTimeChallenge() {
     const isCasino = this.gameType.startsWith('blackjack') || this.gameType.startsWith('poker');
     const targetMode = isCasino ? 'klondike_1' : this.gameType;
-    const seed = Date.now();
+    const seed = SplitMix64.newSeed();
 
     const challenge = this.p2pDuel.createTimeChallenge(targetMode, seed);
     this.gameType = challenge.gameType;

@@ -104,7 +104,7 @@ export class SolvableDealGenerator {
           difficulty: deal.difficulty,
           name: deal.name,
           movesPar: deal.movesPar,
-          verified: true,
+          verified: deal.verified === true,
           source: 'catalog'
         };
       }
@@ -138,7 +138,7 @@ export class SolvableDealGenerator {
           difficulty: deal.difficulty,
           name: deal.name,
           movesPar: deal.movesPar,
-          verified: true,
+          verified: deal.verified === true,
           source: 'catalog'
         });
       });
@@ -214,7 +214,7 @@ export class SolvableDealGenerator {
       difficulty: selected.difficulty,
       name: selected.name,
       movesPar: selected.movesPar,
-      verified: true,
+      verified: selected.verified === true,
       source: 'catalog'
     };
   }
@@ -262,7 +262,7 @@ export class SolvableDealGenerator {
           difficulty: result.difficulty,
           name: this._generateDealName(),
           movesPar: result.steps,
-          verified: true,
+          verified: this.gameType.startsWith('klondike'),
           generatedAt: Date.now()
         };
 
@@ -283,7 +283,7 @@ export class SolvableDealGenerator {
   _verifySolvability(seed) {
     // Determine which solver to use based on game type
     if (this.gameType.startsWith('klondike')) {
-      return HeuristicSolver.solveKlondike(seed, 10000);
+      return HeuristicSolver.solveKlondike(seed, 10000, this.gameType === 'klondike_3' ? 3 : 1);
     } else if (this.gameType === 'freecell') {
       // FreeCell: nearly all deals are solvable, quick check
       return { solved: true, steps: 80, difficulty: 'Medium', timedOut: false };

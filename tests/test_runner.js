@@ -15,6 +15,7 @@ import { CommandValidator } from '../src/core/validator.js';
 import { KlondikeGame } from '../src/games/klondike.js';
 import { FreeCellGame } from '../src/games/freecell.js';
 import { SpiderGame } from '../src/games/spider.js';
+import { HeuristicSolver } from '../src/core/solver.js';
 
 let passed = 0;
 let failed = 0;
@@ -918,6 +919,36 @@ console.log("\n--- TEST SUITE 20: StackExchange Klondike - Filtering Pointless P
   assert(hintB.source.zone === 'tableau' && hintB.source.index === 0 && hintB.source.cardIndex === 1, "Identifies 5♥ on Col 0 as source");
   assert(hintB.target.zone === 'tableau' && hintB.target.index === 1, "Identifies Col 1 as target");
   assert(hintB.message.includes('unblock') && hintB.message.includes('Foundation'), `Hint message explicitly informs player of strategic gain: "${hintB?.message}"`);
+}
+
+// TEST SUITE: SEEDS, DEAL CODES & SOLVABLE CATALOG
+console.log("\n--- TEST SUITE: Seeds, Deal Codes & Solvable Catalog ---");
+{
+  // New seeds must survive the 40-bit deal code, or the code shown recreates a different deal
+  let allRoundtrip = true;
+  for (let i = 0; i < 500; i++) {
+    const seed = SplitMix64.newSeed();
+    const p = SplitMix64.parseDealCode(SplitMix64.formatDealCode('KL', seed));
+    if (!p.valid || Number(p.seed) !== seed) allRoundtrip = false;
+  }
+  assert(allRoundtrip, "500 fresh seeds all round-trip through their deal code");
+
+  const catalog = HeuristicSolver.getVerifiedCatalog();
+  for (const [key, deals] of Object.entries(catalog)) {
+    for (const deal of deals) {
+      const p = SplitMix64.parseDealCode(deal.code);
+      const prefix = deal.code.split('-')[0];
+      assert(p.valid && SplitMix64.formatDealCode(prefix, p.seed) === deal.code, `${key} ${deal.code} has a valid checksum and round-trips`);
+      if (key.startsWith('klondike')) {
+        const drawCount = key === 'klondike_draw3' ? 3 : 1;
+        const r = HeuristicSolver.solveKlondike(p.seed, 10000, drawCount);
+        assert(deal.verified === true && r.solved, `${key} ${deal.code} is won by the solver with draw-${drawCount} rules`);
+        assert(r.difficulty === deal.difficulty && r.moves === deal.movesPar, `${key} ${deal.code} difficulty/par match the solver (${r.difficulty}, ${r.moves})`);
+      } else {
+        assert(deal.verified === false, `${key} ${deal.code} is not claimed as verified (no solver for this game)`);
+      }
+    }
+  }
 }
 
 console.log("\n=================================================");

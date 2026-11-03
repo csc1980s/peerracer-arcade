@@ -256,7 +256,7 @@ export class P2PDuelManager {
    * Starts in WAITING lobby state; duel timer begins when all 5 members join or 5 minutes elapse.
    */
   createTimeChallenge(gameType = 'klondike_1', customSeed = null, roomTitle = null, waitTimeoutMs = DUEL_WAIT_TIMEOUT_MS) {
-    const seed = customSeed !== null && customSeed !== undefined ? customSeed : (Date.now() ^ (Math.random() * 0xFFFFFF));
+    const seed = customSeed !== null && customSeed !== undefined ? customSeed : PRNG.newSeed();
     const duelId = `DUEL-${gameType.toUpperCase().slice(0, 4)}-${Math.abs(Number(seed) % 1000000).toString(36).toUpperCase()}`;
 
     const totalCards = gameType.startsWith('spider') ? 104 : (gameType === 'tripeaks' || gameType === 'pyramid' ? 28 : 52);

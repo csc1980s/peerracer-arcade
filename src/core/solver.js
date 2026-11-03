@@ -13,12 +13,13 @@ import { FreeCellGame } from '../games/freecell.js';
 export class HeuristicSolver {
   /**
    * Evaluates Klondike deal solvability within a step budget
-   * @param {bigint|number|string} seed 
+   * @param {bigint|number|string} seed
    * @param {number} maxSteps Default 10,000 steps
-   * @returns {{solved: boolean, steps: number, difficulty: string, timedOut: boolean}}
+   * @param {number} drawCount 1 or 3, must match the mode the deal is played in
+   * @returns {{solved: boolean, steps: number, moves: number, difficulty: string, timedOut: boolean}}
    */
-  static solveKlondike(seed, maxSteps = 10000) {
-    const game = new KlondikeGame({ seed, drawCount: 1 });
+  static solveKlondike(seed, maxSteps = 10000, drawCount = 1) {
+    const game = new KlondikeGame({ seed, drawCount });
     const visited = new Set();
     let steps = 0;
 
@@ -27,9 +28,10 @@ export class HeuristicSolver {
       steps++;
 
       // Check win
-      if (game.state.won || game.canAutoComplete()) {
-        const difficulty = steps < 800 ? 'Easy' : (steps < 3500 ? 'Medium' : 'Hard');
-        return { solved: true, steps, difficulty, timedOut: false };
+      if (game.state.won || this._isKlondikeGuaranteedWin(game.state)) {
+        const moves = game.state.moves;
+        const difficulty = moves < 110 ? 'Easy' : (moves < 140 ? 'Medium' : 'Hard');
+        return { solved: true, steps, moves, difficulty, timedOut: false };
       }
 
       // Generate state hash
@@ -49,7 +51,10 @@ export class HeuristicSolver {
       let moved = false;
       const hint = game.getTacticalHint();
       if (hint) {
-        if (hint.action === 'DRAW' || hint.action === 'RECYCLE') {
+        if (hint.autoComplete) {
+          const step = game.getNextAutoCompleteStep();
+          if (step) moved = game.moveCards(step.source, step.target, step.count);
+        } else if (hint.action === 'DRAW' || hint.action === 'RECYCLE') {
           game.drawOrRecycle();
           moved = true;
         } else if (hint.source && hint.target) {
@@ -71,9 +76,20 @@ export class HeuristicSolver {
     return {
       solved: false,
       steps,
+      moves: game.state.moves,
       difficulty: 'Unknown',
       timedOut: steps >= maxSteps
     };
+  }
+
+  /**
+   * Stock and waste empty with every tableau card face up is always winnable:
+   * each column is a descending run, so the lowest remaining card is always on
+   * top of a column and plays straight to its foundation.
+   */
+  static _isKlondikeGuaranteedWin(state) {
+    if (state.stock.length > 0 || state.waste.length > 0) return false;
+    return state.tableau.every(col => col.every(c => c.faceUp));
   }
 
   static _hashKlondikeState(state) {
@@ -91,39 +107,44 @@ export class HeuristicSolver {
   }
 
   /**
-   * Pre-verified clean-room solvable seed catalog.
-   * Generated with our SplitMix64 engine and verified by our solver.
-   * Zero Microsoft seeds or deal numbering.
+   * Clean-room seed catalog. Zero Microsoft seeds or deal numbering.
+   *
+   * Klondike entries (verified: true) were won end to end by solveKlondike under
+   * the same draw count they are listed for; difficulty and movesPar are the
+   * solver's own result (movesPar = moves the solver needed).
+   * FreeCell and Spider have no solver yet, so those entries are verified: false
+   * and their difficulty/par values are estimates.
+   * Every code passes its checksum and decodes to a seed below 2^40.
    */
   static getVerifiedCatalog() {
     return {
       klondike_draw1: [
-        { code: "KL-0004-9E37-B", difficulty: "Easy", name: "Aetheria Dawn", movesPar: 72 },
-        { code: "KL-0012-7F3A-8", difficulty: "Easy", name: "Emerald Stream", movesPar: 78 },
-        { code: "KL-0028-11EB-D", difficulty: "Medium", name: "Crimson Spire", movesPar: 95 },
-        { code: "KL-0056-B97F-K", difficulty: "Medium", name: "Obsidian Crest", movesPar: 104 },
-        { code: "KL-0104-E5B9-R", difficulty: "Hard", name: "Royal Citadel", movesPar: 130 },
-        { code: "KL-0218-476D-2", difficulty: "Hard", name: "Sovereign Summit", movesPar: 145 }
+        { code: "KL-7DA2-JDAQ-A", difficulty: "Easy", name: "Aetheria Dawn", movesPar: 96, verified: true },
+        { code: "KL-FN6A-JXG9-5", difficulty: "Easy", name: "Emerald Stream", movesPar: 108, verified: true },
+        { code: "KL-M90N-Q2E7-N", difficulty: "Medium", name: "Crimson Spire", movesPar: 114, verified: true },
+        { code: "KL-3V5P-SA5T-8", difficulty: "Medium", name: "Obsidian Crest", movesPar: 133, verified: true },
+        { code: "KL-J8JD-CGAZ-4", difficulty: "Hard", name: "Royal Citadel", movesPar: 142, verified: true },
+        { code: "KL-BJWR-KYT5-E", difficulty: "Hard", name: "Sovereign Summit", movesPar: 143, verified: true }
       ],
       klondike_draw3: [
-        { code: "KL3-0009-4A7C-M", difficulty: "Medium", name: "Triple Cascade", movesPar: 110 },
-        { code: "KL3-0033-94D0-7", difficulty: "Hard", name: "Grand Master", movesPar: 138 }
+        { code: "KL3-GBDP-0JQ3-C", difficulty: "Easy", name: "Triple Cascade", movesPar: 101, verified: true },
+        { code: "KL3-XJFK-SFHE-M", difficulty: "Medium", name: "Grand Master", movesPar: 110, verified: true }
       ],
       freecell: [
-        { code: "FC-0007-88A2-E", difficulty: "Easy", name: "Cascade Promenade", movesPar: 68 },
-        { code: "FC-0015-3C91-Y", difficulty: "Easy", name: "Harbor Light", movesPar: 74 },
-        { code: "FC-0042-99F0-5", difficulty: "Medium", name: "Fortress Gate", movesPar: 88 },
-        { code: "FC-0089-22B4-T", difficulty: "Hard", name: "Labyrinthine", movesPar: 102 }
+        { code: "FC-0007-88A2-K", difficulty: "Easy", name: "Cascade Promenade", movesPar: 68, verified: false },
+        { code: "FC-0015-3C91-W", difficulty: "Easy", name: "Harbor Light", movesPar: 74, verified: false },
+        { code: "FC-0042-99F0-F", difficulty: "Medium", name: "Fortress Gate", movesPar: 88, verified: false },
+        { code: "FC-0089-22B4-Q", difficulty: "Hard", name: "Labyrinthine", movesPar: 102, verified: false }
       ],
       spider_1suit: [
-        { code: "SP1-0011-55E1-A", difficulty: "Casual", name: "Spider Silk", movesPar: 120 },
-        { code: "SP1-0037-88C3-G", difficulty: "Standard", name: "Arachnid's Web", movesPar: 135 }
+        { code: "SP1-0011-55E1-M", difficulty: "Casual", name: "Spider Silk", movesPar: 120, verified: false },
+        { code: "SP1-0037-88C3-B", difficulty: "Standard", name: "Arachnid's Web", movesPar: 135, verified: false }
       ],
       spider_2suit: [
-        { code: "SP2-0022-77D4-P", difficulty: "Challenging", name: "Dual Threads", movesPar: 160 }
+        { code: "SP2-0022-77D4-D", difficulty: "Challenging", name: "Dual Threads", movesPar: 160, verified: false }
       ],
       spider_4suit: [
-        { code: "SP4-0044-99E8-W", difficulty: "Expert", name: "Black Widow", movesPar: 195 }
+        { code: "SP4-0044-99E8-V", difficulty: "Expert", name: "Black Widow", movesPar: 195, verified: false }
       ]
     };
   }

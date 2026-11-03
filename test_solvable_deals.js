@@ -227,7 +227,8 @@ test('Works with different game types', () => {
     const deal = generator.getSolvableDeal();
 
     assert(deal, `Should generate deal for ${gameType}`);
-    assert(deal.verified, `${gameType} deal should be verified`);
+    // Only Klondike has a solver; FreeCell catalog deals are honestly marked unverified
+    assert(deal.verified === gameType.startsWith('klondike'), `${gameType} deal verified flag should match solver coverage`);
   }
 });
 
